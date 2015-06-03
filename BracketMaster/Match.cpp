@@ -9,6 +9,7 @@
 Match::Match()
     : JMDataObj(-1)
     , m_bracketId(-1)
+    , m_matchNum(-1)
     , m_competitor1(0)
     , m_competitor2(0)
     , m_winner(0)
@@ -20,6 +21,7 @@ Match::Match()
 Match::Match(int id)
     : JMDataObj(id)
     , m_bracketId(-1)
+    , m_matchNum(-1)
     , m_competitor1(0)
     , m_competitor2(0)
     , m_winner(0)
@@ -91,6 +93,7 @@ void Match::read(const QJsonObject &json, const QList<Competitor *> competitors)
 {
     JMDataObj::read(json);
     m_bracketId = json["bracketId"].toInt();
+    m_matchNum = json["matchNumber"].toInt();
     int cid1 = json["competitor1"].toInt();
     int cid2 = json["competitor2"].toInt();
     int winnerId = json["winner"].toInt();
@@ -132,6 +135,7 @@ void Match::write(QJsonObject &json) const
 {
     JMDataObj::write(json);
     json["bracketId"] = m_bracketId;
+    json["matchNumber"] = m_matchNum;
     if(m_competitor1)
         json["competitor1"] = m_competitor1->id();
     if(m_competitor2)

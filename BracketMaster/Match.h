@@ -37,6 +37,7 @@ public:
 
 private:
     int m_bracketId;
+    int m_matchNum;     // For when Texas Match Card system is used.
     Competitor *m_competitor1;  // White
     Competitor *m_competitor2;  // Blue
     Competitor *m_winner;
