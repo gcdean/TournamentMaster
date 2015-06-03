@@ -35,6 +35,8 @@ void BracketTests::numMatchesTest_data()
     QTest::newRow("6 competitors") << 6 << 9;
     QTest::newRow("7 competitors") << 7 << 11;
     QTest::newRow("8 competitors") << 8 << 13;
+    QTest::newRow("9 competitors") << 9 << -1;
+    QTest::newRow("10 competitors") << 10 << -1;
 }
 
 void BracketTests::numMatchesTest()

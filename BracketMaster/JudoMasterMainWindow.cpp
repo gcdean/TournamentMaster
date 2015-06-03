@@ -57,6 +57,7 @@ JudoMasterMainWindow::JudoMasterMainWindow(QWidget *parent) :
     connect(ui->startTime, &QDateTimeEdit::timeChanged, this, &JudoMasterMainWindow::timeChanged);
 
     connect(JMApp(), &QCoreApplication::aboutToQuit, this, &JudoMasterMainWindow::close);
+    connect(ui->actionExit, &QAction::triggered, this, &QApplication::quit);
     updateControls();
 }
 
@@ -99,7 +100,6 @@ void JudoMasterMainWindow::timeChanged(const QTime &time)
 void JudoMasterMainWindow::save()
 {
     if(m_tournament->fileName().isEmpty())
-//    if(m_fileName.isEmpty())
     {
         if(!getFilename())
             return;
