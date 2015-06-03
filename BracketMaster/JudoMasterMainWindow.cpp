@@ -55,6 +55,7 @@ JudoMasterMainWindow::JudoMasterMainWindow(QWidget *parent) :
     connect(ui->tournamentName, &QLineEdit::editingFinished, this, &JudoMasterMainWindow::nameChanged);
     connect(ui->tournamentDate, &QDateTimeEdit::dateChanged, this, &JudoMasterMainWindow::dateChanged);
     connect(ui->startTime, &QDateTimeEdit::timeChanged, this, &JudoMasterMainWindow::timeChanged);
+    connect(ui->useTexasMatchCards, &QCheckBox::clicked, this, &JudoMasterMainWindow::setTexasMatchCard);
 
     connect(JMApp(), &QCoreApplication::aboutToQuit, this, &JudoMasterMainWindow::close);
     connect(ui->actionExit, &QAction::triggered, this, &QApplication::quit);
@@ -94,6 +95,15 @@ void JudoMasterMainWindow::timeChanged(const QTime &time)
     }
 
     m_tournament->setStartTime(time);
+}
+
+void JudoMasterMainWindow::setTexasMatchCard()
+{
+    if(!m_tournament)
+    {
+        return;
+    }
+    m_tournament->setTexasMatchCards(ui->useTexasMatchCards->isChecked());
 }
 
 

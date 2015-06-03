@@ -23,7 +23,18 @@ namespace
 }
 Tournament::Tournament(QObject *parent) :
     QObject(parent)
+    , m_useTexasMatchCards(false)
 {
+}
+
+bool Tournament::useTexasMatchCards()
+{
+    return m_useTexasMatchCards;
+}
+
+void Tournament::setTexasMatchCards(bool use)
+{
+    m_useTexasMatchCards = use;
 }
 
 void Tournament::read(QJsonObject &json)
@@ -31,6 +42,7 @@ void Tournament::read(QJsonObject &json)
     m_name = json["name"].toString();
     m_date = QDate::fromString(json["date"].toString(), "dd.MM.yyyy");
     m_startTime = QTime::fromString(json["starttime"].toString(), "HH.mm");
+    m_useTexasMatchCards = json["texasMatchCards"].toBool();
 
     // Read the competitors
     QJsonArray competitors = json["competitors"].toArray();
@@ -85,6 +97,7 @@ void Tournament::write(QJsonObject &json) const
     QString temp = m_date.toString("dd.MM.yyyy");
     json["date"] = temp;
     json["starttime"] = m_startTime.toString("HH.mm");
+    json["texasMatchCards"] = m_useTexasMatchCards;
 
     // Clubs
     QJsonArray clubArray;

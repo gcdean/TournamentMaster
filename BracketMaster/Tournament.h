@@ -29,6 +29,8 @@ public:
     void setDate(QDate date) {m_date = date;}
     QTime startTime() const {return m_startTime;}
     void setStartTime(QTime startTime) {m_startTime = startTime;}
+    bool useTexasMatchCards();
+    void setTexasMatchCards(bool use);
 
     QList<Club *>& clubs() {return m_clubs;}
     QList<Competitor *>& competitors() {return m_competitors;}
@@ -49,6 +51,7 @@ private:
     QString m_name;
     QDate m_date;
     QTime m_startTime;
+    bool m_useTexasMatchCards;
 
     QList<Club *> m_clubs;
     QList<Competitor *> m_competitors;

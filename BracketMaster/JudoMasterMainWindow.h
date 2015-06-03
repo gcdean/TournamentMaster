@@ -24,6 +24,7 @@ public slots:
     void nameChanged();
     void dateChanged(const QDate& date);
     void timeChanged(const QTime& time);
+    void setTexasMatchCard();
     void save();
     void saveAs();
     void newTournament();
