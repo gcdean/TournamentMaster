@@ -9,7 +9,7 @@ QT       += testlib
 QT       += gui
 
 QMAKE_CXXFLAGS += -Wunused-parameter
-QMAKE_CXXFLAGS += -std=c++11
+CONFIG += c++11
 
 TARGET = BracketMasterTests
 CONFIG   += console

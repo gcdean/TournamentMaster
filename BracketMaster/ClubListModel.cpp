@@ -7,6 +7,7 @@
 #include "JudoMasterApplication.h"
 
 #include <QDebug>
+#include <QDataStream>
 #include <QMimeData>
 
 ClubListModel::ClubListModel(QObject *parent) :

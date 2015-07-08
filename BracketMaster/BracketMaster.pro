@@ -13,7 +13,7 @@ TEMPLATE = app
 
 QMAKE_CXXFLAGS += -Wunused-parameter
 QMAKE_CXXFLAGS += -Wunused-function
-QMAKE_CXXFLAGS += -std=c++11
+CONFIG += c++11
 
 #OBJECTS_DIR = ../gdeanobjs
 
