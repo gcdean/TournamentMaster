@@ -2,7 +2,7 @@
 
 #include "Bracket.h"
 #include "JudoMasterApplication.h"
-#include "PrintController.h"
+#include "controllers/PrintController.h"
 #include "Tournament.h"
 
 #include <QDebug>

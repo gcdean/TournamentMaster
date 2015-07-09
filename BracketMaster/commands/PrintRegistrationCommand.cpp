@@ -3,7 +3,7 @@
 #include "Club.h"
 #include "Competitor.h"
 #include "JudoMasterApplication.h"
-#include "PrintController.h"
+#include "controllers/PrintController.h"
 #include "Tournament.h"
 
 #include <algorithm>

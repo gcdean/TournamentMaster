@@ -1,5 +1,4 @@
-#ifndef COMPETITORTABLEMODEL_H
-#define COMPETITORTABLEMODEL_H
+#pragma once
 
 #include "CompetitorFilter.h"
 
@@ -54,4 +53,3 @@ private:    // Data Members
 
 };
 
-#endif // COMPETITORTABLEMODEL_H

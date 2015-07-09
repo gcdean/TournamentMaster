@@ -1,6 +1,6 @@
 #include "BracketCompetitorTableModel.h"
 
-#include "BaseController.h"
+#include "controllers/BaseController.h"
 #include "Bracket.h"
 #include "JMDataObj.h"
 #include "JudoMasterApplication.h"

@@ -3,7 +3,7 @@
 
 
 #include "commands/MergeClubsCommand.h"
-#include "ClubController.h"
+#include "controllers/ClubController.h"
 #include "JudoMasterApplication.h"
 
 #include <QDebug>

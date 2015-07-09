@@ -25,17 +25,13 @@ SOURCES += main.cpp\
     ClubsEditor.cpp \
     ClubEditor.cpp \
     CompetitorList.cpp \
-    ClubController.cpp \
     JudoMasterApplication.cpp \
     ClubListModel.cpp \
     CompetitorTableModel.cpp \
-    CompetitorController.cpp \
     Bracket.cpp \
     JMUtil.cpp \
     BracketEditor.cpp \
-    BaseController.cpp \
     JMDataObj.cpp \
-    BracketController.cpp \
     BracketManager.cpp \
     BracketTableModel.cpp \
     CompetitorItemDelegate.cpp \
@@ -49,12 +45,16 @@ SOURCES += main.cpp\
     commands/MergeClubsCommand.cpp \
     commands/ImportDataCommand.cpp \
     BracketTypeItemDelegate.cpp \
-    PrintController.cpp \
     CompetitorEditor.cpp \
-    MatchController.cpp \
     Match.cpp \
     MatchTableModel.cpp \
-    MatchItemDelegate.cpp
+    MatchItemDelegate.cpp \
+    controllers/BaseController.cpp \
+    controllers/BracketController.cpp \
+    controllers/CompetitorController.cpp \
+    controllers/MatchController.cpp \
+    controllers/PrintController.cpp \
+    controllers/ClubController.cpp
 
 HEADERS  += JudoMasterMainWindow.h \
     Competitor.h \
@@ -63,17 +63,13 @@ HEADERS  += JudoMasterMainWindow.h \
     ClubsEditor.h \
     ClubEditor.h \
     CompetitorList.h \
-    ClubController.h \
     JudoMasterApplication.h \
     ClubListModel.h \
     CompetitorTableModel.h \
-    CompetitorController.h \
     Bracket.h \
     JMUtil.h \
     BracketEditor.h \
-    BaseController.h \
     JMDataObj.h \
-    BracketController.h \
     BracketManager.h \
     BracketTableModel.h \
     CompetitorItemDelegate.h \
@@ -87,12 +83,16 @@ HEADERS  += JudoMasterMainWindow.h \
     commands/MergeClubsCommand.h \
     commands/ImportDataCommand.h \
     BracketTypeItemDelegate.h \
-    PrintController.h \
     CompetitorEditor.h \
-    MatchController.h \
     Match.h \
     MatchTableModel.h \
-    MatchItemDelegate.h
+    MatchItemDelegate.h \
+    controllers/BaseController.h \
+    controllers/BracketController.h \
+    controllers/ClubController.h \
+    controllers/CompetitorController.h \
+    controllers/MatchController.h \
+    controllers/PrintController.h
 
 FORMS    += JudoMasterMainWindow.ui \
     ClubsEditor.ui \

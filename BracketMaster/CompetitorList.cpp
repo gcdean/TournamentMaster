@@ -1,7 +1,7 @@
 #include "CompetitorList.h"
 #include "ui_CompetitorList.h"
 
-#include "ClubController.h"
+#include "controllers/ClubController.h"
 #include "CompetitorTableModel.h"
 #include "JudoMasterApplication.h"
 

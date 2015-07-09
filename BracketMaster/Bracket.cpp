@@ -3,8 +3,7 @@
 #include "JMUtil.h"
 
 #include "Competitor.h"
-#include "CompetitorController.h"
-//#include "JudoMasterApplication.h"
+#include "controllers/CompetitorController.h"
 #include <QDebug>
 #include <QJsonArray>
 #include <QJsonValue>

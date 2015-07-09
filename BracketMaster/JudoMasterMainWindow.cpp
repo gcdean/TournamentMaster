@@ -2,7 +2,7 @@
 #include "ui_JudoMasterMainWindow.h"
 
 #include "Bracket.h"
-#include "CompetitorController.h"
+#include "controllers/CompetitorController.h"
 #include "JudoMasterApplication.h"
 #include "Tournament.h"
 #include "actions/PrintBracketsAction.h"

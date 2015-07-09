@@ -1,9 +1,9 @@
 #pragma once
 
-#include "BracketController.h"
-#include "ClubController.h"
-#include "CompetitorController.h"
-#include "MatchController.h"
+#include "controllers/BracketController.h"
+#include "controllers/ClubController.h"
+#include "controllers/CompetitorController.h"
+#include "controllers/MatchController.h"
 
 #include <QApplication>
 

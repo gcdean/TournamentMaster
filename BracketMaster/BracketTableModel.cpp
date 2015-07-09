@@ -1,7 +1,7 @@
 #include "BracketTableModel.h"
 
 #include "Bracket.h"
-#include "BracketController.h"
+#include "controllers/BracketController.h"
 #include "JMDataObj.h"
 #include "JudoMasterApplication.h"
 
