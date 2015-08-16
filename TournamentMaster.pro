@@ -3,4 +3,5 @@ CONFIG += ordered
 
 SUBDIRS += \
     BracketMaster \
-    BracketMasterTests
+    BracketMasterTests \
+    TimerMaster
