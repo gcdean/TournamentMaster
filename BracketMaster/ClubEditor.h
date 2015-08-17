@@ -1,5 +1,4 @@
-#ifndef CLUBEDITOR_H
-#define CLUBEDITOR_H
+#pragma once
 
 #include "Club.h"
 
@@ -37,4 +36,3 @@ private:
     Club *m_club;
 };
 
-#endif // CLUBEDITOR_H

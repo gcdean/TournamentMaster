@@ -1,5 +1,4 @@
-#ifndef JUDOMASTERMAINWINDOW_H
-#define JUDOMASTERMAINWINDOW_H
+#pragma once
 
 #include <QDir>
 #include <QMainWindow>
@@ -51,4 +50,3 @@ private:
     QDir m_saveDir;
 };
 
-#endif // JUDOMASTERMAINWINDOW_H

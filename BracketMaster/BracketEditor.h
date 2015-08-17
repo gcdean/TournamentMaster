@@ -1,5 +1,4 @@
-#ifndef BRACKETEDITOR_H
-#define BRACKETEDITOR_H
+#pragma once
 
 #include <QDialog>
 
@@ -33,4 +32,3 @@ private:
 
 };
 
-#endif // BRACKETEDITOR_H

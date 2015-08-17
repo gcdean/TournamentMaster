@@ -1,5 +1,4 @@
-#ifndef PRINTREGISTRATIONCOMMAND_H
-#define PRINTREGISTRATIONCOMMAND_H
+#pragma once
 
 #include "BaseCommand.h"
 #include <QList>
@@ -24,4 +23,3 @@ private:
     QList<Club *> m_clubs;
 };
 
-#endif // PRINTREGISTRATIONCOMMAND_H

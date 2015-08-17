@@ -1,5 +1,4 @@
-#ifndef BASECONTROLLER_H
-#define BASECONTROLLER_H
+#pragma once
 
 #include <QObject>
 
@@ -43,4 +42,3 @@ private:
     Tournament* m_tournament;
 };
 
-#endif // BASECONTROLLER_H

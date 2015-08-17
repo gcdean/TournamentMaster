@@ -1,5 +1,4 @@
-#ifndef BRACKET_H
-#define BRACKET_H
+#pragma once
 
 #include "JMDataObj.h"
 #include "JMUtil.h"
@@ -113,4 +112,3 @@ namespace bracket
     Bracket::WeightType weightTypeFromStr(QString typeStr);
 }
 
-#endif // BRACKET_H

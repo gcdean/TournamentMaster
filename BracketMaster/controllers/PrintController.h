@@ -1,5 +1,4 @@
-#ifndef PRINTCONTROLLER_H
-#define PRINTCONTROLLER_H
+#pragma once
 
 #include <QPainter>
 #include <QPrinter>
@@ -71,4 +70,3 @@ private:
 };
 
 
-#endif // PRINTCONTROLLER_H

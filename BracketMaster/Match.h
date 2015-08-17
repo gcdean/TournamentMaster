@@ -1,5 +1,4 @@
-#ifndef MATCH_H
-#define MATCH_H
+#pragma once
 
 #include "JMDataObj.h"
 
@@ -45,4 +44,3 @@ private:
     QString m_notes;
 };
 
-#endif // MATCH_H

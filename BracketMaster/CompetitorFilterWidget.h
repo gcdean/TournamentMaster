@@ -1,5 +1,4 @@
-#ifndef COMPETIRORFILTER_H
-#define COMPETIRORFILTER_H
+#pragma once
 
 #include "CompetitorFilter.h"
 
@@ -28,4 +27,3 @@ private:
     Ui::CompetitorFilterWidget *ui;
 };
 
-#endif // COMPETIRORFILTER_H

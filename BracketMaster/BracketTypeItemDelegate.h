@@ -1,5 +1,4 @@
-#ifndef BRACKETTYPEITEMDELEGATE_H
-#define BRACKETTYPEITEMDELEGATE_H
+#pragma once
 
 #include <QObject>
 #include <QStyledItemDelegate>
@@ -21,4 +20,3 @@ signals:
     void matNumberChanged() const;
 };
 
-#endif // BRACKETTYPEITEMDELEGATE_H

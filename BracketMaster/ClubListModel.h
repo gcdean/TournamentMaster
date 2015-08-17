@@ -1,5 +1,4 @@
-#ifndef CLUBLISTMODEL_H
-#define CLUBLISTMODEL_H
+#pragma once
 
 #include "Club.h"
 
@@ -38,4 +37,3 @@ public:
     virtual Qt::DropActions supportedDragActions() const;
 };
 
-#endif // CLUBLISTMODEL_H

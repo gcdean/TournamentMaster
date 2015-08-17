@@ -1,5 +1,4 @@
-#ifndef BRACKETCONTROLLER_H
-#define BRACKETCONTROLLER_H
+#pragma once
 
 #include "BaseController.h"
 #include <QObject>
@@ -39,4 +38,3 @@ private:
 
 };
 
-#endif // BRACKETCONTROLLER_H

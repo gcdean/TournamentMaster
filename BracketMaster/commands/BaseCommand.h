@@ -1,5 +1,4 @@
-#ifndef BASECOMMAND_H
-#define BASECOMMAND_H
+#pragma once
 
 
 class BaseCommand
@@ -11,4 +10,3 @@ public:
     virtual bool run() = 0;
 };
 
-#endif // BASECOMMAND_H

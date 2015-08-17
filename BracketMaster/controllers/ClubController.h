@@ -1,5 +1,4 @@
-#ifndef CLUBCONTROLLER_H
-#define CLUBCONTROLLER_H
+#pragma once
 
 #include "BaseController.h"
 #include <QObject>
@@ -47,4 +46,3 @@ private:
 
 };
 
-#endif // CLUBCONTROLLER_H

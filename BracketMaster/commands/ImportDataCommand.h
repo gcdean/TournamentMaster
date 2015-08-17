@@ -1,5 +1,4 @@
-#ifndef IMPORTDATACOMMAND_H
-#define IMPORTDATACOMMAND_H
+#pragma once
 
 #include "BaseCommand.h"
 
@@ -26,4 +25,3 @@ private:
     QList<Competitor *> m_skippedCompetitors;
 };
 
-#endif // IMPORTDATACOMMAND_H

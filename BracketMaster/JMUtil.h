@@ -1,5 +1,4 @@
-#ifndef JMUTIL_H
-#define JMUTIL_H
+#pragma once
 
 #include <QColor>
 #include <QObject>
@@ -51,4 +50,3 @@ JM::Gender genderFromString(QString genderStr);
 
 QString prepareStringForCSV(QString str);
 
-#endif // JMUTIL_H

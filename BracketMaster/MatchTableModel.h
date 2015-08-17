@@ -1,5 +1,4 @@
-#ifndef MATCHTABLEMODEL_H
-#define MATCHTABLEMODEL_H
+#pragma once
 
 #include <QAbstractTableModel>
 
@@ -46,4 +45,3 @@ private:
 
 };
 
-#endif // MATCHTABLEMODEL_H

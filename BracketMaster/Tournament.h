@@ -1,5 +1,4 @@
-#ifndef TOURNAMENT_H
-#define TOURNAMENT_H
+#pragma once
 
 #include <QDate>
 #include <QJsonObject>
@@ -60,4 +59,3 @@ private:
 
 };
 
-#endif // TOURNAMENT_H

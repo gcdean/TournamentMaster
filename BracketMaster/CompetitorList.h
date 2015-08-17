@@ -1,5 +1,4 @@
-#ifndef COMPETITORLIST_H
-#define COMPETITORLIST_H
+#pragma once
 
 #include <QWidget>
 
@@ -43,4 +42,3 @@ private:
     BaseController* m_controller;
 };
 
-#endif // COMPETITORLIST_H

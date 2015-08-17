@@ -1,5 +1,4 @@
-#ifndef COMPETITOR_H
-#define COMPETITOR_H
+#pragma once
 
 #include <QChar>
 #include <QJsonObject>
@@ -74,4 +73,3 @@ private:
 };
 
 
-#endif // COMPETITOR_H

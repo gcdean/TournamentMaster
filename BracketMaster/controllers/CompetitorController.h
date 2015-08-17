@@ -1,5 +1,4 @@
-#ifndef COMPETITORCONTROLLER_H
-#define COMPETITORCONTROLLER_H
+#pragma once
 
 #include "BaseController.h"
 #include "JMUtil.h"
@@ -40,4 +39,3 @@ protected:
 
 };
 
-#endif // COMPETITORCONTROLLER_H

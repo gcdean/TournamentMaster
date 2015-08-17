@@ -1,5 +1,4 @@
-#ifndef COMPETITORFILTER_H
-#define COMPETITORFILTER_H
+#pragma once
 
 #include <QString>
 
@@ -29,4 +28,3 @@ private:
     bool m_female;
 };
 
-#endif // COMPETITORFILTER_H

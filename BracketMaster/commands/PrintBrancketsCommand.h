@@ -1,5 +1,4 @@
-#ifndef PRINTBRANCHESCOMMAND_H
-#define PRINTBRANCHESCOMMAND_H
+#pragma once
 
 #include "commands/BaseCommand.h"
 #include <QList>
@@ -22,4 +21,3 @@ private:
     QList<int> m_bracketIds;
 };
 
-#endif // PRINTBRANCHESCOMMAND_H

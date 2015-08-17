@@ -1,5 +1,4 @@
-#ifndef COMPETITOREDITOR_H
-#define COMPETITOREDITOR_H
+#pragma once
 
 #include <QDialog>
 
@@ -27,4 +26,3 @@ private:
 
 };
 
-#endif // COMPETITOREDITOR_H

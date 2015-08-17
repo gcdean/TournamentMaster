@@ -1,5 +1,4 @@
-#ifndef MERGECLUBSCOMMAND_H
-#define MERGECLUBSCOMMAND_H
+#pragma once
 
 #include "BaseCommand.h"
 
@@ -18,4 +17,3 @@ private:
     Club *m_destClub;
 };
 
-#endif // MERGECLUBSCOMMAND_H

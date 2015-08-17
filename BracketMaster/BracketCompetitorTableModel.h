@@ -1,5 +1,4 @@
-#ifndef BRACKETCOMPETITORTABLEMODEL_H
-#define BRACKETCOMPETITORTABLEMODEL_H
+#pragma once
 
 #include "CompetitorTableModel.h"
 
@@ -24,4 +23,3 @@ public Q_SLOTS:
     void removeCompetitor(int index);
 };
 
-#endif // BRACKETCOMPETITORTABLEMODEL_H

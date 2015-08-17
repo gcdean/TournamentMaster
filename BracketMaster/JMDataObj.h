@@ -1,5 +1,4 @@
-#ifndef JMDATAOBJ_H
-#define JMDATAOBJ_H
+#pragma once
 
 #include <QTextStream>
 
@@ -25,4 +24,3 @@ private:
     int m_id;   // Unique id of the data object.
 };
 
-#endif // JMDATAOBJ_H

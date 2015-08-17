@@ -1,5 +1,4 @@
-#ifndef BRACKETTABLEMODEL_H
-#define BRACKETTABLEMODEL_H
+#pragma once
 
 #include <QAbstractTableModel>
 
@@ -51,4 +50,3 @@ public slots:
 
 };
 
-#endif // BRACKETTABLEMODEL_H

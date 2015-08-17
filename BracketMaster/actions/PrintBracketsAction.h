@@ -1,5 +1,4 @@
-#ifndef PRINTBRACKETSACTION_H
-#define PRINTBRACKETSACTION_H
+#pragma once
 
 #include <QAction>
 
@@ -10,4 +9,3 @@ public:
     ~PrintBracketsAction();
 };
 
-#endif // PRINTBRACKETSACTION_H

@@ -1,5 +1,4 @@
-#ifndef COMPETITORITEMDELEGATE_H
-#define COMPETITORITEMDELEGATE_H
+#pragma once
 
 #include <QStyledItemDelegate>
 
@@ -30,4 +29,3 @@ private:    // Data Members
 public:
 };
 
-#endif // COMPETITORITEMDELEGATE_H

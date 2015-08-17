@@ -1,5 +1,4 @@
-#ifndef MATCHITEMDELEGATE_H
-#define MATCHITEMDELEGATE_H
+#pragma once
 
 #include <QStyledItemDelegate>
 
@@ -24,4 +23,3 @@ private:
     Bracket *m_bracket;
 };
 
-#endif // MATCHITEMDELEGATE_H

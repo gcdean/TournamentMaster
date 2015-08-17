@@ -1,5 +1,4 @@
-#ifndef CLUBSEDITOR_H
-#define CLUBSEDITOR_H
+#pragma once
 
 #include "Club.h"
 
@@ -39,4 +38,3 @@ private:
 //    QList<Club *>* m_clubs;
 };
 
-#endif // CLUBSEDITOR_H

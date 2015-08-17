@@ -1,5 +1,4 @@
-#ifndef MATCHCONTROLLER_H
-#define MATCHCONTROLLER_H
+#pragma once
 
 #include "BaseController.h"
 
@@ -28,4 +27,3 @@ protected:
 
 };
 
-#endif // MATCHCONTROLLER_H

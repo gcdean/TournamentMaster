@@ -1,5 +1,4 @@
-#ifndef BRACKETMANAGER_H
-#define BRACKETMANAGER_H
+#pragma once
 
 #include <QWidget>
 
@@ -53,4 +52,3 @@ private:
     QSortFilterProxyModel*m_allCompSortModel;
 };
 
-#endif // BRACKETMANAGER_H

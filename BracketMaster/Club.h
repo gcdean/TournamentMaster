@@ -1,5 +1,4 @@
-#ifndef CLUB_H
-#define CLUB_H
+#pragma once
 
 #include <QJsonObject>
 #include <QList>
@@ -62,4 +61,3 @@ private:
     QList<Competitor *> m_competitors;
 };
 
-#endif // CLUB_H
