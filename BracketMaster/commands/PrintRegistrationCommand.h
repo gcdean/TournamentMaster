@@ -8,6 +8,7 @@ class Club;
 
 class PrintRegistrationCommand : public BaseCommand
 {
+    Q_OBJECT
 public:
     PrintRegistrationCommand(QWidget *parent = 0, QList<Club *>clubs=QList<Club *>());
     ~PrintRegistrationCommand();

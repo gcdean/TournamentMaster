@@ -218,7 +218,14 @@
     <addaction name="actionExit"/>
     <addaction name="actionPreferences"/>
    </widget>
+   <widget class="QMenu" name="menuTournament">
+    <property name="title">
+     <string>Tournament</string>
+    </property>
+    <addaction name="actionTournamentInfo"/>
+   </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuTournament"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -282,6 +289,11 @@
   <action name="actionPreferences">
    <property name="text">
     <string>Preferences...</string>
+   </property>
+  </action>
+  <action name="actionTournamentInfo">
+   <property name="text">
+    <string>Info...</string>
    </property>
   </action>
  </widget>

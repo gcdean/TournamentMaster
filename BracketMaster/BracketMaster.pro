@@ -54,7 +54,9 @@ SOURCES += main.cpp\
     controllers/CompetitorController.cpp \
     controllers/MatchController.cpp \
     controllers/PrintController.cpp \
-    controllers/ClubController.cpp
+    controllers/ClubController.cpp \
+    dialogs/TournamentInfoDialog.cpp \
+    commands/TournamentInfoCommand.cpp
 
 HEADERS  += JudoMasterMainWindow.h \
     Competitor.h \
@@ -92,7 +94,9 @@ HEADERS  += JudoMasterMainWindow.h \
     controllers/ClubController.h \
     controllers/CompetitorController.h \
     controllers/MatchController.h \
-    controllers/PrintController.h
+    controllers/PrintController.h \
+    dialogs/TournamentInfoDialog.h \
+    commands/TournamentInfoCommand.h
 
 FORMS    += JudoMasterMainWindow.ui \
     ClubsEditor.ui \
@@ -102,7 +106,8 @@ FORMS    += JudoMasterMainWindow.ui \
     BracketManager.ui \
     CompetitorFilterWidget.ui \
     CompetitorFilterWidget.ui \
-    CompetitorEditor.ui
+    CompetitorEditor.ui \
+    dialogs/TournamentInfoDialog.ui
 
 RESOURCES += \
     Resources.qrc

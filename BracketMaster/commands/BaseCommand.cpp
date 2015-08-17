@@ -1,6 +1,7 @@
 #include "BaseCommand.h"
 
-BaseCommand::BaseCommand()
+BaseCommand::BaseCommand(QObject *parent)
+    : QObject(parent)
 {
 
 }

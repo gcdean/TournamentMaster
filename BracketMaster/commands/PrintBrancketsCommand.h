@@ -8,6 +8,8 @@ class Tournament;
 
 class PrintBracketsCommand : public BaseCommand
 {
+    Q_OBJECT
+
 public:
     PrintBracketsCommand(QString tournament);
     PrintBracketsCommand(QString tournament, QList<int> brackets);

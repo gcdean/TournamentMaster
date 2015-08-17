@@ -9,6 +9,7 @@ class Competitor;
 
 class ImportDataCommand : public BaseCommand
 {
+    Q_OBJECT
 public:
     ImportDataCommand(QString filename);
     ~ImportDataCommand();

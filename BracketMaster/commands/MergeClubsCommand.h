@@ -6,6 +6,7 @@ class Club;
 
 class MergeClubsCommand : public BaseCommand
 {
+   Q_OBJECT
 public:
     MergeClubsCommand(Club *srcClub, Club *destClub);
 

@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QString>
 
+#include "commands/TournamentInfoCommand.h"
 class Tournament;
 namespace Ui {
 class JudoMasterMainWindow;
@@ -48,5 +49,9 @@ private:
     Tournament* m_tournament;
     QString m_fileName;
     QDir m_saveDir;
+
+    // Commands.
+    TournamentInfoCommand m_trnInfoCmd;
+
 };
 

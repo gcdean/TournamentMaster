@@ -28,6 +28,7 @@ JudoMasterMainWindow::JudoMasterMainWindow(QWidget *parent) :
     , ui(new Ui::JudoMasterMainWindow)
     , m_printBracketsAction(0)
     , m_tournament(0)
+    , m_trnInfoCmd(this)
 {
     ui->setupUi(this                                            );
 
@@ -51,6 +52,7 @@ JudoMasterMainWindow::JudoMasterMainWindow(QWidget *parent) :
     connect(m_printBracketsAction, &QAction::triggered, this, &JudoMasterMainWindow::printBrackets);
     connect(ui->actionImport, &QAction::triggered, this, &JudoMasterMainWindow::import);
     connect(ui->actionExport, &QAction::triggered, this, &JudoMasterMainWindow::exportData);
+    connect(ui->actionTournamentInfo, &QAction::triggered, &m_trnInfoCmd, &BaseCommand::run);
 
     connect(ui->tournamentName, &QLineEdit::editingFinished, this, &JudoMasterMainWindow::nameChanged);
     connect(ui->tournamentDate, &QDateTimeEdit::dateChanged, this, &JudoMasterMainWindow::dateChanged);
