@@ -4,8 +4,13 @@
 #include <QMainWindow>
 #include <QString>
 
+#include "commands/CloseCommand.h"
+#include "commands/CreateTournamentCommand.h"
+#include "commands/OpenCommand.h"
+#include "commands/PrintBrancketsCommand.h"
 #include "commands/TournamentInfoCommand.h"
-class Tournament;
+#include "commands/SaveCommand.h"
+
 namespace Ui {
 class JudoMasterMainWindow;
 }
@@ -21,37 +26,33 @@ public:
     ~JudoMasterMainWindow();
 
 public slots:
-    void nameChanged();
-    void dateChanged(const QDate& date);
-    void timeChanged(const QTime& time);
-    void setTexasMatchCard();
-    void save();
-    void saveAs();
-    void newTournament();
-    void close();
-    void open();
-    void printBrackets();
     void printRegistration();
     void import();
     void exportData();
 
 private:
     bool getFilename();
-    void updateControls();
-    void loadFile(QString filename);
     void importFile(QString filename);
+
+private slots:
+    void updateControls();
     void resetTitle();
 
 private:
     Ui::JudoMasterMainWindow *ui;
 
     PrintBracketsAction* m_printBracketsAction;
-    Tournament* m_tournament;
     QString m_fileName;
     QDir m_saveDir;
 
     // Commands.
-    TournamentInfoCommand m_trnInfoCmd;
+    TournamentInfoCommand m_tournamentInfoCommand;
+    CreateTournamentCommand m_createTournamentCommand;
+    PrintBracketsCommand m_printBracketsCommand;
+    CloseCommand m_closeCommand;
+    SaveCommand m_saveCommand;
+    SaveCommand m_saveAsCommand;
+    OpenCommand m_openCommand;
 
 };
 

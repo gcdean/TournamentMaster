@@ -15,6 +15,15 @@ public:
     explicit TournamentInfoDialog(QWidget *parent = 0);
     ~TournamentInfoDialog();
 
+    void setName(QString name);
+    QString name() const;
+    void setDate(QDate date);
+    QDate date() const;
+    void setTime(QTime time);
+    QTime time() const;
+    void setUseMatchCards(bool matchCards);
+    bool useMatchCards() const;
+
 private:
     Ui::TournamentInfoDialog *ui;
 };

@@ -3,6 +3,7 @@
 #include "Bracket.h"
 #include "Competitor.h"
 #include "CompetitorFilter.h"
+#include "JudoMasterApplication.h"
 #include "Tournament.h"
 
 #include <QDebug>
@@ -14,18 +15,19 @@ BaseController::BaseController(QObject *parent) :
 {
 }
 
-void BaseController::setTournament(Tournament *tournament)
+void BaseController::setTournament(std::unique_ptr<Tournament> &tournament)
 {
-    if(m_tournament != tournament)
-    {
-        m_tournament = tournament;
+//    if(m_tournament != tournament)
+  //  {
+    //    m_tournament = tournament;
         emit tournamentChanged();
-    }
+    //}
 }
 
-Tournament *BaseController::tournament() const
+const std::unique_ptr<Tournament> &BaseController::tournament() const
 {
-    return m_tournament;
+    return JMApp()->tournament();
+//    return m_tournament;
 }
 
 int BaseController::size() const

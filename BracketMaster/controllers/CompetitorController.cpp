@@ -26,6 +26,7 @@ Competitor *CompetitorController::createCompetitor(QString firstName, QString la
         club->addCompetitor(competitor);
     }
 
+    JMApp()->setModified(true);
     emit addedDataObj(competitor);
 
     return competitor;
@@ -52,17 +53,10 @@ void CompetitorController::add(int parentId)
     Competitor *competitor = new Competitor(compId, QString("Competitor"), QString("%1").arg(compId), JM::Female, 0, 0, JM::White, parentId);
     tournament()->competitors().append(competitor);
 
+    JMApp()->setModified(true);
+
     emit addedDataObj(competitor);
 }
-
-//void CompetitorController::createClubCompetitor(int clubId)
-//{
-//    int compId = findNextId();
-//    Competitor *competitor = new Competitor(compId, QString("Competitor"), QString("%1").arg(compId), JM::Female, 0, 0, JM::White, clubId);
-//    tournament()->competitors().append(competitor);
-
-//    emit competitorAdded(competitor);
-//}
 
 int CompetitorController::size() const
 {

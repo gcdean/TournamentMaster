@@ -12,7 +12,7 @@ class BaseController : public QObject
     Q_OBJECT
 public:
     explicit BaseController(QObject *parent = 0);
-    void setTournament(Tournament* tournament);
+    void setTournament(std::unique_ptr<Tournament> &tournament);
 
     virtual int size() const;    // Size of all elements in the list
     virtual int size(int id) const;  // Size of all elements with given id or parent with id.
@@ -35,7 +35,7 @@ signals:
 public slots:
 
 protected:
-    Tournament* tournament() const;
+    const std::unique_ptr <Tournament> &tournament() const;
     virtual int findNextId() = 0;
 
 private:

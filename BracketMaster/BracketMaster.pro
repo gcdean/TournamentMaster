@@ -56,7 +56,12 @@ SOURCES += main.cpp\
     controllers/PrintController.cpp \
     controllers/ClubController.cpp \
     dialogs/TournamentInfoDialog.cpp \
-    commands/TournamentInfoCommand.cpp
+    commands/TournamentInfoCommand.cpp \
+    commands/CreateTournamentCommand.cpp \
+    controllers/TournamentController.cpp \
+    commands/CloseCommand.cpp \
+    commands/SaveCommand.cpp \
+    commands/OpenCommand.cpp
 
 HEADERS  += JudoMasterMainWindow.h \
     Competitor.h \
@@ -96,7 +101,12 @@ HEADERS  += JudoMasterMainWindow.h \
     controllers/MatchController.h \
     controllers/PrintController.h \
     dialogs/TournamentInfoDialog.h \
-    commands/TournamentInfoCommand.h
+    commands/TournamentInfoCommand.h \
+    commands/CreateTournamentCommand.h \
+    controllers/TournamentController.h \
+    commands/CloseCommand.h \
+    commands/SaveCommand.h \
+    commands/OpenCommand.h
 
 FORMS    += JudoMasterMainWindow.ui \
     ClubsEditor.ui \

@@ -17,12 +17,12 @@ MergeClubsCommand::MergeClubsCommand(Club *src, Club *dest)
 bool MergeClubsCommand::run()
 {
     if(!m_srcClub || !m_destClub)
-        return false;
+        return done(false);
 
     // Confirm the Merge
     if(QMessageBox::No == QMessageBox::question(0, "Merge Clubs", QString("Are you sure you want to merge %1 with %2").arg(m_srcClub->clubName()).arg(m_destClub->clubName())))
     {
-        return false;
+        return done(false);
     }
 
     // Copy Competitors from src to dest.
@@ -33,5 +33,5 @@ bool MergeClubsCommand::run()
 
     // Delete the src club.
     JMApp()->clubController()->remove(m_srcClub->id());
-    return true;
+    return done(true);
 }

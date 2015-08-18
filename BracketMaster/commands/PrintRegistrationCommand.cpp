@@ -70,10 +70,10 @@ bool PrintRegistrationCommand::run()
             newPage = pc.printClubRegistration(club);
         }
 
-        return true;
+        return done(true);
     }
 
-    return false;
+    return done(false);
 }
 
 QList<Club *> PrintRegistrationCommand::getClubs()

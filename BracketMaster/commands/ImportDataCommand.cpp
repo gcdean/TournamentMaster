@@ -132,5 +132,5 @@ bool ImportDataCommand::run()
     int numImported = m_importedCompetitors.size();
     qDebug() << "Total Competitors: " << total << ", Total Imported: " << numImported;
 
-    return true;
+    return done(true);
 }

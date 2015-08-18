@@ -1,6 +1,7 @@
 #include "MatchController.h"
 
 #include "Match.h"
+#include "JudoMasterApplication.h"
 #include "Tournament.h"
 
 MatchController::MatchController(QObject *parent)
@@ -17,6 +18,7 @@ void MatchController::add(int parentId)
 
     tournament()->matches().append(match);
 
+    JMApp()->setModified(true);
     emit addedDataObj(match);
 }
 

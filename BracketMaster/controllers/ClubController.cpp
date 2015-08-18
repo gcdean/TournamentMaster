@@ -1,6 +1,7 @@
 #include "ClubController.h"
 
 #include "Club.h"
+#include "JudoMasterApplication.h"
 #include "Tournament.h"
 
 #include <QDebug>
@@ -26,6 +27,7 @@ Club* ClubController::addClub(Club &club)
     tournament()->clubs().append(newClub);
     emit addedDataObj(newClub);
 
+    JMApp()->setModified(true);
     return newClub;
 }
 
@@ -42,6 +44,7 @@ void ClubController::updateClub(Club& club)
     }
 
     *foundClub = club;
+    JMApp()->setModified(true);
 
     emit clubUpdated(foundClub);
 }
@@ -56,6 +59,7 @@ void ClubController::removeClub(int clubId)
     {
         tournament()->clubs().removeOne(foundClub);
         // May need to delete club which means signature of signal changes
+        JMApp()->setModified(true);
         emit clubRemoved(foundClub);
     }
 }
@@ -134,6 +138,7 @@ void ClubController::removeIndex(int index)
     if(index < 0 || index >= tournament()->clubs().size())
         return;
 
+    JMApp()->setModified(true);
     emit removedDataObj(tournament()->clubs().at(index));
     tournament()->clubs().removeAt(index);
 }

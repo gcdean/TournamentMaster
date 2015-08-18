@@ -11,12 +11,12 @@ class PrintBracketsCommand : public BaseCommand
     Q_OBJECT
 
 public:
-    PrintBracketsCommand(QString tournament);
+    PrintBracketsCommand(QObject *parent = 0);
     PrintBracketsCommand(QString tournament, QList<int> brackets);
     ~PrintBracketsCommand();
 
     // BaseCommand interface
-    bool run();
+    bool run() override;
 
 private:
     QString m_tournament;

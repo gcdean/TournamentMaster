@@ -55,6 +55,7 @@ void BracketController::add(int parentId)
     Bracket *bracket = new Bracket(id);
 
     tournament()->brackets().append(bracket);
+    JMApp()->setModified(true);
     emit addedDataObj(bracket);
 
 }
@@ -71,6 +72,7 @@ void BracketController::remove(int id)
     {
         emit removedDataObj(bracket);
         tournament()->brackets().removeOne(bracket);
+        JMApp()->setModified(true);
     }
 }
 
@@ -83,6 +85,7 @@ void BracketController::removeIndex(int index)
 
     emit removedDataObj(tournament()->brackets().at(index));
     tournament()->brackets().removeAt(index);
+    JMApp()->setModified(true);
 }
 
 
@@ -128,6 +131,7 @@ void BracketController::removeCompetitorFromBracket(int bracketId, int competito
             {
                 bracket->removeCompetitor(index);
                 emit competitorRemoved(index);
+                JMApp()->setModified(true);
                 break;
             }
             index++;

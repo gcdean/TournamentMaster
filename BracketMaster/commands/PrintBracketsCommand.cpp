@@ -8,9 +8,8 @@
 #include <QDebug>
 #include <QList>
 
-PrintBracketsCommand::PrintBracketsCommand(QString tournament)
-    : BaseCommand()
-    , m_tournament(tournament)
+PrintBracketsCommand::PrintBracketsCommand(QObject *parent)
+    : BaseCommand(parent)
 {
 
 }
@@ -34,6 +33,7 @@ bool PrintBracketsCommand::run()
     // Open the print dialog
     // Set the print options.
 
+    m_tournament = JMApp()->tournament()->name();
     if(m_bracketIds.size() > 0)
     {
         PrintController pc(m_tournament);
@@ -94,6 +94,6 @@ bool PrintBracketsCommand::run()
         qDebug() << "Nothing to Print";
     }
 
-    return true;
+    return done(true);
 }
 
