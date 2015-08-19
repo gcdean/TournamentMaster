@@ -14,7 +14,7 @@ BaseCommand::~BaseCommand()
 bool BaseCommand::done(bool success)
 {
     if(success)
-        emit commandSuccesful();
+        emit commandSuccessful();
     else
         emit commandFailed();
 

@@ -11,7 +11,7 @@ class ImportDataCommand : public BaseCommand
 {
     Q_OBJECT
 public:
-    ImportDataCommand(QString filename);
+    ImportDataCommand(QObject *parent = 0);
     ~ImportDataCommand();
 
     const QList<Competitor *> importedCompetitors() const;
@@ -21,7 +21,6 @@ public:
     virtual bool run();
 
 private:
-    QString m_sourceFile;
     QList<Competitor *> m_importedCompetitors;
     QList<Competitor *> m_skippedCompetitors;
 };

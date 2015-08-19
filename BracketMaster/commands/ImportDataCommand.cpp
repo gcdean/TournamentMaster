@@ -6,11 +6,11 @@
 
 #include <QDebug>
 #include <QFile>
+#include <QFileDialog>
 #include <QTextStream>
 
-ImportDataCommand::ImportDataCommand(QString filename)
-    : BaseCommand()
-    , m_sourceFile(filename)
+ImportDataCommand::ImportDataCommand(QObject *parent)
+    : BaseCommand(parent)
     , m_importedCompetitors()
     , m_skippedCompetitors()
 {
@@ -35,7 +35,14 @@ const QList<Competitor *> ImportDataCommand::skippedCompetitors() const
 
 bool ImportDataCommand::run()
 {
-    QFile file(m_sourceFile);
+    QString openFileName = QFileDialog::getOpenFileName(dynamic_cast<QWidget *>(parent()), "Import CSV File", JMApp()->lastSaveDir().absolutePath(), "CSV Files (*.csv)");
+
+    if(openFileName.isEmpty())
+    {
+        return done(false);
+    }
+
+    QFile file(openFileName);
 
     if(file.open(QFile::ReadOnly))
     {
@@ -125,6 +132,10 @@ bool ImportDataCommand::run()
             }
         } while (!line.isNull());
         file.close();
+    }
+    else
+    {
+        return done(false);
     }
 
     // Compare the # imported with the total # we have.

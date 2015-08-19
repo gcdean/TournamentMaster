@@ -6,11 +6,8 @@
 #include "JudoMasterApplication.h"
 #include "Tournament.h"
 #include "actions/PrintBracketsAction.h"
-#include "commands/ImportDataCommand.h"
 #include "commands/PrintBrancketsCommand.h"
 #include "commands/PrintRegistrationCommand.h"
-
-#include <QFileDialog>  // delete
 
 #include <QDebug>
 
@@ -26,6 +23,8 @@ JudoMasterMainWindow::JudoMasterMainWindow(QWidget *parent) :
     , m_saveCommand(false, this)
     , m_saveAsCommand(true, this)
     , m_openCommand(this)
+    , m_importDataCommand(this)
+    , m_exportCSVCommand(this)
 {
     ui->setupUi(this);
 
@@ -40,11 +39,12 @@ JudoMasterMainWindow::JudoMasterMainWindow(QWidget *parent) :
     m_printBracketsAction = new PrintBracketsAction(this);
     ui->menuPrint->addAction(m_printBracketsAction);
 
-    connect(&m_openCommand, &BaseCommand::commandSuccesful, this, &JudoMasterMainWindow::updateControls);
-    connect(&m_closeCommand, &BaseCommand::commandSuccesful, this, &JudoMasterMainWindow::updateControls);
-    connect(&m_saveAsCommand, &BaseCommand::commandSuccesful, this, &JudoMasterMainWindow::resetTitle);
+    connect(&m_openCommand, &BaseCommand::commandSuccessful, this, &JudoMasterMainWindow::updateControls);
+    connect(&m_closeCommand, &BaseCommand::commandSuccessful, this, &JudoMasterMainWindow::updateControls);
+    connect(&m_saveAsCommand, &BaseCommand::commandSuccessful, this, &JudoMasterMainWindow::resetTitle);
     connect(&m_createTournamentCommand, &BaseCommand::commandComplete, this, &JudoMasterMainWindow::updateControls);
     connect(&m_createTournamentCommand, &BaseCommand::commandComplete, &m_tournamentInfoCommand, &BaseCommand::run);
+    connect(&m_importDataCommand, &BaseCommand::commandSuccessful, this, &JudoMasterMainWindow::fileImported);
 
     connect(ui->actionNew, &QAction::triggered, &m_createTournamentCommand, &BaseCommand::run);
 
@@ -56,8 +56,8 @@ JudoMasterMainWindow::JudoMasterMainWindow(QWidget *parent) :
 
     connect(ui->actionPrint_Registration, &QAction::triggered, this, &JudoMasterMainWindow::printRegistration);
     connect(m_printBracketsAction, &QAction::triggered, &m_printBracketsCommand, &BaseCommand::run);
-    connect(ui->actionImport, &QAction::triggered, this, &JudoMasterMainWindow::import);
-    connect(ui->actionExport, &QAction::triggered, this, &JudoMasterMainWindow::exportData);
+    connect(ui->actionImport, &QAction::triggered, &m_importDataCommand, &BaseCommand::run);
+    connect(ui->actionExport, &QAction::triggered, &m_exportCSVCommand, &BaseCommand::run);
     connect(ui->actionTournamentInfo, &QAction::triggered, &m_tournamentInfoCommand, &BaseCommand::run);
 
     connect(JMApp(), &QCoreApplication::aboutToQuit, &m_closeCommand, &BaseCommand::run);
@@ -76,33 +76,11 @@ void JudoMasterMainWindow::printRegistration()
     cmd.run();
 }
 
-void JudoMasterMainWindow::import()
+void JudoMasterMainWindow::fileImported()
 {
-    QString openFileName = QFileDialog::getOpenFileName(this, "Import CSV File", m_saveDir.absolutePath(), "CSV Files (*.csv)");
 
-    if(openFileName.isEmpty())
-    {
-        return;
-    }
-
-    importFile(openFileName);
-    resetTitle();
-}
-
-void JudoMasterMainWindow::exportData()
-{
-    QString dir = QFileDialog::getExistingDirectory(this, "Select Directory to export to.");
-    qDebug() << "EXPORT TO: (" << dir << ")";
-    JMApp()->tournament()->write(dir);
-}
-
-void JudoMasterMainWindow::importFile(QString filename)
-{
-    ImportDataCommand importCmd(filename);
-    importCmd.run();
-
-    const QList<Competitor *> imported = importCmd.importedCompetitors();
-    const QList<Competitor *> skipped = importCmd.skippedCompetitors();
+    const QList<Competitor *> imported = m_importDataCommand.importedCompetitors();
+    const QList<Competitor *> skipped = m_importDataCommand.skippedCompetitors();
 
     qDebug() << "Imported Competitors:";
     foreach(Competitor *comp, imported)
@@ -131,23 +109,6 @@ void JudoMasterMainWindow::resetTitle()
     {
         setWindowTitle("Bracket Master");
     }
-}
-
-bool JudoMasterMainWindow::getFilename()
-{
-    QString newfileName = QFileDialog::getSaveFileName(this, "Save", m_saveDir.absolutePath(), "Tournament Files (*.ecj);;JSON Files (*.json)");
-    if(newfileName.isEmpty())
-    {
-        return false;
-    }
-
-    QFileInfo finfo(newfileName);
-    m_saveDir = finfo.absoluteDir();
-    m_fileName = newfileName;
-
-//    m_tournament->setFileName(newfileName);
-    JMApp()->tournament()->setFileName(newfileName);
-    return true;
 }
 
 void JudoMasterMainWindow::updateControls()

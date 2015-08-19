@@ -61,7 +61,8 @@ SOURCES += main.cpp\
     controllers/TournamentController.cpp \
     commands/CloseCommand.cpp \
     commands/SaveCommand.cpp \
-    commands/OpenCommand.cpp
+    commands/OpenCommand.cpp \
+    commands/ExportCSVCommand.cpp
 
 HEADERS  += JudoMasterMainWindow.h \
     Competitor.h \
@@ -106,7 +107,8 @@ HEADERS  += JudoMasterMainWindow.h \
     controllers/TournamentController.h \
     commands/CloseCommand.h \
     commands/SaveCommand.h \
-    commands/OpenCommand.h
+    commands/OpenCommand.h \
+    commands/ExportCSVCommand.h
 
 FORMS    += JudoMasterMainWindow.ui \
     ClubsEditor.ui \

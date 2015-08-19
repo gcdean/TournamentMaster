@@ -6,6 +6,8 @@
 
 #include "commands/CloseCommand.h"
 #include "commands/CreateTournamentCommand.h"
+#include "commands/ExportCSVCommand.h"
+#include "commands/ImportDataCommand.h"
 #include "commands/OpenCommand.h"
 #include "commands/PrintBrancketsCommand.h"
 #include "commands/TournamentInfoCommand.h"
@@ -27,15 +29,10 @@ public:
 
 public slots:
     void printRegistration();
-    void import();
-    void exportData();
-
-private:
-    bool getFilename();
-    void importFile(QString filename);
 
 private slots:
     void updateControls();
+    void fileImported();
     void resetTitle();
 
 private:
@@ -53,6 +50,8 @@ private:
     SaveCommand m_saveCommand;
     SaveCommand m_saveAsCommand;
     OpenCommand m_openCommand;
+    ImportDataCommand m_importDataCommand;
+    ExportCSVCommand m_exportCSVCommand;
 
 };
 
