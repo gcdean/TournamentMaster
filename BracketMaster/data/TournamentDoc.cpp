@@ -14,8 +14,15 @@
 #include "Match.h"
 #include "Tournament.h"
 
+namespace
+{
+    static Match NO_MATCH(-1);
+    static const Bracket NO_BRACKET(-1);
+}
+
 TournamentDoc::TournamentDoc()
     : m_tournament()
+    , m_modified(false)
 {
 
 }
@@ -24,6 +31,228 @@ TournamentDoc::~TournamentDoc()
 {
 
 }
+
+bool TournamentDoc::isModified()
+{
+    return m_modified;
+}
+
+const Tournament &TournamentDoc::tournament() const
+{
+    return m_tournament;
+}
+
+
+void TournamentDoc::updateTournament(const Tournament &tournament)
+{
+    m_tournament.updateTournament(tournament);
+    m_modified = true;
+}
+
+const QList<Club> TournamentDoc::clubs()
+{
+    return m_clubs;
+}
+
+const Club* TournamentDoc::club(int id) const
+{
+    int index = m_clubs.indexOf(Club(id));
+    if(index >= 0)
+    {
+        return &m_clubs[index];
+    }
+
+    return nullptr;
+}
+
+bool TournamentDoc::addClub(Club club)
+{
+    bool successful = false;
+    if(!m_clubs.contains(club))
+    {
+        m_clubs.append(club);
+        successful = true;
+        m_modified = true;
+    }
+
+    return successful;
+}
+
+bool TournamentDoc::removeClub(int id)
+{
+    bool ret = false;
+    int index = m_clubs.indexOf(Club(id));
+    if(index >= 0)
+    {
+        m_clubs.removeAt(index);
+        ret = true;
+        m_modified = true;
+    }
+    return ret;
+}
+
+bool TournamentDoc::updateClub(const Club &src)
+{
+    int index = m_clubs.indexOf(src);
+    if(index >= 0)
+    {
+        m_clubs[index] = src;
+        return true;
+    }
+
+    return false;
+}
+
+const QList<Competitor> TournamentDoc::competitors() const
+{
+    return m_competitors;
+}
+
+bool TournamentDoc::addCompetitor(Competitor competitor)
+{
+    if(!m_competitors.contains(competitor))
+    {
+        m_competitors.append(competitor);
+        m_modified = true;
+        return true;
+    }
+
+    return false;
+}
+
+bool TournamentDoc::removeCompetitor(int id)
+{
+    int index = m_competitors.indexOf(Competitor(id));
+    if(index >= 0)
+    {
+        m_competitors.removeAt(index);
+        m_modified = true;
+        return true;
+    }
+    return false;
+}
+
+bool TournamentDoc::updateCompetitor(const Competitor &src)
+{
+    int index = m_competitors.indexOf(src);
+    if(index >= 0)
+    {
+        m_competitors[index] = src;
+        return true;
+    }
+
+    return false;
+}
+
+const QList<Bracket> TournamentDoc::brackets() const
+{
+    return m_brackets;
+}
+
+const Bracket &TournamentDoc::bracket(int id)
+{
+    int index = m_brackets.indexOf(Bracket(id));
+    if(index >= 0)
+    {
+        return m_brackets[index];
+    }
+
+    return NO_BRACKET;
+}
+
+bool TournamentDoc::addBracket(Bracket bracket)
+{
+    if(!m_brackets.contains(bracket))
+    {
+        m_brackets.append(bracket);
+        m_modified = true;
+
+        return true;
+    }
+    return false;
+}
+
+bool TournamentDoc::removeBracket(int id)
+{
+    int index = m_brackets.indexOf(Bracket(id));
+    if(index >= 0)
+    {
+        m_brackets.removeAt(index);
+        m_modified = true;
+        return true;
+    }
+    return false;
+}
+
+bool TournamentDoc::updateBracket(const Bracket &src)
+{
+    int index = m_brackets.indexOf(src);
+    if(index >= 0)
+    {
+        m_brackets[index] = src;
+        m_modified = true;
+        return true;
+    }
+    return false;
+}
+
+const QList<Match> TournamentDoc::matches(int bracketid) const
+{
+    return m_matches[bracketid];
+}
+
+const Match &TournamentDoc::match(int id)
+{
+    return nonConstMatch(id);
+}
+
+bool TournamentDoc::addMatch(int bracketId, Match match)
+{
+    QList<Match> matches;
+    if(m_matches.contains(bracketId))
+    {
+        matches = m_matches[bracketId];
+        if(!matches.contains(match.id()))
+        {
+            matches.append(match);
+            m_matchBrackets[match.id()] = bracketId;
+            m_modified = true;
+            return true;
+        }
+    }
+
+    return false;
+}
+
+bool TournamentDoc::removeMatch(int id)
+{
+    // TODO - more work needed. need to find match by id.
+    int bracketId = m_matchBrackets[id];
+    QList<Match> matches = m_matches[bracketId];
+    int index = matches.indexOf(id);
+    if(index>= 0)
+    {
+        matches.removeAt(index);
+        m_matchBrackets.remove(id);
+        m_modified = true;
+        return true;
+    }
+    return false;
+}
+
+bool TournamentDoc::updateMatch(const Match &src)
+{
+    Match& orig = nonConstMatch(src.id());
+    if(orig.id() != -1)
+    {
+        orig = src; // Does this 'persist' the match in the list (due to ref)?
+        m_modified = true;
+        return true;
+    }
+
+    return false;
+}
+
 
 void TournamentDoc::load(QString filename)
 {
@@ -52,9 +281,10 @@ void TournamentDoc::load(QString filename)
     readClubs(jobj);
     readMatches(jobj);
 
+    m_modified = false;
 }
 
-void TournamentDoc::save(QString filename) const
+void TournamentDoc::save(QString filename)
 {
     QFile saveFile(filename);
 
@@ -66,16 +296,18 @@ void TournamentDoc::save(QString filename) const
 
     QJsonObject trnObj;
     writeTournament(trnObj);
-//    writeClubs(trnObj);
-//    writeBrackets(trnObj);
-//    writeCompetitors(trnObj);
-//    writeMatches(trnObj);
+    writeClubs(trnObj);
+    writeBrackets(trnObj);
+    writeCompetitors(trnObj);
+    writeMatches(trnObj);
 
     QJsonDocument saveDoc(trnObj);
     if(-1 == saveFile.write(saveDoc.toJson()))
     {
         return;
     }
+
+    m_modified = false;
 
 }
 
@@ -199,7 +431,8 @@ void TournamentDoc::readMatches(const QJsonObject &root)
         match.setScore(jobj["score"].toInt());
         match.setNotes(jobj["notes"].toString());
 
-        m_matches[match.bracketId()] = match;
+        m_matches[match.bracketId()].append(match);
+        m_matchBrackets[match.id()] = match.bracketId();
     }
 }
 
@@ -215,23 +448,141 @@ void TournamentDoc::writeTournament(QJsonObject &root) const
 
 void TournamentDoc::writeClubs(QJsonObject &root) const
 {
-    Q_UNUSED(root)
+    QJsonArray clubArray;
+    foreach(const Club club, m_clubs)
+    {
+        QJsonObject jobj;
+        jobj["id"] = club.id();
+        jobj["clubname"] = club.clubName();
+        jobj["coachname"] = club.coachName();
+        jobj["address1"] = club.address1();
+        jobj["address2"] = club.address2();
+        jobj["country"] = club.country();
+        jobj["city"] = club.city();
+        jobj["state"] = club.state();
+        jobj["zip"] = club.zip();
 
+        clubArray.append(jobj);
+    }
+    root["clubs"] = clubArray;
 }
 
 void TournamentDoc::writeBrackets(QJsonObject &root) const
 {
-    Q_UNUSED(root)
+    QJsonArray brackets;
+    foreach(Bracket bracket, m_brackets)
+    {
+        QJsonObject jobj;
+        jobj["id"] = bracket.id();
+
+        jobj["name"] = bracket.name();
+        jobj["gender"] = genderToString(bracket.gender());
+        jobj["weightType"] = Bracket::weightTypeToStr(bracket.weightType());
+        jobj["minAge"] = bracket.minAge();
+        jobj["maxAge"] = bracket.maxAge();
+        jobj["time"] = bracket.time();
+        jobj["maxWeight"] = bracket.maxWeight();
+        jobj["chokesAllowed"] = bracket.chokesAllowed();
+        jobj["armbarsAllowed"] = bracket.armbarsAllowed();
+        jobj["matNumber"] = bracket.matNumber();
+        jobj["firstPlace"] = bracket.firstPlace();
+        jobj["secondPlace"] = bracket.secondPlace();
+        jobj["thirdPlace1"] = bracket.thirdPlace1();
+        jobj["thirdPlace2"] = bracket.thirdPlace2();
+
+        // Write out the list of competitor ids.
+        QJsonArray bracketMembers;
+        foreach(const int cid, bracket.competitorIds())
+        {
+            QJsonValue id(cid);
+
+            bracketMembers.append(id);
+        }
+
+        jobj["bracketMembers"] = bracketMembers;
+
+
+        brackets.append(jobj);
+    }
+
+    root["brackets"] = brackets;
 
 }
 
 void TournamentDoc::writeCompetitors(QJsonObject &root) const
 {
-    Q_UNUSED(root)
+
+    QJsonArray judokas;
+    foreach(Competitor judoka, m_competitors)
+    {
+        qDebug() << "Saving Competitor: " << judoka.lastName() << ", " << judoka.firstName();
+        QJsonObject jobj;
+
+        jobj["id"] = judoka.id();
+        jobj["fname"] = judoka.firstName();
+        jobj["lname"] = judoka.lastName();
+        jobj["gender"] = genderToString(judoka.gender());
+        jobj["age"] = judoka.age();
+        jobj["weight"] = judoka.weight();
+
+        jobj["rank"] = rankToString(judoka.rank());
+        jobj["numBrackets"] = judoka.numBrackets();
+        jobj["notes"] = judoka.notes();
+        jobj["clubid"] = judoka.clubId();
+
+        judokas.append(jobj);
+    }
+
+    root["competitors"] = judokas;
 
 }
 
 void TournamentDoc::writeMatches(QJsonObject &root) const
 {
-    Q_UNUSED(root)
+    QJsonArray matches;
+    QMapIterator <int, QList<Match>> i(m_matches);
+    while(i.hasNext())
+    {
+        i.next();
+//        int bracketId = i.key();
+        QList<Match> matchList = i.value();
+
+        foreach(Match match, matchList)
+        {
+            QJsonObject jobj;
+            jobj["id"] = match.id();
+
+            jobj["bracketId"] = match.bracketId();
+            jobj["matchNumber"] = match.matchNum();
+
+            jobj["competitor1"] = match.competitor1Id();
+            jobj["competitor2"] = match.competitor2Id();
+
+            jobj["winner"] = match.winnerId();
+            jobj["score"] = match.score();
+            jobj["notes"] = match.notes();
+
+            matches.append(jobj);
+        }
+    }
+
+    root["matches"] = matches;
+}
+
+Match &TournamentDoc::nonConstMatch(int id)
+{
+    // Get the bracket id for the match
+    int bracketId = m_matchBrackets[id];
+    if(m_matches.contains(bracketId))
+    {
+        QList<Match> matches = m_matches[bracketId];
+        int index = matches.indexOf(Match(id));
+        if(index >= 0)
+        {
+           return matches[index];
+        }
+    }
+
+    return NO_MATCH;
+
 }

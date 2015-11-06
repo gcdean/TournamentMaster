@@ -23,6 +23,18 @@ int JMDataObj::id() const
     return m_id;
 }
 
+bool JMDataObj::operator ==(const JMDataObj &src)
+{
+    return src.id() == id();
+}
+
+JMDataObj &JMDataObj::operator =(const JMDataObj &src)
+{
+    m_id = src.id();
+    return *this;
+}
+
+
 void JMDataObj::read(const QJsonObject &json)
 {
     m_id = json["id"].toInt();

@@ -15,8 +15,10 @@ public:
     JMDataObj(const QJsonObject& json);
     virtual ~JMDataObj() = default;
 
-
     int id() const;
+
+    virtual bool operator ==(const JMDataObj& src);
+    JMDataObj& operator =(const JMDataObj& src);
 
     virtual void read(const QJsonObject &json);
     virtual void write(QJsonObject &json) const;

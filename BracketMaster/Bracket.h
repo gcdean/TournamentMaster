@@ -84,6 +84,8 @@ public:
 
     int numberOfMatches();
 
+    // Operator methods
+    Bracket &operator = (const Bracket& src);
 
     static QString weightTypeToStr(Bracket::WeightType type);
     static Bracket::WeightType weightTypeFromStr(QString typeStr);

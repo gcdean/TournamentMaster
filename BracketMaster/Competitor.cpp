@@ -41,6 +41,24 @@ Competitor::Competitor()
 
 }
 
+Competitor &Competitor::operator =(const Competitor &src)
+{
+    JMDataObj::operator =(src);
+
+    setFirstName(src.firstName());
+    setLastName(src.lastName());
+    setGender(src.gender());
+    setAge(src.age());
+    setWeight(src.weight());
+    setRank(src.rank());
+    setClubId(src.clubId());
+    setNumBrackets(src.numBrackets());
+    setNotes(src.notes());
+
+    return *this;
+
+}
+
 void Competitor::read(const QJsonObject &json)
 {
     JMDataObj::read(json);

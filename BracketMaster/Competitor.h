@@ -56,6 +56,7 @@ public:
     QString notes() const { return m_notes;}
     void setNotes(QString notes) {m_notes = notes;}
 
+    Competitor &operator =(const Competitor& src);
     virtual void read(const QJsonObject& json);
 
     void write(QJsonObject& json) const override;

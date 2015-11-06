@@ -27,6 +27,17 @@ Tournament::Tournament(QObject *parent) :
 {
 }
 
+void Tournament::updateTournament(const Tournament &src)
+{
+    m_fileName = src.fileName();
+    m_name = src.name();
+    m_date = src.date();
+    m_startTime = src.startTime();
+    m_useTexasMatchCards = src.useTexasMatchCards();
+
+}
+
+
 bool Tournament::useTexasMatchCards() const
 {
     return m_useTexasMatchCards;

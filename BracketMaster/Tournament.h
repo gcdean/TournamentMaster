@@ -20,6 +20,8 @@ class Tournament : public QObject
 public:
     explicit Tournament(QObject *parent = 0);
 
+    void updateTournament(const Tournament &src);
+
     QString fileName() const {return m_fileName;}
     void setFileName(QString filename) {m_fileName = filename;}
     QString name() const {return m_name;}

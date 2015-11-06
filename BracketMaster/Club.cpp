@@ -48,6 +48,26 @@ const QList<Competitor *> Club::competitors() const
     return m_competitors;
 }
 
+//bool Club::operator ==(const Club &src)
+//{
+//    return src.id() == id();
+//}
+
+Club &Club::operator =(const Club &src)
+{
+    JMDataObj::operator =(src);
+    setClubName(src.clubName());
+    setCoachName(src.coachName());
+    setAddress1(src.address1());
+    setAddress2(src.address2());
+    setCountry(src.country());
+    setCity(src.city());
+    setState(src.state());
+    setZip(src.zip());
+
+    return *this;
+}
+
 void Club::addCompetitor(Competitor *competitor)
 {
     // Validate

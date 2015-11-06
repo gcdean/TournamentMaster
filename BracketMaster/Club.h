@@ -41,6 +41,9 @@ public:
 
     const QList<Competitor *> competitors() const;
 
+//    virtual bool operator == (const Club& src);
+    Club& operator =(const Club& src);
+
     void addCompetitor(Competitor *competitor);
 
     void read(const QJsonObject &json) override;

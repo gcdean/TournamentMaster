@@ -275,6 +275,7 @@ void Bracket::moveCompetitor(int srcRow, int destRow)
 
 bool Bracket::addCompetitor(int id, int location)
 {
+    bool ret = false;
     if(m_competitorIds.indexOf(id) < 0)
     {
         if(location == -1 | location > m_competitorIds.size())
@@ -285,8 +286,12 @@ bool Bracket::addCompetitor(int id, int location)
         {
             m_competitorIds.insert(location, id);
         }
+        ret = true;
     }
+
+    return ret;
 }
+
 
 const QList<int> Bracket::competitorIds() const
 {
@@ -335,6 +340,28 @@ int Bracket::numberOfMatches()
     }
 
     return numMatches;
+}
+
+Bracket &Bracket::operator =(const Bracket &src)
+{
+    JMDataObj::operator =(src);
+
+    m_name = src.name();
+    m_gender = src.gender();
+    m_weightType = src.weightType();
+    m_minAge = src.minAge();
+    m_maxAge = src.maxAge();
+    m_time = src.time();
+    m_maxWeight = src.maxWeight();
+    m_chokesAllowed = src.chokesAllowed();
+    m_armbarsAllowed = src.armbarsAllowed();
+    m_matNumber = src.matNumber();
+    m_firstPlace = src.firstPlace();
+    m_secondPlace = src.secondPlace();
+    m_thirdPlace_1 = src.thirdPlace1();
+    m_thirdPlace_2 = src.thirdPlace2();
+
+    return *this;
 }
 
 QString Bracket::weightTypeToStr(Bracket::WeightType type)
