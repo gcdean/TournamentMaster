@@ -17,7 +17,8 @@ class Club : public JMDataObj
 {
 
 public:
-    Club();
+    Club(); // Not sure if we need this
+    Club(int id);
     explicit Club(int id, QString clubName, QString coachName, QString addr1 = QString(), QString addr2 = QString(), QString country = QString(), QString city = QString(), QString state = QString(), QString zip = QString());
     Club(const Club& src);
 

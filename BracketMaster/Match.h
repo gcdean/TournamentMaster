@@ -17,6 +17,14 @@ public:
 
     int bracketId() const;
     void setBracketId(int id);
+    int matchNum();
+    void setMatchNum(int num);
+    void setCompetitor1Id(int id);
+    int competitor1Id();
+    void setCompetitor2Id(int id);
+    int competitor2Id();
+    void setWinnerId(int id);
+    int winnerId();
     const Competitor *competitor1() const;
     void setCompetitor1(Competitor *competitor);
     const Competitor *competitor2() const;
@@ -37,6 +45,9 @@ public:
 private:
     int m_bracketId;
     int m_matchNum;     // For when Texas Match Card system is used.
+    int m_competitor1Id;
+    int m_competitor2Id;
+    int m_winnerId;
     Competitor *m_competitor1;  // White
     Competitor *m_competitor2;  // Blue
     Competitor *m_winner;

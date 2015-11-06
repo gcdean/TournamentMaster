@@ -39,6 +39,46 @@ void Match::setBracketId(int id)
     m_bracketId = id;
 }
 
+int Match::matchNum()
+{
+    return m_matchNum;
+}
+
+void Match::setMatchNum(int num)
+{
+    m_matchNum = num;
+}
+
+void Match::setCompetitor1Id(int id)
+{
+    m_competitor1Id = id;
+}
+
+int Match::competitor1Id()
+{
+    return m_competitor1Id;
+}
+
+void Match::setCompetitor2Id(int id)
+{
+    m_competitor2Id = id;
+}
+
+int Match::competitor2Id()
+{
+    return m_competitor2Id;
+}
+
+void Match::setWinnerId(int id)
+{
+    m_winnerId = id;
+}
+
+int Match::winnerId()
+{
+    return m_winnerId;
+}
+
 const Competitor *Match::competitor1() const
 {
     return m_competitor1;
@@ -47,6 +87,7 @@ const Competitor *Match::competitor1() const
 void Match::setCompetitor1(Competitor *competitor)
 {
     m_competitor1 = competitor;
+    setCompetitor1Id(competitor ? competitor->id() : -1);
 }
 
 const Competitor *Match::competitor2() const
@@ -57,6 +98,7 @@ const Competitor *Match::competitor2() const
 void Match::setCompetitor2(Competitor *competitor)
 {
     m_competitor2 = competitor;
+    setCompetitor2Id(competitor ? competitor->id() : -1);
 }
 
 const Competitor *Match::winner() const
@@ -67,6 +109,8 @@ const Competitor *Match::winner() const
 void Match::setWinner(Competitor *competitor)
 {
     m_winner = competitor;
+
+    setWinnerId(competitor ? competitor->id() : -1);
 }
 
 int Match::score() const

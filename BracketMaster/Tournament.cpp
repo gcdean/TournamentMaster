@@ -27,7 +27,7 @@ Tournament::Tournament(QObject *parent) :
 {
 }
 
-bool Tournament::useTexasMatchCards()
+bool Tournament::useTexasMatchCards() const
 {
     return m_useTexasMatchCards;
 }

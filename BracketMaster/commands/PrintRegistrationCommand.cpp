@@ -45,7 +45,7 @@ namespace
 PrintRegistrationCommand::PrintRegistrationCommand(QWidget *parent, QList<Club *> clubs)
     : m_clubs(clubs)
 {
-
+    Q_UNUSED(parent)
 }
 
 PrintRegistrationCommand::~PrintRegistrationCommand()

@@ -16,6 +16,12 @@ Competitor::Competitor(int id, QString firstName, QString lastName, JM::Gender g
 {
 }
 
+Competitor::Competitor(int id)
+    : JMDataObj(id)
+{
+
+}
+
 Competitor::Competitor(const Competitor &src) : JMDataObj(src.id())
 {
     m_firstName = src.firstName();

@@ -33,6 +33,7 @@ class Competitor : public JMDataObj
 public:
 
     explicit Competitor(int id, QString firstName, QString lastName, JM::Gender gender, int age , double weight, JM::Rank rank, int clubId);
+    Competitor(int id);
     Competitor(const Competitor& src);
     Competitor();
 

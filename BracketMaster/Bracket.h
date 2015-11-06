@@ -79,6 +79,9 @@ public:
     void removeCompetitor(int index);
     void moveCompetitor(int srcRow, int destRow);
 
+    bool addCompetitor(int id, int location = -1);
+    const QList<int> competitorIds() const;
+
     int numberOfMatches();
 
 
@@ -104,6 +107,7 @@ private:
     double m_maxWeight;
 
     QList<Competitor *> m_competitors;
+    QList<int> m_competitorIds;
 };
 
 namespace bracket

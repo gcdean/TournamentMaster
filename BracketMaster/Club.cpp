@@ -6,6 +6,12 @@ Club::Club()
 
 }
 
+Club::Club(int id)
+    : JMDataObj(id)
+{
+
+}
+
 Club::Club(int id, QString clubName, QString coachName, QString addr1, QString addr2, QString country, QString city, QString state, QString zip)
     : JMDataObj(id)
     , m_clubName(clubName)

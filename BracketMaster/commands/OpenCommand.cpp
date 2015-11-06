@@ -4,7 +4,10 @@
 #include <QFileDialog>
 #include <QJsonDocument>
 
+#include <QDebug>
+
 #include "JudoMasterApplication.h"
+#include "data/TournamentDoc.h"
 
 OpenCommand::OpenCommand(QObject *parent) :
     BaseCommand(parent)
@@ -30,6 +33,7 @@ bool OpenCommand::run()
 
     QFile tournFile(openFileName);
 
+
     if(!tournFile.open(QIODevice::ReadOnly))
     {
         qWarning("Could not open file for reading");
@@ -37,6 +41,8 @@ bool OpenCommand::run()
     }
 
     QByteArray saveData = tournFile.readAll();
+    qDebug() << "Data Size: " << saveData.size();
+
 
     QJsonDocument loadDoc(QJsonDocument::fromJson(saveData));
 
@@ -46,7 +52,15 @@ bool OpenCommand::run()
     QJsonObject jobj = loadDoc.object();
     tournament->read(jobj);
 
+    // New Document
+    tournFile.close();
+
+    std::unique_ptr<TournamentDoc> doc(new TournamentDoc);
+    doc->load(openFileName);
+
+
     JMApp()->setTournament(std::move(tournament));
+
 
     return done(true);
 }

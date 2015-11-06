@@ -273,6 +273,26 @@ void Bracket::moveCompetitor(int srcRow, int destRow)
     m_competitors.move(srcRow, destRow);
 }
 
+bool Bracket::addCompetitor(int id, int location)
+{
+    if(m_competitorIds.indexOf(id) < 0)
+    {
+        if(location == -1 | location > m_competitorIds.size())
+        {
+            m_competitorIds.append(id);
+        }
+        else
+        {
+            m_competitorIds.insert(location, id);
+        }
+    }
+}
+
+const QList<int> Bracket::competitorIds() const
+{
+    return m_competitorIds;
+}
+
 int Bracket::numberOfMatches()
 {
     // Round Robin Brackets

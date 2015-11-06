@@ -1,0 +1,49 @@
+General notes.
+
+
+
+Texas Match Card System
+
+Be able to create a set of matches given a list of brackets. The matches need to be spread over the brackets
+such that a competitor has at least 1 match rest. Different size brackets may have different ways of allocatating the
+mathces. A round robin is different than a double-elimination bracket.
+
+Double Elimination
+    Go through all the winners first. By the time the 1st place is decided, all other initial positions on
+    the loser bracket side will be known.
+
+Should the program take into account the necessity of giving a rest or should that be done manually?
+    When creating a match, could insure that neither player was in the previous match.
+    Need to figure out what to do in that situation.
+
+
+
+Bracket of 8 - Winners side.
+----------
+                ------
+----------
+
+                           -----------
+----------
+                ------
+----------
+                                              ------
+
+----------
+                ------
+----------
+                             -----------
+----------
+                ------
+----------
+
+
+Document
+
+TournamentDoc
+- The tournament object
+- List of all clubs
+- List of all competitors
+- List of all brackets
+- List of all matches
+    - Matches can be a hash with bracket id as a key

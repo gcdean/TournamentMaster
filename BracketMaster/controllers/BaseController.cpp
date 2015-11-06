@@ -17,6 +17,7 @@ BaseController::BaseController(QObject *parent) :
 
 void BaseController::setTournament(std::unique_ptr<Tournament> &tournament)
 {
+    Q_UNUSED(tournament)
 //    if(m_tournament != tournament)
   //  {
     //    m_tournament = tournament;

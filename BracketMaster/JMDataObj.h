@@ -13,6 +13,8 @@ public:
     JMDataObj(int id);
     JMDataObj(const JMDataObj& src);
     JMDataObj(const QJsonObject& json);
+    virtual ~JMDataObj() = default;
+
 
     int id() const;
 
