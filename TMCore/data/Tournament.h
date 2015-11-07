@@ -7,6 +7,8 @@
 #include <QString>
 #include <QTime>
 
+#include "JMDataObj.h"
+
 class Bracket;
 class Club;
 class Competitor;
@@ -14,11 +16,10 @@ class Match;
 
 class Bracket;
 
-class Tournament : public QObject
+class Tournament : public JMDataObj
 {
-    Q_OBJECT
 public:
-    explicit Tournament(QObject *parent = 0);
+    explicit Tournament(int id = -1);
 
     void updateTournament(const Tournament &src);
 
@@ -43,9 +44,7 @@ public:
     //void write(QTextStream &stream) const;
     void write (QString dirname) const;
 
-signals:
-
-public slots:
+    Tournament& operator =(const Tournament& src);
 
 private:
     QString m_fileName;     // File name used to store the tournament.

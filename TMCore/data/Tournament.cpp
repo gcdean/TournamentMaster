@@ -21,8 +21,8 @@ namespace
     }
 
 }
-Tournament::Tournament(QObject *parent) :
-    QObject(parent)
+Tournament::Tournament(int id) :
+    JMDataObj(id)
     , m_useTexasMatchCards(false)
 {
 }
@@ -227,5 +227,17 @@ void Tournament::write(QString dirname) const
     }
     matchFile.close();
 
+}
+
+Tournament &Tournament::operator =(const Tournament &src)
+{
+    TMBaseData::operator =(src);
+    setFileName(src.fileName());
+    setName(src.name());
+    setDate(src.date());
+    setStartTime(src.startTime());
+    setTexasMatchCards(src.useTexasMatchCards());
+
+    return *this;
 }
 

@@ -316,11 +316,14 @@ void TournamentDoc::readTournament(const QJsonObject &jobj)
 {
     // Read in the tournament info.
 
-    m_tournament.setName(jobj["name"].toString());
-    m_tournament.setDate(QDate::fromString(jobj["date"].toString(), "dd.MM.yyyy"));
-    m_tournament.setStartTime(QTime::fromString(jobj["starttime"].toString(), "HH.mm"));
-    m_tournament.setTexasMatchCards(jobj["texasmatchCards"].toBool());
+    Tournament trn(jobj["id"].toInt());
 
+    trn.setName(jobj["name"].toString());
+    trn.setDate(QDate::fromString(jobj["date"].toString(), "dd.MM.yyyy"));
+    trn.setStartTime(QTime::fromString(jobj["starttime"].toString(), "HH.mm"));
+    trn.setTexasMatchCards(jobj["texasmatchCards"].toBool());
+
+    m_tournament = trn;
     qDebug() << "Tourn Name: " << m_tournament.name();
 
 }
@@ -439,6 +442,7 @@ void TournamentDoc::readMatches(const QJsonObject &root)
 
 void TournamentDoc::writeTournament(QJsonObject &root) const
 {
+    root["id"] = m_tournament.id();
     root["name"] = m_tournament.name();
     QString temp = m_tournament.date().toString("dd.MM.yyyy");
     root["date"] = temp;
