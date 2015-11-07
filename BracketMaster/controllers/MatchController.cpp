@@ -1,8 +1,8 @@
 #include "MatchController.h"
 
-#include "Match.h"
+#include "data/Match.h"
 #include "JudoMasterApplication.h"
-#include "Tournament.h"
+#include "data/Tournament.h"
 
 MatchController::MatchController(QObject *parent)
     : BaseController(parent)

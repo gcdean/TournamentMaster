@@ -1,6 +1,6 @@
 #pragma once
 
-#include "JMDataObj.h"
+#include "data/JMDataObj.h"
 #include "JMUtil.h"
 
 
@@ -20,7 +20,7 @@ void writeBracketPlaceHeader(QTextStream &stream);
  * Brackets are either age and weight based or simply weight based. Additionally,
  * weight brackets can be absolule weight or a weight type (Light, Medium, Heavy)
  */
-class Bracket : public JMDataObj
+class TMCORE_DLLSPEC Bracket : public JMDataObj
 {
 public:
     Bracket();

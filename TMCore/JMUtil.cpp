@@ -91,50 +91,6 @@ Rank rankFromString(QString rankStr)
     return rank;
 }
 
-QColor rankToColor(Rank rank)
-{
-    switch(rank)
-    {
-        case White:
-            return QColor(Qt::white);
-        break;
-
-        case Yellow:
-            return QColor(255, 252, 0);
-            break;
-
-        case Orange:
-              return QColor(234, 134, 16);
-            break;
-
-        case Green:
-            return QColor(51, 119, 42);
-            break;
-
-        case Blue:
-            return QColor(Qt::blue);
-            break;
-
-        case Purple:
-            return QColor(194, 56,215);
-            break;
-
-        case Brown:
-            return QColor(116, 19, 35);
-            break;
-
-        case Black:
-            return QColor(Qt::black);
-            break;
-
-       case Unknown:
-            return QColor(Qt::darkRed);
-            break;
-    }
-
-    return QColor(Qt::red); // Unknown
-}
-
 QString genderToString(Gender gender)
 {
     switch(gender)

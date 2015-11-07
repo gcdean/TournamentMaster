@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Club.h"
+#include "data/Club.h"
 
 #include <QWidget>
 

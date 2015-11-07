@@ -2,8 +2,8 @@
 
 #include <QDebug>
 
-#include "../BracketMaster/Bracket.h"
-#include "../BracketMaster/Competitor.h"
+#include "data/Bracket.h"
+#include "data/Competitor.h"
 
 namespace
 {

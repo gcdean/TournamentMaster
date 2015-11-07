@@ -1,10 +1,10 @@
 #include "CompetitorController.h"
 
-#include "Club.h"
-#include "Competitor.h"
+#include "data/Club.h"
+#include "data/Competitor.h"
 #include "JudoMasterApplication.h"
 #include "JMUtil.h"
-#include "Tournament.h"
+#include "data/Tournament.h"
 
 #include <QString>
 

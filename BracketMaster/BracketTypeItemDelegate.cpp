@@ -1,6 +1,6 @@
 #include "BracketTypeItemDelegate.h"
 
-#include "Bracket.h"
+#include "data/Bracket.h"
 #include "BracketTableModel.h"
 
 #include <QComboBox>

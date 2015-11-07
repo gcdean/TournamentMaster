@@ -21,19 +21,13 @@ CONFIG += c++11
 
 SOURCES += main.cpp\
         JudoMasterMainWindow.cpp \
-    Competitor.cpp \
-    Club.cpp \
-    Tournament.cpp \
     ClubsEditor.cpp \
     ClubEditor.cpp \
     CompetitorList.cpp \
     JudoMasterApplication.cpp \
     ClubListModel.cpp \
     CompetitorTableModel.cpp \
-    Bracket.cpp \
-    JMUtil.cpp \
     BracketEditor.cpp \
-    JMDataObj.cpp \
     BracketManager.cpp \
     BracketTableModel.cpp \
     CompetitorItemDelegate.cpp \
@@ -48,7 +42,6 @@ SOURCES += main.cpp\
     commands/ImportDataCommand.cpp \
     BracketTypeItemDelegate.cpp \
     CompetitorEditor.cpp \
-    Match.cpp \
     MatchTableModel.cpp \
     MatchItemDelegate.cpp \
     controllers/BaseController.cpp \
@@ -64,23 +57,16 @@ SOURCES += main.cpp\
     commands/CloseCommand.cpp \
     commands/SaveCommand.cpp \
     commands/OpenCommand.cpp \
-    commands/ExportCSVCommand.cpp \
-    data/TournamentDoc.cpp
+    commands/ExportCSVCommand.cpp
 
 HEADERS  += JudoMasterMainWindow.h \
-    Competitor.h \
-    Club.h \
-    Tournament.h \
     ClubsEditor.h \
     ClubEditor.h \
     CompetitorList.h \
     JudoMasterApplication.h \
     ClubListModel.h \
     CompetitorTableModel.h \
-    Bracket.h \
-    JMUtil.h \
     BracketEditor.h \
-    JMDataObj.h \
     BracketManager.h \
     BracketTableModel.h \
     CompetitorItemDelegate.h \
@@ -95,7 +81,6 @@ HEADERS  += JudoMasterMainWindow.h \
     commands/ImportDataCommand.h \
     BracketTypeItemDelegate.h \
     CompetitorEditor.h \
-    Match.h \
     MatchTableModel.h \
     MatchItemDelegate.h \
     controllers/BaseController.h \
@@ -111,8 +96,7 @@ HEADERS  += JudoMasterMainWindow.h \
     commands/CloseCommand.h \
     commands/SaveCommand.h \
     commands/OpenCommand.h \
-    commands/ExportCSVCommand.h \
-    data/TournamentDoc.h
+    commands/ExportCSVCommand.h
 
 FORMS    += JudoMasterMainWindow.ui \
     ClubsEditor.ui \

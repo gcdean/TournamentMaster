@@ -1,8 +1,8 @@
 #include "BracketTableModel.h"
 
-#include "Bracket.h"
+#include "data/Bracket.h"
 #include "controllers/BracketController.h"
-#include "JMDataObj.h"
+#include "data/JMDataObj.h"
 #include "JudoMasterApplication.h"
 
 #include <QDebug>

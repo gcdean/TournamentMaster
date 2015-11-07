@@ -1,9 +1,9 @@
 #include "MatchItemDelegate.h"
 
-#include "Bracket.h"
-#include "Competitor.h"
+#include "data/Bracket.h"
+#include "data/Competitor.h"
 #include "JudoMasterApplication.h"
-#include "Match.h"
+#include "data/Match.h"
 #include "MatchTableModel.h"
 
 #include <QComboBox>

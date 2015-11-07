@@ -1,8 +1,8 @@
 #include "MatchTableModel.h"
 
-#include "Competitor.h"
+#include "data/Competitor.h"
 #include "JudoMasterApplication.h"
-#include "Match.h"
+#include "data/Match.h"
 
 #include <QDebug>
 

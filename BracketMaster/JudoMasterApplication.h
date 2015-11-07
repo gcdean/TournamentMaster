@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Tournament.h"
+#include "data/Tournament.h"
 #include "controllers/BracketController.h"
 #include "controllers/ClubController.h"
 #include "controllers/CompetitorController.h"

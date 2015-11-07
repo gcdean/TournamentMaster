@@ -35,26 +35,14 @@ HEADERS += \
     ClubTests.h
 
 
-# Bracket Master Source & Header Files
-SOURCES +=\
-    ../BracketMaster/Bracket.cpp \
-    ../BracketMaster/Club.cpp \
-    ../BracketMaster/Competitor.cpp \
-    ../BracketMaster/JMDataObj.cpp \
-    ../BracketMaster/JMUtil.cpp
-
-#HEADERS += \
-#    ../BracketMaster/Bracket.h \
-#    ../BracketMaster/Club.h \
-#    ../BracketMaster/JMDataObj.h \
-#    ../BracketMaster/JMUtil.h
-
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../TMCore/release/ -lTMCore
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../TMCore/debug/ -lTMCore
 else:unix: LIBS += -L$$OUT_PWD/../TMCore/ -lTMCore
 
 INCLUDEPATH += $$PWD/../TMCore
+INCLUDEPATH += $$PWD/../TMCore/data
 DEPENDPATH += $$PWD/../TMCore
+DEPENDPATH += $$PWD/../TMCore/data
 
 win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../TMCore/release/libTMCore.a
 else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../TMCore/debug/libTMCore.a

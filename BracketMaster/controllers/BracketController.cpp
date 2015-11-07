@@ -1,11 +1,11 @@
 #include "BracketController.h"
 
-#include "Bracket.h"
-#include "Competitor.h"
-#include "Tournament.h"
+#include "data/Bracket.h"
+#include "data/Competitor.h"
+#include "data/Tournament.h"
 
 #include "JudoMasterApplication.h"  // DEBUG ONLY. DELETE
-#include "Competitor.h"             // DEBUG ONLY. DELETE
+#include "data/Competitor.h"             // DEBUG ONLY. DELETE
 
 #include <QDebug>
 #include <QList>

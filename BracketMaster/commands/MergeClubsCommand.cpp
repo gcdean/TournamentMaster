@@ -1,6 +1,6 @@
 #include "MergeClubsCommand.h"
 
-#include "Club.h"
+#include "data/Club.h"
 #include "JudoMasterApplication.h"
 
 #include <QDebug>

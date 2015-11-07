@@ -1,9 +1,9 @@
 #include "PrintBrancketsCommand.h"
 
-#include "Bracket.h"
+#include "data/Bracket.h"
 #include "JudoMasterApplication.h"
 #include "controllers/PrintController.h"
-#include "Tournament.h"
+#include "data/Tournament.h"
 
 #include <QDebug>
 #include <QList>

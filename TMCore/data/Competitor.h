@@ -5,7 +5,7 @@
 #include <QObject>
 #include <QString>
 
-#include "JMDataObj.h"
+#include "data/JMDataObj.h"
 #include "JMUtil.h"
 
 namespace competitor
@@ -27,7 +27,7 @@ namespace competitor
 
 void writeCompetitorHeader(QTextStream &stream);
 
-class Competitor : public JMDataObj
+class TMCORE_DLLSPEC Competitor : public JMDataObj
 {
 
 public:

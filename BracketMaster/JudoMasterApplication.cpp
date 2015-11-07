@@ -1,6 +1,6 @@
 #include "JudoMasterApplication.h"
 
-#include "Tournament.h"
+#include "data/Tournament.h"
 
 JudoMasterApplication *JMApp()
 {

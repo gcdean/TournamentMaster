@@ -4,7 +4,7 @@
 #include <memory>
 
 #include "JudoMasterApplication.h"
-#include "Tournament.h"
+#include "data/Tournament.h"
 #include <QDate>
 #include <QDebug>
 

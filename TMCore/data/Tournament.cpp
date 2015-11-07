@@ -1,9 +1,9 @@
 #include "Tournament.h"
 
-#include "Bracket.h"
-#include "Club.h"
-#include "Competitor.h"
-#include "Match.h"
+#include "data/Bracket.h"
+#include "data/Club.h"
+#include "data/Competitor.h"
+#include "data/Match.h"
 
 #include <QDebug>
 #include <QDir>

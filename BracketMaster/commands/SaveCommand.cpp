@@ -1,7 +1,7 @@
 #include "SaveCommand.h"
 
 #include "JudoMasterApplication.h"
-#include "Tournament.h"
+#include "data/Tournament.h"
 
 #include <QFile>
 #include <QFileDialog>

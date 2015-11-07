@@ -1,9 +1,9 @@
 #include "CompetitorEditor.h"
 #include "ui_CompetitorEditor.h"
 
-#include "Bracket.h"
-#include "Club.h"
-#include "Competitor.h"
+#include "data/Bracket.h"
+#include "data/Club.h"
+#include "data/Competitor.h"
 #include "JudoMasterApplication.h"
 
 #include <QList>

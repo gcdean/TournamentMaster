@@ -1,6 +1,6 @@
 #include "CompetitorItemDelegate.h"
 
-#include "Competitor.h"
+#include "data/Competitor.h"
 
 #include <QComboBox>
 

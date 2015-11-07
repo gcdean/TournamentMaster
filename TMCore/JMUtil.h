@@ -1,6 +1,5 @@
 #pragma once
 
-#include <QColor>
 #include <QObject>
 #include <QString>
 
@@ -43,7 +42,6 @@ Q_DECLARE_METATYPE(JM::Gender)
 
 QString rankToString(JM::Rank rank);
 JM::Rank rankFromString(QString rankStr);
-QColor rankToColor(JM::Rank rank);
 
 QString genderToString(JM::Gender gender);
 JM::Gender genderFromString(QString genderStr);

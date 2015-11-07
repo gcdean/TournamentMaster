@@ -1,6 +1,6 @@
 #include "ImportDataCommand.h"
 
-#include "Club.h"
+#include "data/Club.h"
 #include "JMUtil.h"
 #include "JudoMasterApplication.h"
 

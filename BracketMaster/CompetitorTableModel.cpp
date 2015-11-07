@@ -1,8 +1,8 @@
 #include "CompetitorTableModel.h"
 
-#include "Bracket.h"
-#include "Competitor.h"
-#include "JMDataObj.h"
+#include "data/Bracket.h"
+#include "data/Competitor.h"
+#include "data/JMDataObj.h"
 #include "JudoMasterApplication.h"
 #include "JMUtil.h"
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "JMDataObj.h"
+#include "data/JMDataObj.h"
 
 #include <QList>
 #include <QString>

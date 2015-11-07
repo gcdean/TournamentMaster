@@ -3,7 +3,7 @@
 #include <QDebug>
 #include <QJsonObject>
 
-#include "../BracketMaster/Club.h"
+#include "data/Club.h"
 
 namespace
 {

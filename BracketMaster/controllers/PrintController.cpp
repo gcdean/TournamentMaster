@@ -1,9 +1,9 @@
 #include "PrintController.h"
 
-#include "Tournament.h"
-#include "Bracket.h"
-#include "Competitor.h"
-#include "Club.h"
+#include "data/Tournament.h"
+#include "data/Bracket.h"
+#include "data/Competitor.h"
+#include "data/Club.h"
 #include "JMUtil.h"
 #include "JudoMasterApplication.h"
 

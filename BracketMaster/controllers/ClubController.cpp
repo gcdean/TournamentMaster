@@ -1,8 +1,8 @@
 #include "ClubController.h"
 
-#include "Club.h"
+#include "data/Club.h"
 #include "JudoMasterApplication.h"
-#include "Tournament.h"
+#include "data/Tournament.h"
 
 #include <QDebug>
 

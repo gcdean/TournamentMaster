@@ -1,8 +1,8 @@
 #include "BracketEditor.h"
 #include "ui_BracketEditor.h"
 
-#include "Bracket.h"
-#include "Competitor.h"
+#include "data/Bracket.h"
+#include "data/Competitor.h"
 #include "JMUtil.h"
 #include "JudoMasterApplication.h"
 #include "MatchItemDelegate.h"

@@ -8,11 +8,11 @@
 
 #include <QDebug>       // DEBUG
 
-#include "Bracket.h"
-#include "Club.h"
-#include "Competitor.h"
-#include "Match.h"
-#include "Tournament.h"
+#include "data/Bracket.h"
+#include "data/Club.h"
+#include "data/Competitor.h"
+#include "data/Match.h"
+#include "data/Tournament.h"
 
 namespace
 {

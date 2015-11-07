@@ -2,7 +2,7 @@
 
 #include <QTextStream>
 
-#include "data/TMBaseData.h"
+#include "TMBaseData.h"
 
 class QJsonObject;
 

@@ -6,14 +6,14 @@
 #include <QString>
 
 #include "Competitor.h"
-#include "JMDataObj.h"
+#include "data/JMDataObj.h"
 
 void writeClubHeader(QTextStream &stream);
 
 /**
  * @brief Represents all the data for a Judo club
  */
-class Club : public JMDataObj
+class TMCORE_DLLSPEC Club : public JMDataObj
 {
 
 public:

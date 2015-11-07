@@ -1,10 +1,10 @@
 #include "BaseController.h"
 
-#include "Bracket.h"
-#include "Competitor.h"
+#include "data/Bracket.h"
+#include "data/Competitor.h"
 #include "CompetitorFilter.h"
 #include "JudoMasterApplication.h"
-#include "Tournament.h"
+#include "data/Tournament.h"
 
 #include <QDebug>
 #include <QList>

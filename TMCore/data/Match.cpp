@@ -1,8 +1,7 @@
 #include "Match.h"
 
-#include "Competitor.h"
+#include "data/Competitor.h"
 #include "JMUtil.h"
-#include "JudoMasterApplication.h"
 
 #include <QJsonObject>
 

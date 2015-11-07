@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Tournament.h"
+#include "data/Tournament.h"
 
 #include <QHash>
 #include <QJsonObject>

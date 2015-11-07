@@ -1,10 +1,10 @@
 #include "JudoMasterMainWindow.h"
 #include "ui_JudoMasterMainWindow.h"
 
-#include "Bracket.h"
+#include "data/Bracket.h"
 #include "controllers/CompetitorController.h"
 #include "JudoMasterApplication.h"
-#include "Tournament.h"
+#include "data/Tournament.h"
 #include "actions/PrintBracketsAction.h"
 #include "commands/PrintBrancketsCommand.h"
 #include "commands/PrintRegistrationCommand.h"

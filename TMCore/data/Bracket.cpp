@@ -2,8 +2,8 @@
 
 #include "JMUtil.h"
 
-#include "Competitor.h"
-#include "controllers/CompetitorController.h"
+#include "data/Competitor.h"
+
 #include <QDebug>
 #include <QJsonArray>
 #include <QJsonValue>

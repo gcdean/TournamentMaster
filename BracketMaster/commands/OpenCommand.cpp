@@ -7,7 +7,7 @@
 #include <QDebug>
 
 #include "JudoMasterApplication.h"
-#include "data/TournamentDoc.h"
+#include "TournamentDoc.h"
 
 OpenCommand::OpenCommand(QObject *parent) :
     BaseCommand(parent)
