@@ -4,13 +4,15 @@
 #include <QTextStream>
 
 JMDataObj::JMDataObj(int id)
-    : m_id(id)
+//    : m_id(id)
+    : TMBaseData (id)
 {
 }
 
 JMDataObj::JMDataObj(const JMDataObj& src)
+    : TMBaseData(src)
 {
-    m_id = src.id();
+//    m_id = src.id();
 }
 
 JMDataObj::JMDataObj(const QJsonObject &json)
@@ -18,34 +20,37 @@ JMDataObj::JMDataObj(const QJsonObject &json)
     read(json);
 }
 
-int JMDataObj::id() const
-{
-    return m_id;
-}
+//int JMDataObj::id() const
+//{
+//    return m_id;
+//}
 
 bool JMDataObj::operator ==(const JMDataObj &src)
 {
-    return src.id() == id();
+    return TMBaseData::operator ==(src);
 }
 
 JMDataObj &JMDataObj::operator =(const JMDataObj &src)
 {
-    m_id = src.id();
+    TMBaseData::operator =(src);
+ //   m_id = src.id();
     return *this;
 }
 
 
+
 void JMDataObj::read(const QJsonObject &json)
 {
-    m_id = json["id"].toInt();
+    setId(json["id"].toInt());
+//    m_id = json["id"].toInt();
 }
 
 void JMDataObj::write(QJsonObject &json) const
 {
-    json["id"] = m_id;
+    json["id"] = id();
 }
 
 void JMDataObj::write(QTextStream &stream) const
 {
-    stream << m_id;
+    stream << id();
 }

@@ -48,3 +48,16 @@ SOURCES +=\
 #    ../BracketMaster/Club.h \
 #    ../BracketMaster/JMDataObj.h \
 #    ../BracketMaster/JMUtil.h
+
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../TMCore/release/ -lTMCore
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../TMCore/debug/ -lTMCore
+else:unix: LIBS += -L$$OUT_PWD/../TMCore/ -lTMCore
+
+INCLUDEPATH += $$PWD/../TMCore
+DEPENDPATH += $$PWD/../TMCore
+
+win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../TMCore/release/libTMCore.a
+else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../TMCore/debug/libTMCore.a
+else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../TMCore/release/TMCore.lib
+else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../TMCore/debug/TMCore.lib
+else:unix: PRE_TARGETDEPS += $$OUT_PWD/../TMCore/libTMCore.a

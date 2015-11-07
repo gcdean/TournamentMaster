@@ -18,6 +18,7 @@ namespace
 {
     static Match NO_MATCH(-1);
     static const Bracket NO_BRACKET(-1);
+
 }
 
 TournamentDoc::TournamentDoc()

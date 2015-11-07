@@ -22,7 +22,8 @@ Competitor::Competitor(int id)
 
 }
 
-Competitor::Competitor(const Competitor &src) : JMDataObj(src.id())
+Competitor::Competitor(const Competitor &src)
+    : JMDataObj(src)
 {
     m_firstName = src.firstName();
     m_lastName = src.lastName();
