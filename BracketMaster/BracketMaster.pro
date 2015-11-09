@@ -31,7 +31,6 @@ SOURCES += main.cpp\
     BracketManager.cpp \
     BracketTableModel.cpp \
     CompetitorItemDelegate.cpp \
-    commands/BaseCommand.cpp \
     commands/PrintBracketsCommand.cpp \
     actions/PrintBracketsAction.cpp \
     CompetitorFilterWidget.cpp \
@@ -70,7 +69,6 @@ HEADERS  += JudoMasterMainWindow.h \
     BracketManager.h \
     BracketTableModel.h \
     CompetitorItemDelegate.h \
-    commands/BaseCommand.h \
     commands/PrintBrancketsCommand.h \
     actions/PrintBracketsAction.h \
     CompetitorFilterWidget.h \
