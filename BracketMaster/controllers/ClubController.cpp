@@ -1,7 +1,8 @@
 #include "ClubController.h"
 
-#include "data/Club.h"
 #include "JudoMasterApplication.h"
+#include "commands/ClubCommands.h"
+#include "data/Club.h"
 #include "data/Tournament.h"
 
 #include <QDebug>
@@ -66,21 +67,25 @@ void ClubController::removeClub(int clubId)
 
 namespace
 {
-    const QList<Club *> NOCLUBS;
+    const QList<Club> NOCLUBS;
     const QList<Competitor *> NOCOMPETITORS;
 }
 
-const QList<Club *> *ClubController::clubs() const
+const QList<Club> ClubController::clubs() const
 {
-    if(!tournament())
-        return &NOCLUBS;
-    return &tournament()->clubs();
+    GetClubsCommand cmd(0);
+    if(cmd.run(JMApp()->tournamentEditor()))
+    {
+        return cmd.clubs();
+    }
+
+    return NOCLUBS;
 }
 
-Club *ClubController::findClubByName(QString name)
+Club ClubController::findClubByName(QString name)
 {
-    if(!tournament())
-        return 0;
+//    if(!tournament())
+//        return 0;
 
     int firstSpace = name.indexOf(' ');
     if(firstSpace != -1)
@@ -90,15 +95,9 @@ Club *ClubController::findClubByName(QString name)
 //        qDebug() << "Truncated Name is: (" << name << ")";
     }
 
-    foreach(Club *club, tournament()->clubs())
-    {
-        if(club->clubName().startsWith(name, Qt::CaseInsensitive))
-        {
-            return club;
-        }
-    }
-
-    return 0;
+    GetClubCommand cmd(name);
+    cmd.run(JMApp()->tournamentEditor());
+    return cmd.club();
 }
 
 void ClubController::add(int parentId)

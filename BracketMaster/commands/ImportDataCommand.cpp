@@ -33,7 +33,7 @@ const QList<Competitor *> ImportDataCommand::skippedCompetitors() const
 }
 
 
-bool ImportDataCommand::run()
+bool ImportDataCommand::run(IEditor* const editor)
 {
     QString openFileName = QFileDialog::getOpenFileName(dynamic_cast<QWidget *>(parent()), "Import CSV File", JMApp()->lastSaveDir().absolutePath(), "CSV Files (*.csv)");
 
@@ -95,13 +95,14 @@ bool ImportDataCommand::run()
 //                         << ", belt: " << belt << ", club: " << clubName << ", num Divs: " << numDivs;
 
                 // Let's find the club.
-                Club *club = JMApp()->clubController()->findClubByName(clubName);
-                if(!club)
+                Club club = JMApp()->clubController()->findClubByName(clubName);
+                if(!club.isValid())
                 {
   //                  qDebug() << "Creating New Club for name " << clubName;
                     // Need to add the club.
-                    club = JMApp()->clubController()->createClub();
-                    club->setClubName(clubName);
+                    Q_ASSERT(true);
+//                    club = JMApp()->clubController()->createClub();
+//                    club->setClubName(clubName);
                 }
 
                 // Now add the competitor.
@@ -118,7 +119,7 @@ bool ImportDataCommand::run()
                 if(!competitor)
                 {
                     // Competitor not found, so add.
-                    competitor = JMApp()->competitorController()->createCompetitor(fname,lname, mf, age.toInt(), weight.toDouble(), rank, club->id());
+                    competitor = JMApp()->competitorController()->createCompetitor(fname,lname, mf, age.toInt(), weight.toDouble(), rank, club.id());
                     // TODO add the following to the constructor.
                     competitor->setNumBrackets(numDivs);
                     competitor->setNotes(notes);

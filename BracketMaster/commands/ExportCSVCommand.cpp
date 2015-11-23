@@ -19,7 +19,7 @@ ExportCSVCommand::~ExportCSVCommand()
 
 
 
-bool ExportCSVCommand::run()
+bool ExportCSVCommand::run(IEditor* const editor)
 {
     QString dir = QFileDialog::getExistingDirectory(dynamic_cast<QWidget *>(parent()), "Select Directory to export to.");
     if(dir.isEmpty())

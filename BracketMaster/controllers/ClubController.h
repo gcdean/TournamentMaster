@@ -18,9 +18,9 @@ public:
 
     void updateClub(Club& club);
     void removeClub(int clubId);
-    const QList <Club *> *clubs() const;
+    const QList<Club> clubs() const;
 
-    Club *findClubByName(QString name);
+    Club findClubByName(QString name);
 
     // BaseController interface
     void add(int parentId) override;

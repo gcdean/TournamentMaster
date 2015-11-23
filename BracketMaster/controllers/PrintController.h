@@ -18,7 +18,7 @@ public:
     PrintController(QString tournament, QPrinter::Orientation = QPrinter::Landscape);
     bool prepare(const QString &title);
     bool printBracket(const Bracket *bracket);
-    bool printClubRegistration(const Club *club);
+    bool printClubRegistration(const Club& club);
 
     void nextPage();
     void endPrint();
@@ -33,7 +33,7 @@ private:
     float printCompetitorRegistration(float y, Competitor *competitor);
     Club * getClub(int clubId);
     void joinMatch(float baseY, float height, int comp1, int comp2, int match);
-    void printClubHeader(const Club *club);
+    void printClubHeader(const Club& club);
     void printHeader(const Bracket *bracket);
     void drawBox(float x, float y, float width, float height, float weight);
     void drawLightBox(float x, float y, float width, float height);

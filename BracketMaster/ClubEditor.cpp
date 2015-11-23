@@ -29,7 +29,7 @@ ClubEditor::~ClubEditor()
     delete ui;
 }
 
-void ClubEditor::editClub(Club *club)
+void ClubEditor::editClub(Club club)
 {
     m_club = club;
 
@@ -38,54 +38,53 @@ void ClubEditor::editClub(Club *club)
 
 void ClubEditor::updateClubName()
 {
-    m_club->setClubName(ui->clubNameEdit->text());
+    Q_ASSERT(true);
+    //m_club->setClubName(ui->clubNameEdit->text());
 }
 
 void ClubEditor::updateControls()
 {
-    ui->clubNameEdit->setText(m_club->clubName());
-    ui->coachNameEdit->setText(m_club->coachName());
-    ui->address1Edit->setText(m_club->address1());
-    ui->address2Edit->setText(m_club->address2());
-    ui->cityEdit->setText(m_club->city());
-    ui->zipEdit->setText(m_club->zip());
-    ui->stateCombo->clear();
-    if(m_club->country().isEmpty() || m_club->country().compare("usa", Qt::CaseInsensitive) == 0)
-    {
-        ui->usaBtn->setChecked(true);
-//        ui->stateCombo->addItems(states.split(","));
-//        ui->stateCombo->setCurrentText(m_club->state().toUpper());
-//        ui->otherCountryEdit->setText("");
-    }
-    else if(m_club->country().compare("canada", Qt::CaseInsensitive) == 0)
-    {
-        ui->canadaBtn->setChecked(true);
-//        ui->stateCombo->addItems(provinces.split(","));
-//        ui->stateCombo->setCurrentText(m_club->state().toUpper());
-//        ui->otherCountryEdit->setText("");
-    }
-    else
-    {
-        ui->otherCountryBtn->setChecked(true);
-//        ui->otherCountryEdit->setText(m_club->country());
-    }
+    Q_ASSERT(true);
+
+//    ui->clubNameEdit->setText(m_club->clubName());
+//    ui->coachNameEdit->setText(m_club->coachName());
+//    ui->address1Edit->setText(m_club->address1());
+//    ui->address2Edit->setText(m_club->address2());
+//    ui->cityEdit->setText(m_club->city());
+//    ui->zipEdit->setText(m_club->zip());
+//    ui->stateCombo->clear();
+//    if(m_club->country().isEmpty() || m_club->country().compare("usa", Qt::CaseInsensitive) == 0)
+//    {
+//        ui->usaBtn->setChecked(true);
+//    }
+//    else if(m_club->country().compare("canada", Qt::CaseInsensitive) == 0)
+//    {
+//        ui->canadaBtn->setChecked(true);
+//    }
+//    else
+//    {
+//        ui->otherCountryBtn->setChecked(true);
+//    }
     updateStateList();
 }
 
 void ClubEditor::updateCoachName()
 {
-    m_club->setCoachName(ui->coachNameEdit->text());
+    Q_ASSERT(true);
+//    m_club->setCoachName(ui->coachNameEdit->text());
 }
 
 void ClubEditor::updateClub()
 {
     // This should be done with a controller
-    m_club->setClubName(ui->clubNameEdit->text());
-    m_club->setCoachName(ui->coachNameEdit->text());
-    m_club->setAddress1(ui->address1Edit->text());
-    m_club->setAddress2(ui->address2Edit->text());
-    m_club->setCity(ui->cityEdit->text());
-    m_club->setState(ui->stateCombo->currentText());
+    Q_ASSERT(true);
+
+//    m_club->setClubName(ui->clubNameEdit->text());
+//    m_club->setCoachName(ui->coachNameEdit->text());
+//    m_club->setAddress1(ui->address1Edit->text());
+//    m_club->setAddress2(ui->address2Edit->text());
+//    m_club->setCity(ui->cityEdit->text());
+//    m_club->setState(ui->stateCombo->currentText());
     QString country;
     if(ui->usaBtn->isChecked())
     {
@@ -99,8 +98,8 @@ void ClubEditor::updateClub()
     {
         country = ui->otherCountryEdit->text();
     }
-    m_club->setCountry(country);
-    m_club->setZip(ui->zipEdit->text());
+//    m_club->setCountry(country);
+//    m_club->setZip(ui->zipEdit->text());
 
 }
 
@@ -111,6 +110,8 @@ void ClubEditor::revertClub()
 
 void ClubEditor::updateStateList()
 {
+    Q_ASSERT(true);
+
     ui->stateCombo->clear();
     ui->otherCountryEdit->setText("");
     if(ui->usaBtn->isChecked())
@@ -125,8 +126,8 @@ void ClubEditor::updateStateList()
     }
     else
     {
-        ui->otherCountryEdit->setText(m_club->country());
+        ui->otherCountryEdit->setText(m_club.country());
 
     }
-    ui->stateCombo->setCurrentText(m_club->state().toUpper());
+    ui->stateCombo->setCurrentText(m_club.state().toUpper());
 }

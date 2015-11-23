@@ -1,6 +1,6 @@
 #pragma once
 
-#include "BaseCommand.h"
+#include "commands/BaseCommand.h"
 
 class OpenCommand : public BaseCommand
 {
@@ -10,6 +10,6 @@ public:
 
     // BaseCommand interface
 public slots:
-    bool run();
+    bool run(IEditor* const editor);
 };
 

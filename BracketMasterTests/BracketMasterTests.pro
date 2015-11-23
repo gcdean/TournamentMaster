@@ -23,7 +23,8 @@ TEMPLATE = app
 SOURCES += \
     main.cpp \
     BracketTests.cpp \
-    ClubTests.cpp
+    ClubTests.cpp \
+    ClubCommandTests.cpp
 
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
@@ -32,7 +33,8 @@ INCLUDEPATH += ../BracketMaster
 HEADERS += \
     AutoTest.h \
     BracketTests.h \
-    ClubTests.h
+    ClubTests.h \
+    ClubCommandTests.h
 
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../TMCore/release/ -lTMCore

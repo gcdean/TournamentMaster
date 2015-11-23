@@ -16,6 +16,8 @@ public:
     virtual bool operator ==(const TMBaseData& src);
     virtual TMBaseData& operator =(const TMBaseData& src);
 
+    bool isValid();
+
 protected:
     void setId(int id);
 

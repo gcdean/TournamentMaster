@@ -1,6 +1,6 @@
 #pragma once
 
-#include "BaseCommand.h"
+#include "commands/BaseCommand.h"
 
 class Club;
 
@@ -11,7 +11,7 @@ public:
     MergeClubsCommand(Club *srcClub, Club *destClub);
 
     // BaseCommand interface
-    virtual bool run();
+    virtual bool run(IEditor* const editor);
 
 private:
     Club *m_srcClub;

@@ -40,7 +40,7 @@ Club::Club(const Club &src)
     m_state = src.state();
     m_zip = src.zip();
 
-    m_competitors.append(src.competitors());
+    //m_competitors.append(src.competitors());
 }
 
 const QList<Competitor *> Club::competitors() const
@@ -48,10 +48,6 @@ const QList<Competitor *> Club::competitors() const
     return m_competitors;
 }
 
-//bool Club::operator ==(const Club &src)
-//{
-//    return src.id() == id();
-//}
 
 Club &Club::operator =(const Club &src)
 {

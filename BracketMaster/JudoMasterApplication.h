@@ -1,10 +1,11 @@
 #pragma once
 
-#include "data/Tournament.h"
 #include "controllers/BracketController.h"
 #include "controllers/ClubController.h"
 #include "controllers/CompetitorController.h"
 #include "controllers/MatchController.h"
+#include "data/Tournament.h"
+#include "TournamentEditor.h"
 
 #include <memory.h>
 #include <QApplication>
@@ -21,7 +22,9 @@ public:
     BracketController *bracketController() {return &m_bracketController;}
     MatchController *matchController() {return &m_matchController;}
     void setTournament(std::unique_ptr<Tournament> tournament);
+    void setEditor(QSharedPointer<IEditor> editor);
     const std::unique_ptr<Tournament> &tournament() const;
+    IEditor* const tournamentEditor();
 
     bool isModified() const;
     void setModified(bool setModified);
@@ -34,7 +37,11 @@ private:
     BracketController m_bracketController;
     MatchController m_matchController;
 //    Tournament *m_tournament;
-    std::unique_ptr<Tournament> m_tournament;
+    std::unique_ptr<Tournament> m_tournament; // OLD
+
+    QSharedPointer<IEditor> m_editor;
+
+
     bool m_modified;
     QDir m_lastSaveDir;
 };

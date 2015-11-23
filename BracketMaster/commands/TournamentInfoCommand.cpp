@@ -14,7 +14,7 @@ TournamentInfoCommand::~TournamentInfoCommand()
 
 }
 
-bool TournamentInfoCommand::run()
+bool TournamentInfoCommand::run(IEditor* const editor)
 {
     // Get the tournament info
     const std::unique_ptr<Tournament> &tournament = JMApp()->tournament();

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "BaseCommand.h"
+#include "commands/BaseCommand.h"
 #include <QList>
 
 class QWidget;
@@ -10,17 +10,17 @@ class PrintRegistrationCommand : public BaseCommand
 {
     Q_OBJECT
 public:
-    PrintRegistrationCommand(QWidget *parent = 0, QList<Club *>clubs=QList<Club *>());
+    PrintRegistrationCommand(QWidget *parent = 0, QList<Club >clubs=QList<Club >());
     ~PrintRegistrationCommand();
 
     // BaseCommand interface
 public:
-    bool run();
+    bool run(IEditor* const editor) override;
 
 private:
-    QList<Club *> getClubs();
+    QList<Club > getClubs();
 
 private:
-    QList<Club *> m_clubs;
+    QList<Club > m_clubs;
 };
 

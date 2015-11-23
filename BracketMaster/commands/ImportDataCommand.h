@@ -1,6 +1,6 @@
 #pragma once
 
-#include "BaseCommand.h"
+#include "commands/BaseCommand.h"
 
 #include <QList>
 #include <QString>
@@ -18,7 +18,7 @@ public:
     const QList<Competitor *> skippedCompetitors() const;
 
     // BaseCommand interface
-    virtual bool run();
+    virtual bool run(IEditor* const editor);
 
 private:
     QList<Competitor *> m_importedCompetitors;

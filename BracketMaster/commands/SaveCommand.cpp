@@ -24,7 +24,7 @@ SaveCommand::~SaveCommand()
 
 
 
-bool SaveCommand::run()
+bool SaveCommand::run(IEditor* const editor)
 {
     // Get the tournament info
     const std::unique_ptr<Tournament> &tournament = JMApp()->tournament();

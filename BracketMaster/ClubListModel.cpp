@@ -17,29 +17,28 @@ ClubListModel::ClubListModel(QObject *parent) :
     connect(JMApp()->clubController(), &ClubController::removedDataObj, this, &ClubListModel::clubRemoved);
 }
 
-Club* ClubListModel::club(const QModelIndex &index)
+Club ClubListModel::club(const QModelIndex &index)
 {
-    Club *c = JMApp()->clubController()->clubs()->at(index.row());
-    return c;
+    return JMApp()->clubController()->clubs().at(index.row());
 }
 
 int ClubListModel::rowCount(const QModelIndex &) const
 {
-    return (JMApp()->clubController()->clubs()->size());
+    return (JMApp()->clubController()->clubs().size());
 }
 
 QVariant ClubListModel::data(const QModelIndex &index, int role) const
 {
-    Club *club = JMApp()->clubController()->clubs()->at(index.row());
+    Club club = JMApp()->clubController()->clubs().at(index.row());
 
     switch(role)
     {
         case Qt::DisplayRole:
-            return QVariant(club->clubName());
+            return QVariant(club.clubName());
         break;
 
         case Qt::UserRole:
-            return QVariant(club->id());
+            return QVariant(club.id());
         default:
             return QVariant();
     }
@@ -65,7 +64,7 @@ Qt::ItemFlags ClubListModel::flags(const QModelIndex &) const
 void ClubListModel::clubAdded(JMDataObj *)
 {
     // The club has already been added.
-    int numClubs = JMApp()->clubController()->clubs()->size();
+    int numClubs = JMApp()->clubController()->clubs().size();
     beginInsertRows(QModelIndex(), numClubs - 1, numClubs);
     endInsertRows();
 }
@@ -82,18 +81,6 @@ void ClubListModel::clubRemoved(JMDataObj *club)
     }
 
 }
-
-//QStringList ClubListModel::mimeTypes() const
-//{
-//    qDebug() << "ClubListModel::mimeTypes";
-//    return QAbstractListModel::mimeTypes();
-//}
-
-//QMimeData *ClubListModel::mimeData(const QModelIndexList &indexes) const
-//{
-//    qDebug() << "ClubListModel::mimeData";
-//    return QAbstractListModel::mimeData(indexes);
-//}
 
 bool ClubListModel::dropMimeData(const QMimeData *mimeData, Qt::DropAction action, int row, int column, const QModelIndex &parent)
 {
@@ -120,7 +107,7 @@ bool ClubListModel::dropMimeData(const QMimeData *mimeData, Qt::DropAction actio
             Club *destClub = dynamic_cast<Club *>(JMApp()->clubController()->find(destClubId));
 
             MergeClubsCommand mergeCmd(srcClub, destClub);
-            mergeCmd.run();
+            mergeCmd.run(nullptr);
         }
     }
 
@@ -130,11 +117,9 @@ bool ClubListModel::dropMimeData(const QMimeData *mimeData, Qt::DropAction actio
 Qt::DropActions ClubListModel::supportedDropActions() const
 {
     return Qt::MoveAction;
-//    return QAbstractListModel::supportedDropActions();
 }
 
 Qt::DropActions ClubListModel::supportedDragActions() const
 {
     return Qt::MoveAction;
-//    return QAbstractListModel::supportedDragActions();
 }

@@ -13,7 +13,7 @@ class Club;
 class Competitor;
 class Match;
 
-class TournamentDoc
+class TMCORE_DLLSPEC TournamentDoc
 {
 public:
     TournamentDoc();
@@ -28,8 +28,9 @@ public:
 
     // Club methods
     const QList<Club> clubs();
-    const Club *club(int id) const;
+    const Club club(int id) const;
     bool addClub(Club club);
+    Club addClub();
     bool removeClub(int id);
     bool updateClub(const Club& src);
 
@@ -54,8 +55,9 @@ public:
     bool removeMatch(int id);
     bool updateMatch(const Match& src);
 
-    void load(QString filename);
-    void save(QString filename);
+    bool load(QString filename);
+    bool save();
+    bool save(QString filename);
 
 
 private:
@@ -75,10 +77,14 @@ private:
 
     Tournament m_tournament;
     bool m_modified;
+    QString m_filename;
+
     QList <Bracket> m_brackets;
     QList <Club> m_clubs;
+    int m_nextClubId;
 
     QList <Competitor> m_competitors;
+    int m_nextCompetitorId;
 
     QMap <int, QList<Match>> m_matches;
     QHash <int, int> m_matchBrackets;   // indexs match id to bracket id for faster lookup

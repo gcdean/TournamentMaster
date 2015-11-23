@@ -41,3 +41,9 @@ TMBaseData &TMBaseData::operator =(const TMBaseData &src)
     m_id = src.id();
     return *this;
 }
+
+bool TMBaseData::isValid()
+{
+    // We consider this a valid object if the id is not -1.
+    return m_id != -1;
+}

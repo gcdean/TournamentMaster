@@ -14,7 +14,7 @@ MergeClubsCommand::MergeClubsCommand(Club *src, Club *dest)
 }
 
 
-bool MergeClubsCommand::run()
+bool MergeClubsCommand::run(IEditor* const editor)
 {
     if(!m_srcClub || !m_destClub)
         return done(false);
@@ -26,6 +26,7 @@ bool MergeClubsCommand::run()
     }
 
     // Copy Competitors from src to dest.
+    // TODO - Get list of competitors for a club
     foreach(Competitor *cmp, m_srcClub->competitors())
     {
         m_destClub->addCompetitor(cmp);

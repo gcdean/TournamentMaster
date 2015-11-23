@@ -20,7 +20,7 @@ signals:
     void clubUpdated(Club *club);
 
 public slots:
-    void editClub(Club *club);
+    void editClub(Club club);
     void updateClubName();
     void updateCoachName();
     void updateClub();
@@ -33,6 +33,6 @@ private:
 private:
     Ui::ClubEditor *ui;
 
-    Club *m_club;
+    Club m_club;
 };
 

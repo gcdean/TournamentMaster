@@ -156,7 +156,7 @@ void BracketManager::printSelectedBrackets()
     }
 
     PrintBracketsCommand cmd(JMApp()->tournament()->name(), bracketIds);
-    cmd.run();
+    cmd.run(nullptr);
 
 }
 

@@ -22,8 +22,11 @@ OpenCommand::~OpenCommand()
 
 
 
-bool OpenCommand::run()
+bool OpenCommand::run(IEditor* const editor)
 {
+    // editor is not used because a new one is created.
+    Q_UNUSED(editor)
+
     QString openFileName = QFileDialog::getOpenFileName(dynamic_cast<QWidget *>(parent()), "Open JudoMaster Tournament File", JMApp()->lastSaveDir().absolutePath(), "Tournament Files (*.ecj);;JSON Files (*.json)");
 
     if(openFileName.isEmpty())
@@ -55,10 +58,14 @@ bool OpenCommand::run()
     // New Document
     tournFile.close();
 
-    std::unique_ptr<TournamentDoc> doc(new TournamentDoc);
-    doc->load(openFileName);
+    // Create a new editor here? If so, what type?
+    QSharedPointer<TournamentDoc> doc = QSharedPointer<TournamentDoc>(new TournamentDoc);
+    QSharedPointer<IEditor> teditor = QSharedPointer<IEditor>(new TournamentEditor(doc));
+    teditor->load(openFileName);
 
+    JMApp()->setEditor(teditor);
 
+    // TODO - This should go away after conversion to editor/doc is complete.
     JMApp()->setTournament(std::move(tournament));
 
 

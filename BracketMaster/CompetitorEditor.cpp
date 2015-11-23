@@ -34,10 +34,10 @@ CompetitorEditor::CompetitorEditor(Competitor *competitor, QWidget *parent) :
 
     // Fill in the Club combo
     int index = 0;
-    foreach(Club *club, *JMApp()->clubController()->clubs())
+    foreach(Club club, JMApp()->clubController()->clubs())
     {
-        ui->clubCombo->addItem(club->clubName(), QVariant(club->id()));
-        if(club->id() == competitor->clubId())
+        ui->clubCombo->addItem(club.clubName(), QVariant(club.id()));
+        if(club.id() == competitor->clubId())
             ui->clubCombo->setCurrentIndex(index);
         index++;
     }

@@ -123,14 +123,17 @@ bool PrintController::printBracket(const Bracket *bracket)
     return true;
 }
 
-bool PrintController::printClubRegistration(const Club *club)
+bool PrintController::printClubRegistration(const Club& club)
 {
-    qDebug() << "Printing Registration for Club: " << club->clubName();
+    Q_ASSERT(true);
+
+    qDebug() << "Printing Registration for Club: " << club.clubName();
 
     printClubHeader(club);
 
     float y = 2.2;
-    QList<Competitor *> clubCompetitors(club->competitors());
+//    QList<Competitor *> clubCompetitors(club->competitors());
+    QList<Competitor *> clubCompetitors;    // DUMMY DECLARATION
     std::sort(clubCompetitors.begin(), clubCompetitors.end(), compareCompetitorNames);
     foreach(Competitor *competitor, clubCompetitors)
     {
@@ -220,7 +223,7 @@ void PrintController::printDoubleEliminationBracket(const Bracket *bracket)
     drawRightAlignedText(0.75, 5.9375, "#2");
 }
 
-void PrintController::printClubHeader(const Club *club)
+void PrintController::printClubHeader(const Club& club)
 {
     // TODO Below Code should be refactored, maybe to prepare()?
     p.setRenderHint(QPainter::Antialiasing);
@@ -232,7 +235,7 @@ void PrintController::printClubHeader(const Club *club)
     // END OF CODE TO BE REFACTORED
 
     drawCenteredText(pageWidth() / 2/*5.5*/, 1.0, m_tournament, 16, true);
-    drawCenteredText(pageWidth() / 2/*5.5*/, 1.5, club->clubName(), 16.0, true);
+    drawCenteredText(pageWidth() / 2/*5.5*/, 1.5, club.clubName(), 16.0, true);
 
     // | Name                       | Gender  | Age | #Divs |  Reg Weight | Actual Weight |
     //            4"                    1"      .5"      .5"          1"           1"

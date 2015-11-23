@@ -47,3 +47,26 @@ TournamentDoc
 - List of all brackets
 - List of all matches
     - Matches can be a hash with bracket id as a key
+
+Editor and commands
+
+A command does the work.
+The editor keeps track of the commands for undo/redo.
+What executes the command?
+    The editor?
+    A command controller?
+    Directly?
+
+What if editor is the interface to the doc.
+A command would call methods on the editor to update data
+Command would need to do the opposite for a undo and retain state.
+In this mode, where would the command stack be stored?
+    Pass the command to the editor and have it call the execute?
+    Editor could then be passed to the command to do the work.
+
+Create an IEditor interface?
+    It has the method declarations?
+    It can be exported.
+
+
+Editor.execute() would take a pointer to a command.

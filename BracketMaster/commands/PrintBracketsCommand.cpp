@@ -27,7 +27,7 @@ PrintBracketsCommand::~PrintBracketsCommand()
 
 }
 
-bool PrintBracketsCommand::run()
+bool PrintBracketsCommand::run(IEditor* const editor)
 {
     // TODO
     // Open the print dialog

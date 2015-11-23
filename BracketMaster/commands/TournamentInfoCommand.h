@@ -1,6 +1,6 @@
 #pragma once
 
-#include "BaseCommand.h"
+#include "commands/BaseCommand.h"
 #include <QObject>
 
 class TournamentInfoCommand : public BaseCommand
@@ -11,6 +11,6 @@ public:
 
     // BaseCommand interface
 public slots:
-    bool run();
+    bool run(IEditor* const editor) override;
 };
 

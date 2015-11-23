@@ -21,7 +21,7 @@ public:
 
 signals:
     void clubAdded(Club *club);
-    void clubSelect(Club *club);
+    void clubSelect(Club club);
 
 private slots:
     void addClub();

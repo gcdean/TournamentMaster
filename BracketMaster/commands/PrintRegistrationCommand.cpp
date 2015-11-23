@@ -24,28 +24,13 @@ namespace
         return club1->clubName().compare(club2->clubName()) < 0;
     }
 
-//    bool compareCompetitorNames(Competitor* competitor1, Competitor* competitor2)
-//    {
-//        int lastNameCompare = competitor1->lastName().compare(competitor2->lastName());
-//        if( lastNameCompare < 0)
-//        {
-//            return true;
-//        }
-
-//        if(lastNameCompare == 0)
-//        {
-//            // Last names are the same, compare the first name.
-//            return competitor1->firstName().compare(competitor2->firstName()) < 0;
-//        }
-
-//        return false;
-//    }
 }
 
-PrintRegistrationCommand::PrintRegistrationCommand(QWidget *parent, QList<Club *> clubs)
-    : m_clubs(clubs)
+PrintRegistrationCommand::PrintRegistrationCommand(QWidget *parent, QList<Club > clubs)
+    : BaseCommand(parent)
+
 {
-    Q_UNUSED(parent)
+    m_clubs.append(clubs);
 }
 
 PrintRegistrationCommand::~PrintRegistrationCommand()
@@ -53,16 +38,16 @@ PrintRegistrationCommand::~PrintRegistrationCommand()
 
 }
 
-bool PrintRegistrationCommand::run()
+bool PrintRegistrationCommand::run(IEditor* const editor)
 {
 
-    QList<Club *>sortedClubs = getClubs();
+    QList<Club >sortedClubs = getClubs();
 
     PrintController pc(JMApp()->tournament()->name(), QPrinter::Portrait);
     if(pc.prepare("Print Registration"))
     {
         bool newPage = false;
-        foreach(const Club* club, sortedClubs)
+        foreach(const Club club, sortedClubs)
         {
             if(newPage)
                 pc.nextPage();
@@ -76,22 +61,24 @@ bool PrintRegistrationCommand::run()
     return done(false);
 }
 
-QList<Club *> PrintRegistrationCommand::getClubs()
+QList<Club > PrintRegistrationCommand::getClubs()
 {
-    QList<Club *>sortedClubs;
+    Q_ASSERT(true);
 
-    if(m_clubs.size() == 0)
-    {
-        const QList<Club *> *clubs = JMApp()->clubController()->clubs();
+    QList<Club >sortedClubs;
 
-        sortedClubs.append(*clubs);
-    }
-    else
-    {
-        sortedClubs.append(m_clubs);
-    }
+//    if(m_clubs.size() == 0)
+//    {
+//        const QList<Club > clubs = JMApp()->clubController()->clubs();
 
-    std::sort(sortedClubs.begin(), sortedClubs.end(), compareClubs);
+//        sortedClubs.append(clubs);
+//    }
+//    else
+//    {
+//        sortedClubs.append(m_clubs);
+//    }
+
+//    std::sort(sortedClubs.begin(), sortedClubs.end(), compareClubs);
 
     return sortedClubs;
 }

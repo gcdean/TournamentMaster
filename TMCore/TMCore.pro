@@ -21,7 +21,11 @@ SOURCES += \
     data/Bracket.cpp \
     TournamentDoc.cpp \
     data/Match.cpp \
-    data/Tournament.cpp
+    data/Tournament.cpp \
+    commands/BaseCommand.cpp \
+    commands/BaseUndoCommand.cpp \
+    TournamentEditor.cpp \
+    commands/ClubCommands.cpp
 
 HEADERS += \
     TMCore.h \
@@ -33,7 +37,12 @@ HEADERS += \
     data/Bracket.h \
     TournamentDoc.h \
     data/Match.h \
-    data/Tournament.h
+    data/Tournament.h \
+    commands/BaseCommand.h \
+    commands/BaseUndoCommand.h \
+    IEditor.h \
+    TournamentEditor.h \
+    commands/ClubCommands.h
 unix {
     target.path = /usr/lib
     INSTALLS += target

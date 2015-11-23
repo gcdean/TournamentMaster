@@ -14,6 +14,8 @@
 #include "data/Match.h"
 #include "data/Tournament.h"
 
+#include <math.h>
+
 namespace
 {
     static Match NO_MATCH(-1);
@@ -24,13 +26,14 @@ namespace
 TournamentDoc::TournamentDoc()
     : m_tournament()
     , m_modified(false)
+    , m_nextClubId(1)
 {
 
 }
 
 TournamentDoc::~TournamentDoc()
 {
-
+    qDebug() << "TournamentDoc being deleted.";
 }
 
 bool TournamentDoc::isModified()
@@ -55,15 +58,15 @@ const QList<Club> TournamentDoc::clubs()
     return m_clubs;
 }
 
-const Club* TournamentDoc::club(int id) const
+const Club TournamentDoc::club(int id) const
 {
     int index = m_clubs.indexOf(Club(id));
     if(index >= 0)
     {
-        return &m_clubs[index];
+        return m_clubs[index];
     }
 
-    return nullptr;
+    return Club();
 }
 
 bool TournamentDoc::addClub(Club club)
@@ -77,6 +80,16 @@ bool TournamentDoc::addClub(Club club)
     }
 
     return successful;
+}
+
+Club TournamentDoc::addClub()
+{
+    Club club(m_nextClubId++);
+    club.setClubName(QString("Club: %1").arg(club.id()));
+    if(addClub(club))
+        return club;
+
+    return Club();
 }
 
 bool TournamentDoc::removeClub(int id)
@@ -255,15 +268,17 @@ bool TournamentDoc::updateMatch(const Match &src)
 }
 
 
-void TournamentDoc::load(QString filename)
+bool TournamentDoc::load(QString filename)
 {
     QFile file(filename);
 
     if(!file.open(QIODevice::ReadOnly))
     {
         qWarning("Could not open file for reading");
-        return;
+        return false;
     }
+
+    m_filename = filename;
 
     QByteArray saveData = file.readAll();
 
@@ -271,6 +286,7 @@ void TournamentDoc::load(QString filename)
 
     QJsonDocument loadDoc(QJsonDocument::fromJson(saveData));
 
+    m_filename = filename;
     m_tournament.setFileName(filename);
 
     QJsonObject jobj = loadDoc.object();
@@ -283,17 +299,25 @@ void TournamentDoc::load(QString filename)
     readMatches(jobj);
 
     m_modified = false;
+
+    return true;
 }
 
-void TournamentDoc::save(QString filename)
+bool TournamentDoc::save()
+{
+    return save(m_filename);
+}
+
+bool TournamentDoc::save(QString filename)
 {
     QFile saveFile(filename);
 
     if(!saveFile.open(QIODevice::WriteOnly))
     {
         qWarning("Could not open file for writing");
-        return;
+        return false;
     }
+
 
     QJsonObject trnObj;
     writeTournament(trnObj);
@@ -305,11 +329,12 @@ void TournamentDoc::save(QString filename)
     QJsonDocument saveDoc(trnObj);
     if(-1 == saveFile.write(saveDoc.toJson()))
     {
-        return;
+        return false;
     }
 
     m_modified = false;
 
+    return true;
 }
 
 void TournamentDoc::readTournament(const QJsonObject &jobj)
@@ -388,7 +413,9 @@ void TournamentDoc::readClubs(const QJsonObject &root)
         club.setZip(jobj["zip"].toString());
 
         m_clubs.append(club);
+        m_nextClubId = std::max(m_nextClubId, club.id());
     }
+    m_nextClubId++;
 
 }
 
@@ -413,8 +440,9 @@ void TournamentDoc::readCompetitors(const QJsonObject &root)
         competitor.setClubId(jobj["clubid"].toInt());
 
         m_competitors.append(competitor);
-
+        m_nextCompetitorId = std::max(m_nextCompetitorId, competitor.id());
     }
+    m_nextCompetitorId++;
     qDebug() << "Total Competitors Read In: " << m_competitors.size();
 
 }

@@ -43,24 +43,37 @@ JudoMasterMainWindow::JudoMasterMainWindow(QWidget *parent) :
     connect(&m_closeCommand, &BaseCommand::commandSuccessful, this, &JudoMasterMainWindow::updateControls);
     connect(&m_saveAsCommand, &BaseCommand::commandSuccessful, this, &JudoMasterMainWindow::resetTitle);
     connect(&m_createTournamentCommand, &BaseCommand::commandComplete, this, &JudoMasterMainWindow::updateControls);
-    connect(&m_createTournamentCommand, &BaseCommand::commandComplete, &m_tournamentInfoCommand, &BaseCommand::run);
+    connect(&m_createTournamentCommand, &BaseCommand::commandComplete, [=] () {JMApp()->tournamentEditor()->doCommand(QSharedPointer<BaseCommand>(&m_tournamentInfoCommand));/* m_tournamentInfoCommand.run(JMApp()->tournamentEditor());*/});
     connect(&m_importDataCommand, &BaseCommand::commandSuccessful, this, &JudoMasterMainWindow::fileImported);
 
-    connect(ui->actionNew, &QAction::triggered, &m_createTournamentCommand, &BaseCommand::run);
 
-    connect(ui->actionSave_As, &QAction::triggered, &m_saveAsCommand, &BaseCommand::run);
-    connect(ui->actionSave, &QAction::triggered, &m_saveCommand, &BaseCommand::run);
+    ///////// NEW
+    connect(ui->actionNew, &QAction::triggered, [=] (){JMApp()->tournamentEditor()->doCommand(QSharedPointer<BaseCommand>(&m_createTournamentCommand));});
 
-    connect(ui->actionClose, &QAction::triggered, &m_closeCommand, &BaseCommand::run);
-    connect(ui->actionOpen, &QAction::triggered, &m_openCommand, &BaseCommand::run);
+    connect(ui->actionSave_As, &QAction::triggered, [=] (){JMApp()->tournamentEditor()->doCommand(QSharedPointer<BaseCommand>(&m_saveAsCommand));});
+    connect(ui->actionSave, &QAction::triggered, [=] (){JMApp()->tournamentEditor()->doCommand(QSharedPointer<BaseCommand>(&m_saveCommand));});
+
+    connect(ui->actionClose, &QAction::triggered, [=] (){JMApp()->tournamentEditor()->doCommand(QSharedPointer<BaseCommand>(&m_closeCommand));});
+    connect(ui->actionOpen, &QAction::triggered, [=] (){JMApp()->tournamentEditor()->doCommand(QSharedPointer<BaseCommand>(&m_openCommand));});
+    ///////// OLD
+//    connect(ui->actionNew, &QAction::triggered, &m_createTournamentCommand, &BaseCommand::run);
+
+//    connect(ui->actionSave_As, &QAction::triggered, &m_saveAsCommand, &BaseCommand::run);
+//    connect(ui->actionSave, &QAction::triggered, &m_saveCommand, &BaseCommand::run);
+
+//    connect(ui->actionClose, &QAction::triggered, &m_closeCommand, &BaseCommand::run);
+//    connect(ui->actionOpen, &QAction::triggered, &m_openCommand, &BaseCommand::run);
+
+    //////////// END OLD
+
 
     connect(ui->actionPrint_Registration, &QAction::triggered, this, &JudoMasterMainWindow::printRegistration);
-    connect(m_printBracketsAction, &QAction::triggered, &m_printBracketsCommand, &BaseCommand::run);
-    connect(ui->actionImport, &QAction::triggered, &m_importDataCommand, &BaseCommand::run);
-    connect(ui->actionExport, &QAction::triggered, &m_exportCSVCommand, &BaseCommand::run);
-    connect(ui->actionTournamentInfo, &QAction::triggered, &m_tournamentInfoCommand, &BaseCommand::run);
+    connect(m_printBracketsAction, &QAction::triggered, [=] (){JMApp()->tournamentEditor()->doCommand(QSharedPointer<BaseCommand>(&m_printBracketsCommand));});
+    connect(ui->actionImport, &QAction::triggered, [=](){JMApp()->tournamentEditor()->doCommand(QSharedPointer<BaseCommand>(&m_importDataCommand));});
+    connect(ui->actionExport, &QAction::triggered, [=](){JMApp()->tournamentEditor()->doCommand(QSharedPointer<BaseCommand>(&m_exportCSVCommand));});
+    connect(ui->actionTournamentInfo, &QAction::triggered, [=] (){JMApp()->tournamentEditor()->doCommand(QSharedPointer<BaseCommand>(&m_tournamentInfoCommand));});
 
-    connect(JMApp(), &QCoreApplication::aboutToQuit, &m_closeCommand, &BaseCommand::run);
+    connect(JMApp(), &QCoreApplication::aboutToQuit, [=] (){JMApp()->tournamentEditor()->doCommand(QSharedPointer<BaseCommand>(&m_closeCommand));});
     connect(ui->actionExit, &QAction::triggered, this, &QApplication::quit);
     updateControls();
 }
@@ -73,7 +86,7 @@ JudoMasterMainWindow::~JudoMasterMainWindow()
 void JudoMasterMainWindow::printRegistration()
 {
     PrintRegistrationCommand cmd(this);
-    cmd.run();
+    cmd.run(nullptr);
 }
 
 void JudoMasterMainWindow::fileImported()

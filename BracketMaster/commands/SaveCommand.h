@@ -1,6 +1,6 @@
 #pragma once
 
-#include "BaseCommand.h"
+#include "commands/BaseCommand.h"
 
 class SaveCommand : public BaseCommand
 {
@@ -10,7 +10,7 @@ public:
 
     // BaseCommand interface
 public slots:
-    bool run();
+    bool run(IEditor* const editor) override;
 
 private:
     bool m_enableSaveAs;

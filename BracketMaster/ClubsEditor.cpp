@@ -43,7 +43,8 @@ ClubsEditor::ClubsEditor(QWidget *parent) :
 
     connect(ui->addClubBtn, &QPushButton::clicked, this, &ClubsEditor::addClub);
     connect(ui->removeClubBtn, &QPushButton::clicked, this, &ClubsEditor::removeClub);
-    connect(this, &ClubsEditor::clubAdded, ui->clubEditor, &ClubEditor::editClub);
+    // TODO - Fix
+    //connect(this, &ClubsEditor::clubAdded, ui->clubEditor, &ClubEditor::editClub);
     connect(this, &ClubsEditor::clubSelect, ui->clubEditor, &ClubEditor::editClub);
 
     connect(ui->clubList->selectionModel(), &QItemSelectionModel::currentChanged, this, &ClubsEditor::clubSelected);
@@ -66,7 +67,7 @@ void ClubsEditor::addClub()
         return; // Handle null value
 
     JMApp()->clubController()->createClub();
-    QModelIndex addedIndex = model->index(JMApp()->clubController()->clubs()->size() - 1, 0);
+    QModelIndex addedIndex = model->index(JMApp()->clubController()->clubs().size() - 1, 0);
     ui->clubList->selectionModel()->select(addedIndex, QItemSelectionModel::ClearAndSelect);
     clubSelected(addedIndex);
 }
@@ -88,7 +89,7 @@ void ClubsEditor::clubSelected(const QModelIndex &index)
     if(!model)
         return; // Handle null value
 
-    ui->competitorsList->setClubId(model->club(index)->id());
+    ui->competitorsList->setClubId(model->club(index).id());
     emit clubSelect(model->club(index));
 }
 
@@ -110,17 +111,18 @@ void ClubsEditor::clubContextMenu(const QPoint &pos)
 
 void ClubsEditor::printClubRegistration()
 {
-    QModelIndexList indexes = ui->clubList->selectionModel()->selectedRows();
-    QList<Club *> selectedClubs;
-    foreach(QModelIndex index, indexes)
-    {
-        Club *club = dynamic_cast<Club *>(JMApp()->clubController()->find(ui->clubList->model()->data(index, Qt::UserRole).toInt()));
-        if(club)
-        {
-            selectedClubs.append(club);
-        }
-    }
+    Q_ASSERT(true);
+//    QModelIndexList indexes = ui->clubList->selectionModel()->selectedRows();
+//    QList<Club *> selectedClubs;
+//    foreach(QModelIndex index, indexes)
+//    {
+//        Club *club = dynamic_cast<Club *>(JMApp()->clubController()->find(ui->clubList->model()->data(index, Qt::UserRole).toInt()));
+//        if(club)
+//        {
+//            selectedClubs.append(club);
+//        }
+//    }
 
-    PrintRegistrationCommand cmd(this, selectedClubs);
-    cmd.run();
+//    PrintRegistrationCommand cmd(this, selectedClubs);
+//    cmd.run(nullptr);
 }

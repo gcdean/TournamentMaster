@@ -24,9 +24,22 @@ void JudoMasterApplication::setTournament(std::unique_ptr<Tournament> tournament
     m_bracketController.setTournament(m_tournament);
 }
 
+void JudoMasterApplication::setEditor(QSharedPointer<IEditor> editor)
+{
+    m_editor = editor;
+
+    // TODO - Set controllers?
+}
+
 const std::unique_ptr<Tournament> &JudoMasterApplication::tournament() const
 {
     return m_tournament;
+}
+
+IEditor *const JudoMasterApplication::tournamentEditor()
+{
+
+    return m_editor.data();
 }
 
 bool JudoMasterApplication::isModified() const

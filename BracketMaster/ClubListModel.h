@@ -11,7 +11,7 @@ class ClubListModel : public QAbstractListModel
 public:
     explicit ClubListModel(QObject *parent = 0);
 
-    Club* club(const QModelIndex &index);
+    Club club(const QModelIndex &index);
 
     // Overrides
     int rowCount(const QModelIndex &parent) const;
