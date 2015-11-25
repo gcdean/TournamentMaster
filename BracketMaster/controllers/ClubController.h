@@ -14,7 +14,7 @@ class ClubController : public BaseController
 public:
     explicit ClubController(QObject *parent = 0);
 
-    Club *createClub();
+    Club createClub();
 
     void updateClub(Club& club);
     void removeClub(int clubId);
@@ -40,8 +40,7 @@ signals:
 public slots:
 
 private:
-    Club *addClub(Club& club);
-    Club* findClub(int id);
+//    Club* findClub(int id);
     int findNextId() override;
 
 };

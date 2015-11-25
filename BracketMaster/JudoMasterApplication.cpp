@@ -1,6 +1,7 @@
 #include "JudoMasterApplication.h"
 
 #include "data/Tournament.h"
+#include "TournamentDoc.h"
 
 JudoMasterApplication *JMApp()
 {
@@ -13,6 +14,12 @@ JudoMasterApplication::JudoMasterApplication(int &argc, char **argv) :
     , m_tournament(nullptr)
     , m_lastSaveDir(QDir::home())
 {
+
+    QSharedPointer<TournamentDoc> doc = QSharedPointer<TournamentDoc>(new TournamentDoc);
+    QSharedPointer<IEditor> teditor = QSharedPointer<IEditor>(new TournamentEditor(doc));
+
+    setEditor(teditor);
+
 }
 
 void JudoMasterApplication::setTournament(std::unique_ptr<Tournament> tournament)

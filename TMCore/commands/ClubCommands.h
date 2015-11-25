@@ -49,7 +49,7 @@ class CreateClubCommand : public BaseUndoCommand
     Q_OBJECT
 
 public:
-    CreateClubCommand(QObject* parent);
+    CreateClubCommand(QObject* parent = 0);
 
     Club club();
 

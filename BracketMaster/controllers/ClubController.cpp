@@ -12,56 +12,45 @@ ClubController::ClubController(QObject *parent) :
 {
 }
 
-Club *ClubController::createClub()
+Club ClubController::createClub()
 {
-    int clubId = findNextId();
-    Club club(clubId, QString("<Club %1>").arg(clubId), QString("<coach %1>").arg(clubId));
-    return addClub(club);
+    QSharedPointer<CreateClubCommand> cmd = QSharedPointer<CreateClubCommand>(new CreateClubCommand());
+
+    JMApp()->tournamentEditor()->doCommand(cmd);
+
+    Club club = cmd->club();
+
+    emit addedDataObj(&club);
+
+    return club;
 }
 
-Club* ClubController::addClub(Club &club)
-{
-    if(!tournament())
-        return 0;
-
-    Club *newClub = new Club(club);
-    tournament()->clubs().append(newClub);
-    emit addedDataObj(newClub);
-
-    JMApp()->setModified(true);
-    return newClub;
-}
 
 void ClubController::updateClub(Club& club)
 {
-    if(!tournament())
-        return;
 
-    Club* foundClub = findClub(club.id());
-    // Remove the old one and insert the new one?
-    if(!foundClub)
+    QSharedPointer<UpdateClubCommand> cmd = QSharedPointer<UpdateClubCommand>(new UpdateClubCommand(club));
+
+    if(JMApp()->tournamentEditor()->doCommand(cmd))
     {
-        return;
+        emit clubUpdated(&club);
     }
 
-    *foundClub = club;
-    JMApp()->setModified(true);
-
-    emit clubUpdated(foundClub);
 }
 
 void ClubController::removeClub(int clubId)
 {
-    if(!tournament())
-        return;
-
-    Club *foundClub = findClub(clubId);
-    if(foundClub)
+    // Let's find the club.
+    QSharedPointer<GetClubCommand> findCmd = QSharedPointer<GetClubCommand>(new GetClubCommand(clubId));
+    if(JMApp()->tournamentEditor()->doCommand(findCmd))
     {
-        tournament()->clubs().removeOne(foundClub);
-        // May need to delete club which means signature of signal changes
-        JMApp()->setModified(true);
-        emit clubRemoved(foundClub);
+        Club club = findCmd->club();
+        QSharedPointer<RemoveClubCommand> cmd = QSharedPointer<RemoveClubCommand>(new RemoveClubCommand(club));
+
+        if(JMApp()->tournamentEditor()->doCommand(cmd))
+        {
+            emit clubRemoved(&club);
+        }
     }
 }
 
@@ -73,10 +62,13 @@ namespace
 
 const QList<Club> ClubController::clubs() const
 {
-    GetClubsCommand cmd(0);
-    if(cmd.run(JMApp()->tournamentEditor()))
+    if(JMApp()->tournamentEditor())
     {
-        return cmd.clubs();
+        QSharedPointer<GetClubsCommand> cmd = QSharedPointer<GetClubsCommand> (new GetClubsCommand);
+        if(JMApp()->tournamentEditor()->doCommand(cmd))
+        {
+            return cmd->clubs();
+        }
     }
 
     return NOCLUBS;
@@ -84,9 +76,6 @@ const QList<Club> ClubController::clubs() const
 
 Club ClubController::findClubByName(QString name)
 {
-//    if(!tournament())
-//        return 0;
-
     int firstSpace = name.indexOf(' ');
     if(firstSpace != -1)
     {
@@ -95,9 +84,9 @@ Club ClubController::findClubByName(QString name)
 //        qDebug() << "Truncated Name is: (" << name << ")";
     }
 
-    GetClubCommand cmd(name);
-    cmd.run(JMApp()->tournamentEditor());
-    return cmd.club();
+    QSharedPointer<GetClubCommand> cmd = QSharedPointer<GetClubCommand>( new GetClubCommand(name));
+    JMApp()->tournamentEditor()->doCommand(cmd);
+    return cmd->club();
 }
 
 void ClubController::add(int parentId)
@@ -112,12 +101,14 @@ void ClubController::add(int parentId)
 
 int ClubController::size() const
 {
-    if(!tournament())
-    {
-        return 0;
-    }
+//    if(!tournament())
+//    {
+//        return 0;
+//    }
 
-    return tournament()->clubs().size();
+//    return tournament()->clubs().size();
+
+    return clubs().size();
 }
 
 int ClubController::size(int id) const
@@ -129,7 +120,7 @@ int ClubController::size(int id) const
 
 void ClubController::remove(int id)
 {
-    removeIndex(indexOf(id));
+    removeClub(id);
 }
 
 void ClubController::removeIndex(int index)
@@ -155,23 +146,23 @@ int ClubController::indexOf(int id)
     return -1;
 }
 
-Club* ClubController::findClub(int id)
-{
-    Club* club = 0;
+//Club* ClubController::findClub(int id)
+//{
+//    Club* club = 0;
 
-    if(!tournament())
-        return club;
+//    if(!tournament())
+//        return club;
 
-    for(int x = 0; x < tournament()->clubs().size() && !club; x++)
-    {
-        Club* temp = tournament()->clubs()[x];
-        if(temp->id() == id)
-        {
-            club = temp;
-        }
-    }
-    return club;
-}
+//    for(int x = 0; x < tournament()->clubs().size() && !club; x++)
+//    {
+//        Club* temp = tournament()->clubs()[x];
+//        if(temp->id() == id)
+//        {
+//            club = temp;
+//        }
+//    }
+//    return club;
+//}
 
 int ClubController::findNextId()
 {

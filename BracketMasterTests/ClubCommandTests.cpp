@@ -16,6 +16,7 @@ void ClubCommandTests::initTestCase()
 void ClubCommandTests::createClubTest()
 {
     QSharedPointer<CreateClubCommand> cmd = QSharedPointer<CreateClubCommand>(new CreateClubCommand(0));
+
     bool success = m_editor->doCommand(cmd);
     m_testClub = cmd->club();
     QCOMPARE(success, true);

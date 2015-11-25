@@ -101,8 +101,9 @@ bool ImportDataCommand::run(IEditor* const editor)
   //                  qDebug() << "Creating New Club for name " << clubName;
                     // Need to add the club.
                     Q_ASSERT(true);
-//                    club = JMApp()->clubController()->createClub();
-//                    club->setClubName(clubName);
+                    club = JMApp()->clubController()->createClub();
+                    club.setClubName(clubName);
+                    JMApp()->clubController()->updateClub(club);
                 }
 
                 // Now add the competitor.
