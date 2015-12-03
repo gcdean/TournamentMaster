@@ -17,15 +17,6 @@
 #include <QString>
 #include <QWidget>
 
-namespace
-{
-    bool compareClubs(Club* club1, Club* club2)
-    {
-        return club1->clubName().compare(club2->clubName()) < 0;
-    }
-
-}
-
 PrintRegistrationCommand::PrintRegistrationCommand(QWidget *parent, QList<Club > clubs)
     : BaseCommand(parent)
 
@@ -38,7 +29,7 @@ PrintRegistrationCommand::~PrintRegistrationCommand()
 
 }
 
-bool PrintRegistrationCommand::run(IEditor* const editor)
+bool PrintRegistrationCommand::run(IDocument *const doc)
 {
 
     QList<Club >sortedClubs = getClubs();
@@ -78,7 +69,7 @@ QList<Club > PrintRegistrationCommand::getClubs()
 //        sortedClubs.append(m_clubs);
 //    }
 
-//    std::sort(sortedClubs.begin(), sortedClubs.end(), compareClubs);
+//    std::sort(sortedClubs.begin(), sortedClubs.end(), JM::compareClubNames);
 
     return sortedClubs;
 }

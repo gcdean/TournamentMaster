@@ -7,9 +7,9 @@ GetClubsCommand::GetClubsCommand(QObject *parent)
 
 }
 
-bool GetClubsCommand::run(IEditor *const editor)
+bool GetClubsCommand::run(IDocument *const doc)
 {
-    m_clubs = editor->clubs();
+    m_clubs = doc->clubs();
     return true;
 }
 
@@ -38,10 +38,10 @@ Club GetClubCommand::club()
     return m_club;
 }
 
-bool GetClubCommand::run(IEditor *const editor)
+bool GetClubCommand::run(IDocument *const doc)
 {
     bool found = false;
-    foreach(Club club, editor->clubs())
+    foreach(Club club, doc->clubs())
     {
         if((m_byId && club.id() == m_id) || (!m_byId && club.clubName() == m_name))
         {
@@ -65,15 +65,15 @@ Club CreateClubCommand::club()
     return m_club;
 }
 
-bool CreateClubCommand::run(IEditor *const editor)
+bool CreateClubCommand::run(IDocument *const doc)
 {
-    m_club = editor->createClub();
+    m_club = doc->addClub();
     return m_club.isValid();
 }
 
-bool CreateClubCommand::undo(IEditor *editor)
+bool CreateClubCommand::undo(IDocument *doc)
 {
-    return editor->removeClub(m_club.id());
+    return doc->removeClub(m_club.id());
 }
 
 
@@ -84,20 +84,20 @@ UpdateClubCommand::UpdateClubCommand(Club club, QObject *parent)
 
 }
 
-bool UpdateClubCommand::run(IEditor *const editor)
+bool UpdateClubCommand::run(IDocument *const doc)
 {
-    m_origClub = editor->findClub(m_updatedClub.id());
+    m_origClub = doc->club(m_updatedClub.id());
     if(m_origClub.isValid())
     {
-        return editor->updateClub(m_updatedClub);
+        return doc->updateClub(m_updatedClub);
     }
 
     return false;
 }
 
-bool UpdateClubCommand::undo(IEditor *editor)
+bool UpdateClubCommand::undo(IDocument *doc)
 {
-    return editor->updateClub(m_origClub);
+    return doc->updateClub(m_origClub);
 }
 
 RemoveClubCommand::RemoveClubCommand(Club club, QObject *parent)
@@ -107,12 +107,12 @@ RemoveClubCommand::RemoveClubCommand(Club club, QObject *parent)
 
 }
 
-bool RemoveClubCommand::run(IEditor *const editor)
+bool RemoveClubCommand::run(IDocument *const doc)
 {
-    return editor->removeClub(m_origClub.id());
+    return doc->removeClub(m_origClub.id());
 }
 
-bool RemoveClubCommand::undo(IEditor *editor)
+bool RemoveClubCommand::undo(IDocument *doc)
 {
-    return editor->addClub(m_origClub);
+    return doc->addClub(m_origClub);
 }

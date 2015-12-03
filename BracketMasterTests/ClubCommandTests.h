@@ -5,7 +5,7 @@
 #include "IEditor.h"
 #include <QObject>
 
-class TournamentEditor;
+class CommandController;
 
 class ClubCommandTests : public QObject
 {
@@ -20,7 +20,7 @@ private slots:
     void removeClubTest();
 
 private:
-    QSharedPointer<IEditor> m_editor;
+    QSharedPointer<CommandController> m_editor;
     Club m_testClub;
 };
 

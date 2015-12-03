@@ -5,6 +5,7 @@
 #include "JudoMasterApplication.h"
 #include "JMUtil.h"
 #include "data/Tournament.h"
+#include "data/JMDataObj.h" // TODO - delete this.
 
 #include <QString>
 
@@ -16,33 +17,39 @@ CompetitorController::CompetitorController(QObject *parent) :
 Competitor *CompetitorController::createCompetitor(QString firstName, QString lastName, JM::Gender gender, int age, double weight, JM::Rank rank, int clubId)
 {
     int compId = findNextId();
-    Competitor *competitor = new Competitor(compId, firstName, lastName, gender, age, weight, rank, clubId);
 
-    tournament()->competitors().append(competitor);
+    // TODO - Use Editor/Doc to create competitor
+//    Competitor *competitor = new Competitor(compId, firstName, lastName, gender, age, weight, rank, clubId);
+
+//    tournament()->competitors().append(competitor);
 
     Club *club = dynamic_cast<Club *>(JMApp()->clubController()->find(clubId));
-    if(club)
-    {
-        club->addCompetitor(competitor);
-    }
+    // TODO - Fix below
+//    if(club)
+//    {
+//        club->addCompetitor(competitor);
+//    }
 
     JMApp()->setModified(true);
-    emit addedDataObj(competitor);
+    // TODO - Change signal
+//    emit addedDataObj(competitor);
 
-    return competitor;
+//    return competitor;
+    return 0;
 }
 
 JMDataObj* CompetitorController::find(int id) const
 {
     // Real simple linear search for now.
-    foreach(Competitor* competitor, tournament()->competitors())
-    {
-        if(competitor->id() == id)
-        {
-            // Found it!
-            return competitor;
-        }
-    }
+      // TODO - Fix Below or change method signature.
+//    foreach(Competitor* competitor, tournament()->competitors())
+//    {
+//        if(competitor->id() == id)
+//        {
+//            // Found it!
+//            return competitor;
+//        }
+//    }
 
     return 0;
 }
@@ -50,12 +57,14 @@ JMDataObj* CompetitorController::find(int id) const
 void CompetitorController::add(int parentId)
 {
     int compId = findNextId();
-    Competitor *competitor = new Competitor(compId, QString("Competitor"), QString("%1").arg(compId), JM::Female, 0, 0, JM::White, parentId);
-    tournament()->competitors().append(competitor);
+    // TODO - CHange to use commands
+//    Competitor *competitor = new Competitor(compId, QString("Competitor"), QString("%1").arg(compId), JM::Female, 0, 0, JM::White, parentId);
+//    tournament()->competitors().append(competitor);
 
     JMApp()->setModified(true);
 
-    emit addedDataObj(competitor);
+    // TODO change signal
+//    emit addedDataObj(competitor);
 }
 
 int CompetitorController::size() const
@@ -63,7 +72,9 @@ int CompetitorController::size() const
     if(!tournament())
         return 0;
 
-    return tournament()->competitors().size();
+    // TODO - use command
+//    return tournament()->competitors().size();
+    return 0;
 }
 
 int CompetitorController::size(int id) const
@@ -72,20 +83,21 @@ int CompetitorController::size(int id) const
     if(!tournament())
         return numCompetitors;
 
-    if(id == -1)
-    {
-        numCompetitors = tournament()->competitors().size();
-    }
-    else
-    {
-        foreach(Competitor *competitor, tournament()->competitors())
-        {
-            if(competitor->clubId() == id)
-            {
-                numCompetitors++;
-            }
-        }
-    }
+    // TODO - use command
+//    if(id == -1)
+//    {
+//        numCompetitors = tournament()->competitors().size();
+//    }
+//    else
+//    {
+//        foreach(Competitor *competitor, tournament()->competitors())
+//        {
+//            if(competitor->clubId() == id)
+//            {
+//                numCompetitors++;
+//            }
+//        }
+//    }
 
     return numCompetitors;
 }
@@ -99,14 +111,15 @@ int CompetitorController::size(int id) const
  */
 Competitor *CompetitorController::findByName(QString firstName, QString lastName)
 {
-    foreach(Competitor *competitor, tournament()->competitors())
-    {
-        if(competitor->firstName().compare(firstName, Qt::CaseInsensitive) == 0 && competitor->lastName().compare(lastName, Qt::CaseInsensitive) == 0)
-        {
-            // Found it.
-            return competitor;
-        }
-    }
+    // TODO - use command
+//    foreach(Competitor *competitor, tournament()->competitors())
+//    {
+//        if(competitor->firstName().compare(firstName, Qt::CaseInsensitive) == 0 && competitor->lastName().compare(lastName, Qt::CaseInsensitive) == 0)
+//        {
+//            // Found it.
+//            return competitor;
+//        }
+//    }
 
     return 0;
 }
@@ -123,13 +136,14 @@ const QList<Competitor *> CompetitorController::clubCompetitors(int clubId) cons
 
     if(tournament())
     {
-        foreach(Competitor *competitor, tournament()->competitors())
-        {
-            if(competitor->clubId() == clubId)
-            {
-                competitors.append(competitor);
-            }
-        }
+        // TODO - use command
+//        foreach(Competitor *competitor, tournament()->competitors())
+//        {
+//            if(competitor->clubId() == clubId)
+//            {
+//                competitors.append(competitor);
+//            }
+//        }
     }
 
     return competitors;
@@ -141,38 +155,41 @@ const QList<Competitor *> CompetitorController::competitors(int clubId) const
     {
         return QList<Competitor *>();
     }
-    if(clubId == -1)
-        return tournament()->competitors();
-    else
-    {
-        // TODO: I think this should be moved to the Club Controller and this controller
-        // should only return all competitors.
-        QList<Competitor *> competitors;
+    // TODO - use command
+//    if(clubId == -1)
+//        return tournament()->competitors();
+//    else
+//    {
+//        // TODO: I think this should be moved to the Club Controller and this controller
+//        // should only return all competitors.
+//        QList<Competitor *> competitors;
 
-        foreach(Competitor *competitor, tournament()->competitors())
-        {
-            if(competitor->clubId() == clubId)
-            {
-                competitors.append(competitor);
-            }
-        }
+//        foreach(Competitor *competitor, tournament()->competitors())
+//        {
+//            if(competitor->clubId() == clubId)
+//            {
+//                competitors.append(competitor);
+//            }
+//        }
 
-        return competitors;
+//        return competitors;
 
-    }
+//    }
+    return QList<Competitor *>();
 
 }
 
 int CompetitorController::findNextId()
 {
     int id = 0;
-    if(tournament())
-    {
-        foreach(Competitor* competitor, tournament()->competitors())
-        {
-            id = std::max(id, competitor->id());
-        }
-    }
+    // TODO - remove this method
+//    if(tournament())
+//    {
+//        foreach(Competitor* competitor, tournament()->competitors())
+//        {
+//            id = std::max(id, competitor->id());
+//        }
+//    }
 
     return id + 1;
 }

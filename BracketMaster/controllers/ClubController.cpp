@@ -16,11 +16,12 @@ Club ClubController::createClub()
 {
     QSharedPointer<CreateClubCommand> cmd = QSharedPointer<CreateClubCommand>(new CreateClubCommand());
 
-    JMApp()->tournamentEditor()->doCommand(cmd);
+    JMApp()->commandController()->doCommand(cmd);
 
     Club club = cmd->club();
 
-    emit addedDataObj(&club);
+    // TODO - Fix signal
+//    emit addedDataObj(&club);
 
     return club;
 }
@@ -31,7 +32,7 @@ void ClubController::updateClub(Club& club)
 
     QSharedPointer<UpdateClubCommand> cmd = QSharedPointer<UpdateClubCommand>(new UpdateClubCommand(club));
 
-    if(JMApp()->tournamentEditor()->doCommand(cmd))
+    if(JMApp()->commandController()->doCommand(cmd))
     {
         emit clubUpdated(&club);
     }
@@ -42,12 +43,12 @@ void ClubController::removeClub(int clubId)
 {
     // Let's find the club.
     QSharedPointer<GetClubCommand> findCmd = QSharedPointer<GetClubCommand>(new GetClubCommand(clubId));
-    if(JMApp()->tournamentEditor()->doCommand(findCmd))
+    if(JMApp()->commandController()->doCommand(findCmd))
     {
         Club club = findCmd->club();
         QSharedPointer<RemoveClubCommand> cmd = QSharedPointer<RemoveClubCommand>(new RemoveClubCommand(club));
 
-        if(JMApp()->tournamentEditor()->doCommand(cmd))
+        if(JMApp()->commandController()->doCommand(cmd))
         {
             emit clubRemoved(&club);
         }
@@ -62,10 +63,10 @@ namespace
 
 const QList<Club> ClubController::clubs() const
 {
-    if(JMApp()->tournamentEditor())
+    if(JMApp()->commandController())
     {
         QSharedPointer<GetClubsCommand> cmd = QSharedPointer<GetClubsCommand> (new GetClubsCommand);
-        if(JMApp()->tournamentEditor()->doCommand(cmd))
+        if(JMApp()->commandController()->doCommand(cmd))
         {
             return cmd->clubs();
         }
@@ -85,7 +86,7 @@ Club ClubController::findClubByName(QString name)
     }
 
     QSharedPointer<GetClubCommand> cmd = QSharedPointer<GetClubCommand>( new GetClubCommand(name));
-    JMApp()->tournamentEditor()->doCommand(cmd);
+    JMApp()->commandController()->doCommand(cmd);
     return cmd->club();
 }
 
@@ -125,23 +126,27 @@ void ClubController::remove(int id)
 
 void ClubController::removeIndex(int index)
 {
-    if(index < 0 || index >= tournament()->clubs().size())
-        return;
+    // TODO - use command
+//    if(index < 0 || index >= tournament()->clubs().size())
+//        return;
 
-    JMApp()->setModified(true);
-    emit removedDataObj(tournament()->clubs().at(index));
-    tournament()->clubs().removeAt(index);
+//    JMApp()->setModified(true);
+
+//    // TODO - Fixe signal
+////    emit removedDataObj(tournament()->clubs().at(index));
+//    tournament()->clubs().removeAt(index);
 }
 
 int ClubController::indexOf(int id)
 {
     int index = 0;
-    foreach(const Club* club, tournament()->clubs())
-    {
-        if(id == club->id())
-            return index;
-        index++;
-    }
+    // TODO - use command. Do we need this method?
+//    foreach(const Club* club, tournament()->clubs())
+//    {
+//        if(id == club->id())
+//            return index;
+//        index++;
+//    }
 
     return -1;
 }
@@ -169,11 +174,12 @@ int ClubController::findNextId()
     int nextId = 0;
     if(tournament())
     {
-        foreach (Club* club, tournament()->clubs())
-        {
+        // TODO - Remove this method.
+//        foreach (Club* club, tournament()->clubs())
+//        {
 
-            nextId = std::max(nextId, club->id());
-        }
+//            nextId = std::max(nextId, club->id());
+//        }
     }
 
     // We now have the max club id.
@@ -185,23 +191,26 @@ int ClubController::findNextId()
 
 JMDataObj *ClubController::find(int id) const
 {
-    foreach(Club *club, tournament()->clubs())
-    {
-        if(id == club->id())
-            return club;
-    }
+    // TODO - Fix return
+//    foreach(Club *club, tournament()->clubs())
+//    {
+//        if(id == club->id())
+//            return club;
+//    }
 
     return 0;
 }
 
 const QList<Competitor *> ClubController::competitors(int parentId) const
 {
-    Club *club = dynamic_cast<Club *>(find(parentId));
+    // TODO - Fix this.
+//    Club *club = dynamic_cast<Club *>(find(parentId));
 
-    if(club)
-    {
-        return club->competitors();
-    }
+//    if(club)
+//    {
+//        // TODO - Fix below
+////        return club->competitors();
+//    }
 
     return NOCOMPETITORS;
 }

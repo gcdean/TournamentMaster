@@ -130,7 +130,8 @@ QVariant BracketTableModel::data(const QModelIndex &index, int role) const
                 case bracket::MatNum:
                     return QVariant(selectedBracket->matNumber());
                 case bracket::Competitors:
-                    return QVariant(selectedBracket->competitors().size());
+                        // TODO - Fix with command?
+//                    return QVariant(selectedBracket->competitors().size());
                 default:
                     return QVariant("Unknown");
             }
@@ -211,7 +212,7 @@ bool BracketTableModel::setData(const QModelIndex &index, const QVariant &value,
         case bracket::Type: // Weight Type
         {
             int t = value.toInt();
-            bracket->setWeightType((Bracket::WeightType)t);
+            bracket->setWeightType((JM::WeightType)t);
             break;
         }
 

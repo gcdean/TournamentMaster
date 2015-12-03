@@ -1,118 +1,165 @@
 #include "Competitor.h"
-
+#include "CompetitorData.h"
 #include "JMUtil.h"
 
-Competitor::Competitor(int id, QString firstName, QString lastName, JM::Gender gender, int age , double weight, JM::Rank rank, int clubId) :
-     JMDataObj(id)
-    , m_firstName(firstName)
-    , m_lastName(lastName)
-    , m_gender(gender)
-    , m_age(age)
-    , m_weight(weight)
-    , m_rank(rank)
-    , m_numBrackets(1)
-    , m_notes()
-    , m_clubId(clubId)
+Competitor::Competitor()
 {
+    m_data = new CompetitorData;
 }
 
 Competitor::Competitor(int id)
-    : JMDataObj(id)
 {
-
+    m_data = new CompetitorData;
+    m_data->m_id = id;
 }
 
 Competitor::Competitor(const Competitor &src)
-    : JMDataObj(src)
+    : m_data(src.m_data)
 {
-    m_firstName = src.firstName();
-    m_lastName = src.lastName();
-    m_gender = src.gender();
-    m_age = src.age();
-    m_weight = src.weight();
-    m_rank = src.rank();
-    m_clubId = src.clubId();
-    m_numBrackets = src.numBrackets();
-    m_notes = src.notes();
 }
 
-Competitor::Competitor()
-    : JMDataObj(-1)
+Competitor::~Competitor()
 {
 
 }
 
-Competitor &Competitor::operator =(const Competitor &src)
+int Competitor::id() const
 {
-    JMDataObj::operator =(src);
-
-    setFirstName(src.firstName());
-    setLastName(src.lastName());
-    setGender(src.gender());
-    setAge(src.age());
-    setWeight(src.weight());
-    setRank(src.rank());
-    setClubId(src.clubId());
-    setNumBrackets(src.numBrackets());
-    setNotes(src.notes());
-
-    return *this;
-
+    return m_data->m_id;
 }
 
-void Competitor::read(const QJsonObject &json)
+void Competitor::setId(int id)
 {
-    JMDataObj::read(json);
-
-    m_firstName = json["fname"].toString();
-    m_lastName = json["lname"].toString();
-    m_gender = genderFromString(json["gender"].toString());
-    m_age = json["age"].toInt();
-    m_weight = json["weight"].toDouble();
-
-    m_rank = rankFromString(json["rank"].toString());
-    m_numBrackets = json["numBrackets"].toInt();
-    m_notes = json["notes"].toString();
-
-    m_clubId = json["clubid"].toInt();
-
+    m_data->m_id = id;
 }
 
-void Competitor::write(QJsonObject &json) const
+
+QString Competitor::firstName() const
 {
-    JMDataObj::write(json);
-    json["fname"] = m_firstName;
-    json["lname"] = m_lastName;
-    json["gender"] = genderToString(m_gender);
-    json["age"] = m_age;
-    json["weight"] = m_weight;
-
-    json["rank"] = rankToString(m_rank);
-    json["numBrackets"] = m_numBrackets;
-    json["notes"] = m_notes;
-    json["clubid"] = m_clubId;
-
+    return m_data->m_firstName;
 }
+
+void Competitor::setFirstName(QString name)
+{
+    m_data->m_firstName = name;
+}
+
+QString Competitor::lastName() const
+{
+    return m_data->m_lastName;
+}
+
+void Competitor::setLastName(QString name) {m_data->m_lastName = name;}
+
+JM::Gender Competitor::gender() const {return m_data->m_gender;}
+
+void Competitor::setGender(JM::Gender gender) {m_data->m_gender = gender;}
+
+int Competitor::age() const {return m_data->m_age;}
+
+void Competitor::setAge(int age) {m_data->m_age = age;}
+
+double Competitor::weight() const {return m_data->m_weight;}
+
+void Competitor::setWeight(double weight) {m_data->m_weight = weight;}
+
+JM::Rank Competitor::rank() const {return m_data->m_rank;}
+
+void Competitor::setRank(JM::Rank rank) {m_data->m_rank = rank;}
+
+int Competitor::clubId() const {return m_data->m_clubId;}
+
+void Competitor::setClubId(int id) {m_data->m_clubId = id;}
+
+int Competitor::numBrackets() const {return m_data->m_numBrackets;}
+
+void Competitor::setNumBrackets(int num) {m_data->m_numBrackets = num;}
+
+QString Competitor::notes() const { return m_data->m_notes;}
+
+void Competitor::setNotes(QString notes) {m_data->m_notes = notes;}
+
+bool Competitor::isValid() const
+{
+    return m_data->m_id != -1;
+}
+
+bool Competitor::operator ==(const Competitor &src)
+{
+    return id() == src.id();
+}
+
+//Competitor &Competitor::operator =(const Competitor &src)
+//{
+//    JMDataObj::operator =(src);
+
+//    setFirstName(src.firstName());
+//    setLastName(src.lastName());
+//    setGender(src.gender());
+//    setAge(src.age());
+//    setWeight(src.weight());
+//    setRank(src.rank());
+//    setClubId(src.clubId());
+//    setNumBrackets(src.numBrackets());
+//    setNotes(src.notes());
+
+//    return *this;
+
+//}
+
+//void Competitor::read(const QJsonObject &json)
+//{
+//    JMDataObj::read(json);
+
+//    m_firstName = json["fname"].toString();
+//    m_lastName = json["lname"].toString();
+//    m_gender = genderFromString(json["gender"].toString());
+//    m_age = json["age"].toInt();
+//    m_weight = json["weight"].toDouble();
+
+//    m_rank = rankFromString(json["rank"].toString());
+//    m_numBrackets = json["numBrackets"].toInt();
+//    m_notes = json["notes"].toString();
+
+//    m_clubId = json["clubid"].toInt();
+
+//}
+
+//void Competitor::write(QJsonObject &json) const
+//{
+//    JMDataObj::write(json);
+//    json["fname"] = m_firstName;
+//    json["lname"] = m_lastName;
+//    json["gender"] = genderToString(m_gender);
+//    json["age"] = m_age;
+//    json["weight"] = m_weight;
+
+//    json["rank"] = rankToString(m_rank);
+//    json["numBrackets"] = m_numBrackets;
+//    json["notes"] = m_notes;
+//    json["clubid"] = m_clubId;
+
+//}
 
 void writeCompetitorHeader(QTextStream &stream)
 {
     stream << "CompetitorId,FirstName,LastName,Gender,Age,Weight,Rank,NumBrackets,ClubId,Notes" << endl;
 }
 
-void Competitor::write(QTextStream &stream) const
-{
-    JMDataObj::write(stream);
+//void Competitor::write(QTextStream &stream) const
+//{
+//    JMDataObj::write(stream);
 
-    stream << "," << m_firstName;
-    stream << "," << m_lastName;
-    stream << "," << genderToString(m_gender);
-    stream << "," << m_age;
-    stream << "," << m_weight;
-    stream << "," << rankToString(m_rank);
-    stream << "," << m_numBrackets;
-    stream << "," << m_clubId;
+//    stream << "," << m_firstName;
+//    stream << "," << m_lastName;
+//    stream << "," << genderToString(m_gender);
+//    stream << "," << m_age;
+//    stream << "," << m_weight;
+//    stream << "," << rankToString(m_rank);
+//    stream << "," << m_numBrackets;
+//    stream << "," << m_clubId;
 
-    QString tmp(m_notes);
-    stream << "," << prepareStringForCSV(tmp);
-    stream << endl;
-}
+//    QString tmp(m_notes);
+//    stream << "," << prepareStringForCSV(tmp);
+//    stream << endl;
+//}

@@ -16,7 +16,7 @@ public:
     ~PrintBracketsCommand();
 
     // BaseCommand interface
-    bool run(IEditor* const editor) override;
+    bool run(IDocument* const doc) override;
 
 private:
     QString m_tournament;

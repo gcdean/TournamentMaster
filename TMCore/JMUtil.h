@@ -3,6 +3,8 @@
 #include <QObject>
 #include <QString>
 
+class Club;
+
 namespace JM
 {
 
@@ -33,12 +35,22 @@ enum Gender
     NotApplicable
 };
 
+enum WeightType
+{
+    Light,
+    Medium,
+    Heavy,
+    SuperHeavy,
+    IJF
+};
+
 
 
 }
 
 Q_DECLARE_METATYPE(JM::Rank)
 Q_DECLARE_METATYPE(JM::Gender)
+Q_DECLARE_METATYPE(JM::WeightType)
 
 QString rankToString(JM::Rank rank);
 JM::Rank rankFromString(QString rankStr);
@@ -48,3 +60,4 @@ JM::Gender genderFromString(QString genderStr);
 
 QString prepareStringForCSV(QString str);
 
+bool compareClubNames(Club* club1, Club* club2);

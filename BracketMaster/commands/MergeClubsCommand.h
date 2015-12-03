@@ -11,7 +11,7 @@ public:
     MergeClubsCommand(Club *srcClub, Club *destClub);
 
     // BaseCommand interface
-    virtual bool run(IEditor* const editor);
+    virtual bool run(IDocument* const doc);
 
 private:
     Club *m_srcClub;

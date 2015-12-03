@@ -24,7 +24,11 @@ SOURCES += \
     main.cpp \
     BracketTests.cpp \
     ClubTests.cpp \
-    ClubCommandTests.cpp
+    ClubCommandTests.cpp \
+    CompetitorTests.cpp \
+    TournamentTests.cpp \
+    BracketCommandTests.cpp \
+    TestDoc.cpp
 
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
@@ -34,7 +38,11 @@ HEADERS += \
     AutoTest.h \
     BracketTests.h \
     ClubTests.h \
-    ClubCommandTests.h
+    ClubCommandTests.h \
+    CompetitorTests.h \
+    TournamentTests.h \
+    BracketCommandTests.h \
+    TestDoc.h
 
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../TMCore/release/ -lTMCore

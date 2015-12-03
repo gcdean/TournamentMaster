@@ -11,6 +11,6 @@ public:
 
     // BaseCommand interface
 public slots:
-    bool run(IEditor* const editor) override;
+    bool run(IDocument* const doc) override;
 };
 

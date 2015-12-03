@@ -1,7 +1,6 @@
 #include "ClubTests.h"
 
 #include <QDebug>
-#include <QJsonObject>
 
 #include "data/Club.h"
 

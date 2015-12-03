@@ -1,62 +1,58 @@
 #pragma once
 
-#include <QDate>
-#include <QJsonObject>
-#include <QList>
-#include <QObject>
-#include <QString>
-#include <QTime>
+#include "TMCore.h"
+#include "TournamentData.h"
 
-#include "JMDataObj.h"
+//#include <QDate>
+//#include <QJsonObject>
+//#include <QList>
+//#include <QObject>
+//#include <QString>
+//#include <QTime>
 
-class Bracket;
-class Club;
-class Competitor;
-class Match;
+//#include "JMDataObj.h"
 
-class Bracket;
+//class Bracket;
+//class Club;
+//class Competitor;
+//class Match;
 
-class Tournament : public JMDataObj
+//class Bracket;
+
+class Tournament
 {
 public:
     explicit Tournament(int id = -1);
+    Tournament(const Tournament& src);
 
-    void updateTournament(const Tournament &src);
+//    void updateTournament(const Tournament &src);
 
-    QString fileName() const {return m_fileName;}
-    void setFileName(QString filename) {m_fileName = filename;}
-    QString name() const {return m_name;}
-    void setName(QString name) {m_name = name;}
-    QDate date() const {return m_date;}
-    void setDate(QDate date) {m_date = date;}
-    QTime startTime() const {return m_startTime;}
-    void setStartTime(QTime startTime) {m_startTime = startTime;}
+    int id() const;
+    void setId(int id);
+    QString name() const;
+    void setName(QString name);
+    QDate date() const;
+    void setDate(QDate date);
+    QTime startTime() const;
+    void setStartTime(QTime startTime);
     bool useTexasMatchCards() const;
     void setTexasMatchCards(bool use);
 
-    QList<Club *>& clubs() {return m_clubs;}
-    QList<Competitor *>& competitors() {return m_competitors;}
-    QList<Bracket *>& brackets() {return m_brackets;}
-    QList<Match *>& matches() {return m_matches;}
+//    QList<Club *>& clubs() {return m_clubs;}
+//    QList<Competitor *>& competitors() {return m_competitors;}
+//    QList<Bracket *>& brackets() {return m_brackets;}
+//    QList<Match *>& matches() {return m_matches;}
 
-    void read(QJsonObject &json);
-    void write(QJsonObject& json) const;
-    //void write(QTextStream &stream) const;
-    void write (QString dirname) const;
+//    void read(QJsonObject &json);
+//    void write(QJsonObject& json) const;
+//    //void write(QTextStream &stream) const;
+//    void write (QString dirname) const;
 
-    Tournament& operator =(const Tournament& src);
+//    Tournament& operator =(const Tournament& src);
+    bool operator ==(const Tournament& src);
 
 private:
-    QString m_fileName;     // File name used to store the tournament.
-    QString m_name;
-    QDate m_date;
-    QTime m_startTime;
-    bool m_useTexasMatchCards;
-
-    QList<Club *> m_clubs;
-    QList<Competitor *> m_competitors;
-    QList <Bracket *> m_brackets;
-    QList <Match *> m_matches;
+    QSharedDataPointer<TournamentData> m_data;
 
 };
 

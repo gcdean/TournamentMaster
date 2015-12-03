@@ -19,7 +19,7 @@ ExportCSVCommand::~ExportCSVCommand()
 
 
 
-bool ExportCSVCommand::run(IEditor* const editor)
+bool ExportCSVCommand::run(IDocument *const doc)
 {
     QString dir = QFileDialog::getExistingDirectory(dynamic_cast<QWidget *>(parent()), "Select Directory to export to.");
     if(dir.isEmpty())
@@ -27,7 +27,10 @@ bool ExportCSVCommand::run(IEditor* const editor)
         return done(false);
     }
     qDebug() << "EXPORT TO: (" << dir << ")";
-    JMApp()->tournament()->write(dir);
+
+    // TODO - Fix this. Use editor/doc
+    doc->save();
+//    JMApp()->tournament()->write(dir);
 
     return done(true);
 }

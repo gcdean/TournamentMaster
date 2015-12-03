@@ -15,7 +15,7 @@ public:
 
     // BaseCommand interface
 public:
-    bool run(IEditor* const editor) override;
+    bool run(IDocument* const doc) override;
 
 private:
     QList<Club > getClubs();

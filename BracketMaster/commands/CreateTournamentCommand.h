@@ -12,6 +12,6 @@ public:
 
     // BaseCommand interface
 public slots:
-    bool run(IEditor* const editor);
+    bool run(IDocument* const doc);
 };
 

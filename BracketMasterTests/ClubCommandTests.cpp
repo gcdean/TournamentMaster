@@ -2,7 +2,7 @@
 
 #include "commands/ClubCommands.h"
 #include "TournamentDoc.h"
-#include "TournamentEditor.h"
+#include "CommandController.h"
 
 #include <QDebug>
 #include <QSharedPointer>
@@ -10,7 +10,7 @@
 void ClubCommandTests::initTestCase()
 {
     QSharedPointer<TournamentDoc> doc = QSharedPointer<TournamentDoc>(new TournamentDoc);
-    m_editor = QSharedPointer<IEditor>(new TournamentEditor(doc));
+    m_editor = QSharedPointer<CommandController>(new CommandController(doc));
 }
 
 void ClubCommandTests::createClubTest()

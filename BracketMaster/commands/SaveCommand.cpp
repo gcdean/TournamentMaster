@@ -24,40 +24,44 @@ SaveCommand::~SaveCommand()
 
 
 
-bool SaveCommand::run(IEditor* const editor)
+bool SaveCommand::run(IDocument *const doc)
 {
-    // Get the tournament info
-    const std::unique_ptr<Tournament> &tournament = JMApp()->tournament();
+    Q_ASSERT(false);
+    // TODO - Use to editor/doc
+    return false;
 
-    if(tournament->fileName().isEmpty() || m_enableSaveAs)
-    {
-        QString newfileName = QFileDialog::getSaveFileName(dynamic_cast<QWidget *>(parent()), "Save", JMApp()->lastSaveDir().absolutePath(), "Tournament Files (*.ecj);;JSON Files (*.json)");
-        if(newfileName.isEmpty())
-        {
-            return done(false);
-        }
+//    // Get the tournament info
+//    const std::unique_ptr<Tournament> &tournament = JMApp()->tournament();
 
-        QFileInfo finfo(newfileName);
-        JMApp()->setLastSaveDir(finfo.absoluteDir());
+//    if(tournament->fileName().isEmpty() || m_enableSaveAs)
+//    {
+//        QString newfileName = QFileDialog::getSaveFileName(dynamic_cast<QWidget *>(parent()), "Save", JMApp()->lastSaveDir().absolutePath(), "Tournament Files (*.ecj);;JSON Files (*.json)");
+//        if(newfileName.isEmpty())
+//        {
+//            return done(false);
+//        }
 
-        tournament->setFileName(newfileName);
-    }
+//        QFileInfo finfo(newfileName);
+//        JMApp()->setLastSaveDir(finfo.absoluteDir());
 
-    QFile saveFile(tournament->fileName());
+//        tournament->setFileName(newfileName);
+//    }
 
-    if(!saveFile.open(QIODevice::WriteOnly))
-    {
-        qWarning("Could not open file for writing");
-    }
+//    QFile saveFile(tournament->fileName());
 
-    QJsonObject trnObj;
-    tournament->write(trnObj);
+//    if(!saveFile.open(QIODevice::WriteOnly))
+//    {
+//        qWarning("Could not open file for writing");
+//    }
 
-    QJsonDocument saveDoc(trnObj);
-    if(-1 == saveFile.write(saveDoc.toJson()))
-    {
-        return done(false);
-    }
+//    QJsonObject trnObj;
+//    tournament->write(trnObj);
 
-    return done(true);
+//    QJsonDocument saveDoc(trnObj);
+//    if(-1 == saveFile.write(saveDoc.toJson()))
+//    {
+//        return done(false);
+//    }
+
+//    return done(true);
 }

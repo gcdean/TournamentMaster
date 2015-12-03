@@ -18,7 +18,7 @@ public:
     const QList<Competitor *> skippedCompetitors() const;
 
     // BaseCommand interface
-    virtual bool run(IEditor* const editor);
+    virtual bool run(IDocument* const doc);
 
 private:
     QList<Competitor *> m_importedCompetitors;

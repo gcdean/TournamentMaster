@@ -1,5 +1,7 @@
 #include "JMUtil.h"
 
+#include "data/Club.h"
+
 namespace
 {
     const QString WhiteStr("White");
@@ -122,4 +124,9 @@ Gender genderFromString(QString genderStr)
 QString prepareStringForCSV(QString str)
 {
     return str.replace(QString(","), QString(";"));
+}
+
+bool compareClubNames(Club* club1, Club* club2)
+{
+    return club1->clubName().compare(club2->clubName(), Qt::CaseInsensitive) < 0;
 }

@@ -14,7 +14,7 @@ public:
 
 public slots:
     // BaseCommand interface
-    bool run(IEditor *const editor);
+    bool run(IDocument *const doc);
 
 private:
     QList<Club> m_clubs;
@@ -33,7 +33,7 @@ public:
 
 public slots:
     // BaseCommand interface
-    bool run(IEditor *const editor);
+    bool run(IDocument *const doc);
 
 private:
     bool m_byId;
@@ -55,8 +55,8 @@ public:
 
     // BaseUndoCommand interface
 public slots:
-    bool run(IEditor* const editor) override;
-    bool undo(IEditor *editor);
+    bool run(IDocument* const doc) override;
+    bool undo(IDocument *doc) override;
 
 private:
     Club m_club;
@@ -72,9 +72,9 @@ public:
 
 public slots:
     // BaseCommand interface
-    bool run(IEditor *const editor) override;
+    bool run(IDocument *const doc) override;
     // BaseUndoCommand interface
-    bool undo(IEditor *editor) override;
+    bool undo(IDocument *doc) override;
 
 private:
     Club m_updatedClub;
@@ -90,9 +90,9 @@ public:
 
 public slots:
     // BaseCommand interface
-    bool run(IEditor *const editor) override;
+    bool run(IDocument *const doc) override;
     // BaseUndoCommand interface
-    bool undo(IEditor *editor) override;
+    bool undo(IDocument *doc) override;
 
 private:
     Club m_origClub;

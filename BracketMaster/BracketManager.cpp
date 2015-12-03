@@ -98,10 +98,11 @@ void BracketManager::resetMatCompetitors()
     const QList<Bracket *> *brackets = JMApp()->bracketController()->brackets();
     foreach(Bracket *bracket, *brackets)
     {
-        if(bracket->matNumber() == 1)
-            mat1 += bracket->competitors().size();
-        if(bracket->matNumber() == 2)
-            mat2 += bracket->competitors().size();
+        // TODO - Fix
+//        if(bracket->matNumber() == 1)
+//            mat1 += bracket->competitors().size();
+//        if(bracket->matNumber() == 2)
+//            mat2 += bracket->competitors().size();
     }
 
     ui->mat1Cntr->display(mat1);
@@ -203,9 +204,10 @@ void BracketManager::rowChanged(const QModelIndex &current, const QModelIndex &p
         // Set the id in the competitor list.
         if(qv.isValid())
         {
-            m_currentBracket = dynamic_cast<Bracket *>(JMApp()->bracketController()->find(qv.toInt()));
-            CompetitorTableModel* cmodel = dynamic_cast<CompetitorTableModel *>(ui->bracketCompetitors->tableModel());
-            cmodel->setParentId(qv.toInt());
+            // TODO Fix getting the bracket
+//            m_currentBracket = dynamic_cast<Bracket *>(JMApp()->bracketController()->find(qv.toInt()));
+//            CompetitorTableModel* cmodel = dynamic_cast<CompetitorTableModel *>(ui->bracketCompetitors->tableModel());
+//            cmodel->setParentId(qv.toInt());
         }
     }
 
@@ -230,8 +232,9 @@ void BracketManager::removeCompetitorFromBracket()
     QModelIndexList lst = ui->bracketCompetitors->tableView()->selectionModel()->selectedRows();
     foreach(const QModelIndex& index, lst)
     {
-        Competitor *competitor = m_currentBracket->competitors().at(index.row());
-        JMApp()->bracketController()->removeCompetitorFromBracket(m_currentBracket->id(), competitor->id());
+        // TODO - Fix with command(s).
+//        Competitor *competitor = m_currentBracket->competitors().at(index.row());
+//        JMApp()->bracketController()->removeCompetitorFromBracket(m_currentBracket->id(), competitor->id());
     }
 
     resetMatCompetitors();
@@ -264,7 +267,9 @@ void BracketManager::editBracket()
 
     QModelIndex modelIndex = selected[0];
     QVariant qv = m_bracketModel->data(modelIndex, Qt::UserRole);
-    Bracket *bracket = dynamic_cast<Bracket *>(JMApp()->bracketController()->find(qv.toInt()));
+    // TODO - Fix gettting bracekt.
+    Bracket* bracket = nullptr;
+//    Bracket *bracket = dynamic_cast<Bracket *>(JMApp()->bracketController()->find(qv.toInt()));
 
     BracketEditor be(bracket, this);
     be.exec();
@@ -284,7 +289,9 @@ void BracketManager::editCompetitor()
 
     CompetitorTableModel *cmodel = allCompetitorModel();
     QVariant qv = cmodel->data(rootIndex, Qt::UserRole);
-    Competitor *competitor = dynamic_cast<Competitor *>(JMApp()->competitorController()->find(qv.toInt()));
+    // TODO - Fix getting competitor
+    Competitor* competitor = nullptr;
+//    Competitor *competitor = dynamic_cast<Competitor *>(JMApp()->competitorController()->find(qv.toInt()));
 
     CompetitorEditor editor(competitor, this);
     editor.exec();

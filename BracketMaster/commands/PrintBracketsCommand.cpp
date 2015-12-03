@@ -27,7 +27,7 @@ PrintBracketsCommand::~PrintBracketsCommand()
 
 }
 
-bool PrintBracketsCommand::run(IEditor* const editor)
+bool PrintBracketsCommand::run(IDocument *const doc)
 {
     // TODO
     // Open the print dialog
@@ -42,7 +42,9 @@ bool PrintBracketsCommand::run(IEditor* const editor)
             for(int x = 0; x < m_bracketIds.size(); x++)
             {
                 int bracketId = m_bracketIds[x];
-                Bracket *bracket = dynamic_cast<Bracket *>(JMApp()->bracketController()->find(bracketId));
+                // TODO - Change method signature
+                Bracket *bracket = nullptr;
+//                Bracket *bracket = dynamic_cast<Bracket *>(JMApp()->bracketController()->find(bracketId));
                 if(bracket)
                 {
                     qDebug() << "Print Bracket: " << bracket->name();
@@ -66,20 +68,21 @@ bool PrintBracketsCommand::run(IEditor* const editor)
             bool newPage = false;
             foreach(Bracket *bracket, *JMApp()->bracketController()->brackets())
             {
-                if (bracket->competitors().size() > 1)
-                {
-                    if (newPage)
-                    {
-                        pc.nextPage();
-                    }
+                // TODO - Fix with command to get competitors
+//                if (bracket->competitors().size() > 1)
+//                {
+//                    if (newPage)
+//                    {
+//                        pc.nextPage();
+//                    }
 
-                    newPage = pc.printBracket(bracket);
-                    qDebug() << "Print Bracket: " << bracket->name();
-                }
-                else if (bracket->competitors().size() == 1)
-                {
-                    qDebug() << "WARNING: Bracket with only one competitor: " << bracket->name();
-                }
+//                    newPage = pc.printBracket(bracket);
+//                    qDebug() << "Print Bracket: " << bracket->name();
+//                }
+//                else if (bracket->competitors().size() == 1)
+//                {
+//                    qDebug() << "WARNING: Bracket with only one competitor: " << bracket->name();
+//                }
             }
             pc.endPrint();
         }

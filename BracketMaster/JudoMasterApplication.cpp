@@ -1,5 +1,6 @@
 #include "JudoMasterApplication.h"
 
+#include "CommandController.h"
 #include "data/Tournament.h"
 #include "TournamentDoc.h"
 
@@ -16,9 +17,9 @@ JudoMasterApplication::JudoMasterApplication(int &argc, char **argv) :
 {
 
     QSharedPointer<TournamentDoc> doc = QSharedPointer<TournamentDoc>(new TournamentDoc);
-    QSharedPointer<IEditor> teditor = QSharedPointer<IEditor>(new TournamentEditor(doc));
+    QSharedPointer<CommandController> teditor = QSharedPointer<CommandController>(new CommandController(doc));
 
-    setEditor(teditor);
+    setCommandController(teditor);
 
 }
 
@@ -31,9 +32,9 @@ void JudoMasterApplication::setTournament(std::unique_ptr<Tournament> tournament
     m_bracketController.setTournament(m_tournament);
 }
 
-void JudoMasterApplication::setEditor(QSharedPointer<IEditor> editor)
+void JudoMasterApplication::setCommandController(QSharedPointer<CommandController> editor)
 {
-    m_editor = editor;
+    m_commandController = editor;
 
     // TODO - Set controllers?
 }
@@ -43,10 +44,10 @@ const std::unique_ptr<Tournament> &JudoMasterApplication::tournament() const
     return m_tournament;
 }
 
-IEditor *const JudoMasterApplication::tournamentEditor()
+CommandController* JudoMasterApplication::commandController()
 {
 
-    return m_editor.data();
+    return m_commandController.data();
 }
 
 bool JudoMasterApplication::isModified() const

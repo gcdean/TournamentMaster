@@ -2,6 +2,8 @@
 
 #include "data/Tournament.h"
 
+#include "IDocument.h"
+
 #include <QHash>
 #include <QJsonObject>
 #include <QList>
@@ -13,51 +15,52 @@ class Club;
 class Competitor;
 class Match;
 
-class TMCORE_DLLSPEC TournamentDoc
+class TMCORE_DLLSPEC TournamentDoc : public IDocument
 {
 public:
     TournamentDoc();
     ~TournamentDoc();
 
-
     bool isModified();
 
     // Tournament methods
-    const Tournament& tournament() const;
-    void updateTournament(const Tournament& tournament);
+    const Tournament& tournament() const override;
+    void updateTournament(const Tournament& tournament) override;
 
     // Club methods
-    const QList<Club> clubs();
-    const Club club(int id) const;
-    bool addClub(Club club);
-    Club addClub();
-    bool removeClub(int id);
-    bool updateClub(const Club& src);
+    const QList<Club> clubs() override;
+    const Club club(int id) const override;
+    bool addClub(Club club) override;
+    Club addClub() override;
+    bool removeClub(int id) override;
+    bool updateClub(const Club& src) override;
 
     // Competitor methods
-    const QList<Competitor> competitors() const;
-    bool addCompetitor(Competitor competitor);
-    bool removeCompetitor(int id);
-    bool updateCompetitor(const Competitor& src);
+    const QList<Competitor> competitors() const override;
+    const Competitor competitor(int id) const;
+    bool addCompetitor(Competitor competitor) override;
+    bool removeCompetitor(int id) override;
+    bool updateCompetitor(const Competitor& src) override;
 
     // Bracket methods
-    const QList<Bracket> brackets() const;
-    const Bracket& bracket(int id);
-    bool addBracket(Bracket bracket);
-    bool removeBracket(int id);
-    bool updateBracket(const Bracket& src);
+    const QList<Bracket> brackets() const override;
+    const Bracket& bracket(int id) override;
+    const QList<Competitor> bracketCompetitors(int bracketId) override;
+    bool addBracket(Bracket bracket) override;
+    bool removeBracket(int id) override;
+    bool updateBracket(const Bracket& src) override;
 
 
     // Match methods
-    const QList<Match> matches(int bracketid) const;
-    const Match& match(int id);
-    bool addMatch(int bracketId, Match match);
-    bool removeMatch(int id);
-    bool updateMatch(const Match& src);
+    const QList<Match> matches(int bracketid) const override;
+    const Match& match(int id) override;
+    bool addMatch(int bracketId, Match match) override;
+    bool removeMatch(int id) override;
+    bool updateMatch(const Match& src) override;
 
-    bool load(QString filename);
-    bool save();
-    bool save(QString filename);
+    bool load(QString filename) override;
+    bool save() override;
+    bool save(QString filename) override;
 
 
 private:

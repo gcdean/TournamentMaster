@@ -63,33 +63,33 @@ void CompetitorItemDelegate::destroyEditor(QWidget *editor, const QModelIndex &i
     return QStyledItemDelegate::destroyEditor(editor, index);
 }
 
-void CompetitorItemDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const
-{
-    switch(index.column())
-    {
-        case competitor::Gender:
-        {
-            // Need to select the right one.
-            QVariant var = index.model()->data(index);
-            if(genderFromString(var.toString()) == JM::Male)
-                m_genderCombo->setCurrentIndex(0);
-            else
-                m_genderCombo->setCurrentIndex(1);
+//void CompetitorItemDelegate::setCommandControllerData(QWidget *editor, const QModelIndex &index) const
+//{
+//    switch(index.column())
+//    {
+//        case competitor::Gender:
+//        {
+//            // Need to select the right one.
+//            QVariant var = index.model()->data(index);
+//            if(genderFromString(var.toString()) == JM::Male)
+//                m_genderCombo->setCurrentIndex(0);
+//            else
+//                m_genderCombo->setCurrentIndex(1);
 
-            break;
-        }
-        case competitor::Rank:
-        {
-            QVariant var = index.model()->data(index);
+//            break;
+//        }
+//        case competitor::Rank:
+//        {
+//            QVariant var = index.model()->data(index);
 
-            m_rankCombo->setCurrentIndex(rankFromString(var.toString()));
+//            m_rankCombo->setCurrentIndex(rankFromString(var.toString()));
 
-            break;
-        }
-    }
+//            break;
+//        }
+//    }
 
-    return QStyledItemDelegate::setEditorData(editor, index);
-}
+//    return QStyledItemDelegate::setCommandControllerData(editor, index);
+//}
 
 void CompetitorItemDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
 {

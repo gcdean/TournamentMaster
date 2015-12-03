@@ -60,7 +60,8 @@ bool BracketCompetitorTableModel::dropMimeData(const QMimeData *data, Qt::DropAc
 
                 if(destRow == -1)
                 {
-                    destRow = bracket->competitors().size() - 1;
+                    // TODO - Fix with command.
+//                    destRow = bracket->competitors().size() - 1;
                 }
                 /* do something with the data */
 
@@ -71,14 +72,15 @@ bool BracketCompetitorTableModel::dropMimeData(const QMimeData *data, Qt::DropAc
                 {
                     qDebug() << "Moving srcRow: " << srcRow << ", To row: " << destRow;
                     beginMoveRows(parent, srcRow, srcRow, parent, destRow);
-                    try
-                    {
-                        bracket->moveCompetitor(srcRow, destRow);
-                    }
-                    catch (std::exception& ex)
-                    {
-                        qDebug() << "EXCEPTION: " << ex.what();
-                    }
+                    // TODO - Fix with command.
+//                    try
+//                    {
+//                        bracket->moveCompetitor(srcRow, destRow);
+//                    }
+//                    catch (std::exception& ex)
+//                    {
+//                        qDebug() << "EXCEPTION: " << ex.what();
+//                    }
 
                     endMoveRows();
 

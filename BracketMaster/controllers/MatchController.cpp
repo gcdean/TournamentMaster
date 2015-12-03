@@ -16,21 +16,24 @@ void MatchController::add(int parentId)
     Match *match = new Match(findNextId());
     match->setBracketId(parentId);
 
-    tournament()->matches().append(match);
+    // TODO - use command
+//    tournament()->matches().append(match);
 
     JMApp()->setModified(true);
-    emit addedDataObj(match);
+    // TODO - fix signal signature
+//    emit addedDataObj(match);
 }
 
 JMDataObj *MatchController::find(int id) const
 {
-    foreach(Match *match, tournament()->matches())
-    {
-        if(id == match->id())
-        {
-            return match;
-        }
-    }
+    // TODO - Change return value.
+//    foreach(Match *match, tournament()->matches())
+//    {
+//        if(id == match->id())
+//        {
+//            return match;
+//        }
+//    }
 
     return nullptr;
 }
@@ -40,11 +43,12 @@ int MatchController::findNextId()
     int nextId = 0;
     if(tournament())
     {
-        foreach (Match* match, tournament()->matches())
-        {
+        // TODO - Remove this method
+//        foreach (Match* match, tournament()->matches())
+//        {
 
-            nextId = std::max(nextId, match->id());
-        }
+//            nextId = std::max(nextId, match->id());
+//        }
     }
 
     // We now have the max match id.
@@ -70,18 +74,18 @@ int MatchController::size(int id) const
 
 const QList<Match *> MatchController::matches(int bracketId) const
 {
-    if(bracketId == -1)
-        return tournament()->matches();
+//    if(bracketId == -1)
+//        return tournament()->matches();
 
-    // TODO Need a better way to hold this list.
+    // TODO - use command
     QList<Match *> matches;
-    foreach(Match *match, tournament()->matches())
-    {
-        if(bracketId == match->bracketId())
-        {
-            matches.append(match);
-        }
-    }
+//    foreach(Match *match, tournament()->matches())
+//    {
+//        if(bracketId == match->bracketId())
+//        {
+//            matches.append(match);
+//        }
+//    }
 
     return matches;
 }
@@ -91,14 +95,15 @@ const QList<Match *> MatchController::matches(int bracketId) const
 int MatchController::indexOf(int id)
 {
     int index = 0;
-    foreach(Match *match, tournament()->matches())
-    {
-        if(id == match->id())
-        {
-            return index;
-        }
-        index++;
-    }
+    // TODO - use command. Do we need this method?
+//    foreach(Match *match, tournament()->matches())
+//    {
+//        if(id == match->id())
+//        {
+//            return index;
+//        }
+//        index++;
+//    }
 
     return -1;
 }

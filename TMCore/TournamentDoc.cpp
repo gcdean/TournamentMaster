@@ -8,9 +8,11 @@
 
 #include <QDebug>       // DEBUG
 
+#include "data/BracketData.h"
 #include "data/Bracket.h"
 #include "data/Club.h"
 #include "data/Competitor.h"
+#include "data/CompetitorData.h"
 #include "data/Match.h"
 #include "data/Tournament.h"
 
@@ -49,7 +51,8 @@ const Tournament &TournamentDoc::tournament() const
 
 void TournamentDoc::updateTournament(const Tournament &tournament)
 {
-    m_tournament.updateTournament(tournament);
+    m_tournament = tournament;
+//    m_tournament.updateTournament(tournament);
     m_modified = true;
 }
 
@@ -122,6 +125,17 @@ const QList<Competitor> TournamentDoc::competitors() const
     return m_competitors;
 }
 
+const Competitor TournamentDoc::competitor(int id) const
+{
+    int index = m_competitors.indexOf(Competitor(id));
+    if(index >= 0)
+    {
+        return m_competitors[index];
+    }
+
+    return Competitor();
+}
+
 bool TournamentDoc::addCompetitor(Competitor competitor)
 {
     if(!m_competitors.contains(competitor))
@@ -172,6 +186,19 @@ const Bracket &TournamentDoc::bracket(int id)
     }
 
     return NO_BRACKET;
+}
+
+const QList<Competitor> TournamentDoc::bracketCompetitors(int bracketId)
+{
+    Bracket bracket = m_brackets.at(m_brackets.indexOf(bracketId));
+
+    QList<Competitor> competitors;
+    foreach(int id, bracket.competitorIds())
+    {
+        competitors.append(m_competitors.at(m_competitors.indexOf(id)));
+    }
+
+    return competitors;
 }
 
 bool TournamentDoc::addBracket(Bracket bracket)
@@ -287,7 +314,7 @@ bool TournamentDoc::load(QString filename)
     QJsonDocument loadDoc(QJsonDocument::fromJson(saveData));
 
     m_filename = filename;
-    m_tournament.setFileName(filename);
+//    m_tournament.setFileName(filename);
 
     QJsonObject jobj = loadDoc.object();
 
@@ -392,7 +419,6 @@ void TournamentDoc::readBrackets(const QJsonObject &root)
 
         m_brackets.append(bracket);
     }
-
 }
 
 void TournamentDoc::readClubs(const QJsonObject &root)

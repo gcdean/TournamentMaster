@@ -15,7 +15,7 @@ CloseCommand::~CloseCommand()
 
 }
 
-bool CloseCommand::run(IEditor* const editor)
+bool CloseCommand::run(IDocument *const doc)
 {
     if(JMApp()->isModified())
     {
@@ -24,7 +24,7 @@ bool CloseCommand::run(IEditor* const editor)
         {
             // Call Save Command
             SaveCommand saveCmd(false, this);
-            if(!saveCmd.run(editor))
+            if(!saveCmd.run(doc))
             {
                 return done(false);
             }

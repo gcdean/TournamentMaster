@@ -2,7 +2,7 @@
 
 #include <QObject>
 
-#include "IEditor.h"
+#include "IDocument.h"
 
 class BaseCommand : public QObject
 {
@@ -19,10 +19,12 @@ signals:
     void commandSuccessful();    // Emitted when the command is successful
     void commandFailed();       // Emitted when command fails.
 public slots:
-    virtual bool run(IEditor* const editor) = 0;
+    virtual bool run(IDocument* const doc) = 0;
 
 protected:
     bool done(bool success);
 
 };
+
+typedef QSharedPointer<BaseCommand> BaseCommandPtr;
 

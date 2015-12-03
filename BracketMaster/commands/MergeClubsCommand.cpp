@@ -14,7 +14,7 @@ MergeClubsCommand::MergeClubsCommand(Club *src, Club *dest)
 }
 
 
-bool MergeClubsCommand::run(IEditor* const editor)
+bool MergeClubsCommand::run(IDocument *const doc)
 {
     if(!m_srcClub || !m_destClub)
         return done(false);
@@ -25,12 +25,12 @@ bool MergeClubsCommand::run(IEditor* const editor)
         return done(false);
     }
 
-    // Copy Competitors from src to dest.
-    // TODO - Get list of competitors for a club
-    foreach(Competitor *cmp, m_srcClub->competitors())
-    {
-        m_destClub->addCompetitor(cmp);
-    }
+//    // Copy Competitors from src to dest.
+//    // TODO - Get list of competitors for a club
+//    foreach(Competitor *cmp, m_srcClub->competitors())
+//    {
+//        m_destClub->addCompetitor(cmp);
+//    }
 
     // Delete the src club.
     JMApp()->clubController()->remove(m_srcClub->id());

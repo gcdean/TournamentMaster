@@ -24,9 +24,9 @@ CreateTournamentCommand::~CreateTournamentCommand()
 
 
 
-bool CreateTournamentCommand::run(IEditor* const editor)
+bool CreateTournamentCommand::run(IDocument *const doc)
 {
-    Q_UNUSED(editor)
+    Q_UNUSED(doc)
 
     qDebug() << "Create a New Tournament";
 
@@ -39,11 +39,11 @@ bool CreateTournamentCommand::run(IEditor* const editor)
     JMApp()->setModified(true);
 
 
-    QSharedPointer<TournamentDoc> doc = QSharedPointer<TournamentDoc>(new TournamentDoc);
-    QSharedPointer<TournamentEditor> teditor = QSharedPointer<TournamentEditor>(new TournamentEditor(doc));
-//    std::unique_ptr<IEditor> teditor(new TournamentEditor(new TournamentDoc));
+    QSharedPointer<TournamentDoc> newdoc = QSharedPointer<TournamentDoc>(new TournamentDoc);
+    QSharedPointer<CommandController> teditor = QSharedPointer<CommandController>(new CommandController(newdoc));
+//    std::unique_ptr<IEditor> teditor(new CommandController(new TournamentDoc));
 
-    JMApp()->setEditor(teditor);
+    JMApp()->setCommandController(teditor);
 
     return done(true);
 }

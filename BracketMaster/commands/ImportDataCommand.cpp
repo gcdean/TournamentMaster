@@ -1,6 +1,7 @@
 #include "ImportDataCommand.h"
 
 #include "data/Club.h"
+#include "data/Competitor.h"
 #include "JMUtil.h"
 #include "JudoMasterApplication.h"
 
@@ -33,7 +34,7 @@ const QList<Competitor *> ImportDataCommand::skippedCompetitors() const
 }
 
 
-bool ImportDataCommand::run(IEditor* const editor)
+bool ImportDataCommand::run(IDocument *const doc)
 {
     QString openFileName = QFileDialog::getOpenFileName(dynamic_cast<QWidget *>(parent()), "Import CSV File", JMApp()->lastSaveDir().absolutePath(), "CSV Files (*.csv)");
 

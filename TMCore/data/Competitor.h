@@ -1,11 +1,15 @@
 #pragma once
 
-#include <QChar>
-#include <QJsonObject>
-#include <QObject>
-#include <QString>
+#include "TMCore.h"
 
-#include "data/JMDataObj.h"
+//#include <QChar>
+//#include <QJsonObject>
+//#include <QObject>
+#include <QSharedDataPointer>
+//#include <QString>
+
+
+#include "data/CompetitorData.h"
 #include "JMUtil.h"
 
 namespace competitor
@@ -27,51 +31,50 @@ namespace competitor
 
 void writeCompetitorHeader(QTextStream &stream);
 
-class TMCORE_DLLSPEC Competitor : public JMDataObj
+class CompetitorData;
+
+class TMCORE_DLLSPEC Competitor// : public JMDataObj
 {
 
 public:
 
-    explicit Competitor(int id, QString firstName, QString lastName, JM::Gender gender, int age , double weight, JM::Rank rank, int clubId);
+    Competitor();
     Competitor(int id);
     Competitor(const Competitor& src);
-    Competitor();
+    virtual ~Competitor();
 
-    QString firstName() const {return m_firstName;}
-    void setFirstName(QString name) {m_firstName = name;}
-    QString lastName() const {return m_lastName;}
-    void setLastName(QString name) {m_lastName = name;}
-    JM::Gender gender() const {return m_gender;}
-    void setGender(JM::Gender gender) {m_gender = gender;}
-    int age() const {return m_age;}
-    void setAge(int age) {m_age = age;}
-    double weight() const {return m_weight;}
-    void setWeight(double weight) {m_weight = weight;}
-    JM::Rank rank() const {return m_rank;}
-    void setRank(JM::Rank rank) {m_rank = rank;}
-    int clubId() const {return m_clubId;}
-    void setClubId(int id) {m_clubId = id;}
-    int numBrackets() const {return m_numBrackets;}
-    void setNumBrackets(int num) {m_numBrackets = num;}
-    QString notes() const { return m_notes;}
-    void setNotes(QString notes) {m_notes = notes;}
+    int id() const;
+    void setId(int id);
+    QString firstName() const;
+    void setFirstName(QString name);
+    QString lastName() const;
+    void setLastName(QString name);
+    JM::Gender gender() const;
+    void setGender(JM::Gender gender);
+    int age() const;
+    void setAge(int age);
+    double weight() const;
+    void setWeight(double weight);
+    JM::Rank rank() const;
+    void setRank(JM::Rank rank);
+    int clubId() const;
+    void setClubId(int id);
+    int numBrackets() const;
+    void setNumBrackets(int num);
+    QString notes() const;
+    void setNotes(QString notes);
 
-    Competitor &operator =(const Competitor& src);
-    virtual void read(const QJsonObject& json);
+    bool isValid() const;
+//    Competitor &operator =(const Competitor& src);
+    virtual bool operator == (const Competitor& src);
+//    virtual void read(const QJsonObject& json);
 
-    void write(QJsonObject& json) const override;
-    void write(QTextStream &stream) const override;
+//    void write(QJsonObject& json) const override;
+//    void write(QTextStream &stream) const override;
 
 private:
-    QString m_firstName;
-    QString m_lastName;
-    JM::Gender m_gender;
-    int m_age;
-    double m_weight;
-    JM::Rank m_rank;
-    int m_numBrackets;
-    QString m_notes;
-    int m_clubId;
+    QSharedDataPointer<CompetitorData> m_data;
+
 };
 
 

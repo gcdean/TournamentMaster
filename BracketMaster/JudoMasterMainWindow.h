@@ -43,8 +43,9 @@ private:
     QDir m_saveDir;
 
     // Commands.
-    TournamentInfoCommand m_tournamentInfoCommand;
-    CreateTournamentCommand m_createTournamentCommand;
+    BaseCommandPtr m_tournamentInfoCommand;
+    BaseCommandPtr m_createTournamentCommand;
+    // TODO - Either convert all to BaseCommandPtr or specific typedef
     PrintBracketsCommand m_printBracketsCommand;
     CloseCommand m_closeCommand;
     SaveCommand m_saveCommand;

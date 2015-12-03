@@ -399,17 +399,18 @@ bool CompetitorTableModel::dropMimeData(const QMimeData *data, Qt::DropAction ac
                 Bracket* bracket = dynamic_cast<Bracket *>(m_controller->find(m_parentId));
                 if(bracket)
                 {
-                    // Now add the competitor to the bracket.
-                    if(bracket->addCompetitor(competitor, parent.row()))
-                    {
-                        beginInsertRows(QModelIndex(), bracket->competitors().size(), bracket->competitors().size());
-                        success = true;
-                        endInsertRows();
-                    }
-                    else
-                    {
-                        // The add failed, maybe it's a move.
-                    }
+                    // TODO - Fix with command
+//                    // Now add the competitor to the bracket.
+//                    if(bracket->addCompetitor(competitor, parent.row()))
+//                    {
+//                        beginInsertRows(QModelIndex(), bracket->competitors().size(), bracket->competitors().size());
+//                        success = true;
+//                        endInsertRows();
+//                    }
+//                    else
+//                    {
+//                        // The add failed, maybe it's a move.
+//                    }
                 }
             }
         }

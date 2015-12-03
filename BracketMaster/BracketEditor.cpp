@@ -25,19 +25,20 @@ BracketEditor::BracketEditor(Bracket *bracket, QWidget *parent) :
     ui->secondPlaceCombo->addItem(QString("<None>"), QVariant(-1));
     ui->thirdPlace1Combo->addItem(QString("<None>"), QVariant(-1));
     int index = 1;
-    foreach(Competitor *competitor, bracket->competitors())
-    {
-        ui->firstPlaceCombo->addItem(QString("%1, %2").arg(competitor->lastName()).arg(competitor->firstName()), QVariant(competitor->id()));
-        if(bracket->firstPlace() == competitor->id())
-            ui->firstPlaceCombo->setCurrentIndex(index);
-        ui->secondPlaceCombo->addItem(QString("%1, %2").arg(competitor->lastName()).arg(competitor->firstName()), QVariant(competitor->id()));
-        if(bracket->secondPlace() == competitor->id())
-            ui->secondPlaceCombo->setCurrentIndex(index);
-        ui->thirdPlace1Combo->addItem(QString("%1, %2").arg(competitor->lastName()).arg(competitor->firstName()), QVariant(competitor->id()));
-        if(bracket->thirdPlace1() == competitor->id())
-            ui->thirdPlace1Combo->setCurrentIndex(index);
-        index++;
-    }
+    // TODO - Fix with Command
+//    foreach(Competitor *competitor, bracket->competitors())
+//    {
+//        ui->firstPlaceCombo->addItem(QString("%1, %2").arg(competitor->lastName()).arg(competitor->firstName()), QVariant(competitor->id()));
+//        if(bracket->firstPlace() == competitor->id())
+//            ui->firstPlaceCombo->setCurrentIndex(index);
+//        ui->secondPlaceCombo->addItem(QString("%1, %2").arg(competitor->lastName()).arg(competitor->firstName()), QVariant(competitor->id()));
+//        if(bracket->secondPlace() == competitor->id())
+//            ui->secondPlaceCombo->setCurrentIndex(index);
+//        ui->thirdPlace1Combo->addItem(QString("%1, %2").arg(competitor->lastName()).arg(competitor->firstName()), QVariant(competitor->id()));
+//        if(bracket->thirdPlace1() == competitor->id())
+//            ui->thirdPlace1Combo->setCurrentIndex(index);
+//        index++;
+//    }
 
     m_matchTableModel = new MatchTableModel(ui->matchesTable);
     m_matchTableModel->setBracketId(bracket->id());
