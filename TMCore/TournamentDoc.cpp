@@ -29,6 +29,8 @@ TournamentDoc::TournamentDoc()
     : m_tournament()
     , m_modified(false)
     , m_nextClubId(1)
+    , m_nextCompetitorId(1)
+    , m_nextMatchNum(1)
 {
 
 }
@@ -265,27 +267,60 @@ const QList<Match> TournamentDoc::matches(int bracketid) const
     return m_matches[bracketid];
 }
 
-const Match &TournamentDoc::match(int id)
+const Match TournamentDoc::match(int id)
 {
     return nonConstMatch(id);
 }
 
-bool TournamentDoc::addMatch(int bracketId, Match match)
+bool TournamentDoc::addMatch(int bracketId, Match &match)
 {
+    // First, let's see if the match id is valid. If not, set a new one.
+    if(match.id() == -1)
+    {
+        match.setId(m_nextMatchNum++);
+    }
     QList<Match> matches;
     if(m_matches.contains(bracketId))
     {
         matches = m_matches[bracketId];
         if(!matches.contains(match.id()))
         {
+            match.setBracketId(bracketId);
             matches.append(match);
+            m_matches[bracketId] = matches;
             m_matchBrackets[match.id()] = bracketId;
             m_modified = true;
             return true;
         }
     }
+    else
+    {
+        // There are no existing matches for the bracket.
+        match.setBracketId(bracketId);
+        matches.append(match);
+        m_matches[bracketId] = matches;
+
+        m_matchBrackets[match.id()] = bracketId;
+
+        return true;
+
+    }
 
     return false;
+}
+
+Match TournamentDoc::addMatch(int bracketId)
+{
+    Match match(m_nextMatchNum++);
+
+    bool success = addMatch(bracketId, match);
+
+    if(success)
+    {
+        return match;
+    }
+
+    return Match();
 }
 
 bool TournamentDoc::removeMatch(int id)
@@ -297,6 +332,7 @@ bool TournamentDoc::removeMatch(int id)
     if(index>= 0)
     {
         matches.removeAt(index);
+        m_matches[bracketId] = matches;
         m_matchBrackets.remove(id);
         m_modified = true;
         return true;
@@ -306,12 +342,19 @@ bool TournamentDoc::removeMatch(int id)
 
 bool TournamentDoc::updateMatch(const Match &src)
 {
-    Match& orig = nonConstMatch(src.id());
-    if(orig.id() != -1)
+
+    int bracketId = m_matchBrackets[src.id()];
+    if(m_matches.contains(bracketId))
     {
-        orig = src; // Does this 'persist' the match in the list (due to ref)?
-        m_modified = true;
-        return true;
+        QList<Match> matches = m_matches[bracketId];
+        int index = matches.indexOf(Match(src.id()));
+        if(index >= 0)
+        {
+           matches[index] = src;
+           m_matches[bracketId] = matches;
+           m_modified = true;
+           return true;
+        }
     }
 
     return false;
@@ -514,7 +557,11 @@ void TournamentDoc::readMatches(const QJsonObject &root)
 
         m_matches[match.bracketId()].append(match);
         m_matchBrackets[match.id()] = match.bracketId();
+
+        m_nextMatchNum = std::max(m_nextMatchNum, match.id());
+
     }
+    m_nextMatchNum++;
 }
 
 void TournamentDoc::writeTournament(QJsonObject &root) const
@@ -651,14 +698,14 @@ void TournamentDoc::writeMatches(QJsonObject &root) const
     root["matches"] = matches;
 }
 
-Match &TournamentDoc::nonConstMatch(int id)
+Match TournamentDoc::nonConstMatch(int matchId)
 {
     // Get the bracket id for the match
-    int bracketId = m_matchBrackets[id];
+    int bracketId = m_matchBrackets[matchId];
     if(m_matches.contains(bracketId))
     {
         QList<Match> matches = m_matches[bracketId];
-        int index = matches.indexOf(Match(id));
+        int index = matches.indexOf(Match(matchId));
         if(index >= 0)
         {
            return matches[index];

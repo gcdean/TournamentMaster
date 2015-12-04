@@ -6,7 +6,6 @@
 
 namespace
 {
-    QJsonObject clubJsonObj;
     Club testClub;
 }
 

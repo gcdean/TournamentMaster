@@ -70,3 +70,8 @@ void ClubCommandTests::removeClubTest()
 
 }
 
+void ClubCommandTests::cleanupTestCase()
+{
+
+}
+

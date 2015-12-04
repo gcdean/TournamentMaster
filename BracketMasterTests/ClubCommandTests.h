@@ -18,6 +18,7 @@ private slots:
     void findAllClubsTest();
     void updateClubTest();
     void removeClubTest();
+    void cleanupTestCase();
 
 private:
     QSharedPointer<CommandController> m_editor;

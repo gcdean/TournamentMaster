@@ -12,6 +12,7 @@ class TMCORE_DLLSPEC IDocument
 {
 public:
 
+    // NOTE - Maybe all add methods should return the object, in case it's changed during the add.
 
     // Tournament methods
     virtual const Tournament& tournament() const = 0;
@@ -43,8 +44,9 @@ public:
 
     // Match methods
     virtual const QList<Match> matches(int bracketid) const = 0;
-    virtual const Match& match(int id) = 0;
-    virtual bool addMatch(int bracketId, Match match) = 0;
+    virtual const Match match(int id) = 0;
+    virtual bool addMatch(int bracketId, Match& match) = 0;
+    virtual Match addMatch(int bracketId) = 0;
     virtual bool removeMatch(int id) = 0;
     virtual bool updateMatch(const Match& src) = 0;
 

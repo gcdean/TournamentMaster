@@ -86,39 +86,6 @@ int Match::winnerId() const
     return m_data->m_winnerId;
 }
 
-//const Competitor *Match::competitor1() const
-//{
-//    return m_competitor1;
-//}
-
-//void Match::setCompetitor1(Competitor *competitor)
-//{
-//    m_competitor1 = competitor;
-//    setCompetitor1Id(competitor ? competitor->id() : -1);
-//}
-
-//const Competitor *Match::competitor2() const
-//{
-//    return m_competitor2;
-//}
-
-//void Match::setCompetitor2(Competitor *competitor)
-//{
-//    m_competitor2 = competitor;
-//    setCompetitor2Id(competitor ? competitor->id() : -1);
-//}
-
-//const Competitor *Match::winner() const
-//{
-//    return m_winner;
-//}
-
-//void Match::setWinner(Competitor *competitor)
-//{
-//    m_winner = competitor;
-
-//    setWinnerId(competitor ? competitor->id() : -1);
-//}
 
 int Match::score() const
 {

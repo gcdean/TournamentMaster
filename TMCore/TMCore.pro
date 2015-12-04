@@ -27,7 +27,9 @@ SOURCES += \
     commands/ClubCommands.cpp \
     commands/BracketCommands.cpp \
     CommandController.cpp \
-    commands/CompetitorCommands.cpp
+    commands/CompetitorCommands.cpp \
+    commands/MatchCommands.cpp \
+    commands/TournamentCommands.cpp
 
 HEADERS += \
     TMCore.h \
@@ -52,7 +54,9 @@ HEADERS += \
     commands/BracketCommands.h \
     IDocument.h \
     CommandController.h \
-    commands/CompetitorCommands.h
+    commands/CompetitorCommands.h \
+    commands/MatchCommands.h \
+    commands/TournamentCommands.h
 unix {
     target.path = /usr/lib
     INSTALLS += target

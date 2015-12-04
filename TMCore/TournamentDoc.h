@@ -54,8 +54,9 @@ public:
 
     // Match methods
     const QList<Match> matches(int bracketid) const override;
-    const Match& match(int id) override;
-    bool addMatch(int bracketId, Match match) override;
+    const Match match(int id) override;
+    bool addMatch(int bracketId, Match& match) override;
+    Match addMatch(int bracketId) override;
     bool removeMatch(int id) override;
     bool updateMatch(const Match& src) override;
 
@@ -77,7 +78,7 @@ private:
     void writeCompetitors(QJsonObject &root) const;
     void writeMatches(QJsonObject &root) const;
 
-    Match& nonConstMatch(int id);
+    Match nonConstMatch(int matchId);
 
     Tournament m_tournament;
     bool m_modified;
@@ -90,7 +91,9 @@ private:
     QList <Competitor> m_competitors;
     int m_nextCompetitorId;
 
-    QMap <int, QList<Match>> m_matches;
+    QMap <int, QList<Match>> m_matches; // bracket id to matches
+    int m_nextMatchNum;
+
     QHash <int, int> m_matchBrackets;   // indexs match id to bracket id for faster lookup
 
 
