@@ -26,7 +26,8 @@ SOURCES += \
     commands/BaseUndoCommand.cpp \
     commands/ClubCommands.cpp \
     commands/BracketCommands.cpp \
-    CommandController.cpp
+    CommandController.cpp \
+    commands/CompetitorCommands.cpp
 
 HEADERS += \
     TMCore.h \
@@ -50,7 +51,8 @@ HEADERS += \
     data/TournamentData.h \
     commands/BracketCommands.h \
     IDocument.h \
-    CommandController.h
+    CommandController.h \
+    commands/CompetitorCommands.h
 unix {
     target.path = /usr/lib
     INSTALLS += target

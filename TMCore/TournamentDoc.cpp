@@ -138,14 +138,37 @@ const Competitor TournamentDoc::competitor(int id) const
 
 bool TournamentDoc::addCompetitor(Competitor competitor)
 {
+    // Insure that the id is 'valid'
+    if(!competitor.isValid() || m_competitors.contains(competitor))
+    {
+        competitor.setId(m_nextCompetitorId++);
+    }
+
     if(!m_competitors.contains(competitor))
     {
         m_competitors.append(competitor);
+
+        // Make sure we have a unique competitor id.
+        if(competitor.id() > m_nextCompetitorId)
+        {
+            m_nextCompetitorId = competitor.id() + 1;
+        }
         m_modified = true;
         return true;
     }
 
     return false;
+}
+
+Competitor TournamentDoc::addCompetitor()
+{
+    Competitor competitor(m_nextCompetitorId++);
+    if(addCompetitor(competitor))
+    {
+        return competitor;
+    }
+
+    return Competitor();
 }
 
 bool TournamentDoc::removeCompetitor(int id)

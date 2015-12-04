@@ -18,7 +18,7 @@ public:
     bool isUndoable() override;
 
 public slots:
-    virtual bool undo(IDocument *editor) = 0;
+    virtual bool undo(IDocument *doc) = 0;
 
 };
 

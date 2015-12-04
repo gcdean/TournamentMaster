@@ -29,6 +29,7 @@ public:
     virtual const QList<Competitor> competitors() const = 0;
     virtual const Competitor competitor(int id) const = 0;
     virtual bool addCompetitor(Competitor competitor) = 0;
+    virtual Competitor addCompetitor() = 0;
     virtual bool removeCompetitor(int id) = 0;
     virtual bool updateCompetitor(const Competitor& src) = 0;
 

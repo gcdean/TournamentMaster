@@ -19,7 +19,7 @@ class TMCORE_DLLSPEC TournamentDoc : public IDocument
 {
 public:
     TournamentDoc();
-    ~TournamentDoc();
+    virtual ~TournamentDoc();
 
     bool isModified();
 
@@ -39,6 +39,7 @@ public:
     const QList<Competitor> competitors() const override;
     const Competitor competitor(int id) const;
     bool addCompetitor(Competitor competitor) override;
+    Competitor addCompetitor() override;
     bool removeCompetitor(int id) override;
     bool updateCompetitor(const Competitor& src) override;
 
