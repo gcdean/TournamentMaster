@@ -51,10 +51,12 @@ public:
     virtual bool updateMatch(const Match& src) = 0;
 
     // Read/write methods
+    virtual QString name() = 0;
     virtual bool load(QString filename) = 0;
     virtual bool save() = 0;
     virtual bool save(QString filename) = 0;
 
+    virtual bool isModified() = 0;
 
 };
 

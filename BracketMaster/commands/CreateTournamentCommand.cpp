@@ -30,16 +30,12 @@ bool CreateTournamentCommand::run(IDocument *const doc)
 
     qDebug() << "Create a New Tournament";
 
-    Tournament tournament;
-    tournament.setName("Test");
-    tournament.setDate(QDate::currentDate());
-
     QSharedPointer<TournamentDoc> newdoc = QSharedPointer<TournamentDoc>(new TournamentDoc);
     QSharedPointer<CommandController> teditor = QSharedPointer<CommandController>(new CommandController(newdoc));
 
     JMApp()->setCommandController(teditor);
 
-    newdoc->updateTournament(tournament);
+//    newdoc->updateTournament(tournament);
 
     return done(true);
 }

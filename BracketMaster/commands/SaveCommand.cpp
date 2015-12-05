@@ -1,6 +1,7 @@
 #include "SaveCommand.h"
 
 #include "JudoMasterApplication.h"
+#include "commands/TournamentCommands.h"
 #include "data/Tournament.h"
 
 #include <QFile>
@@ -26,41 +27,36 @@ SaveCommand::~SaveCommand()
 
 bool SaveCommand::run(IDocument *const doc)
 {
-    // TODO - Set the filename if necessary.
-    return doc->save();
+    // TODO - need a tournament controller to encapsulate the commands.
+    GetTournamentCmdPtr cmd = GetTournamentCmdPtr(new GetTournamentCommand);
+    JMApp()->commandController()->doCommand(cmd);
+    Tournament tournament = cmd->tournament();
+    QString name = doc->name();
 
-//    // Get the tournament info
-//    const std::unique_ptr<Tournament> &tournament = JMApp()->tournament();
+    if(name.isEmpty() || m_enableSaveAs)
+    {
+        QString newfileName = QFileDialog::getSaveFileName(dynamic_cast<QWidget *>(parent()), "Save", JMApp()->lastSaveDir().absolutePath(), "Tournament Files (*.ecj);;JSON Files (*.json)");
+        if(newfileName.isEmpty())
+        {
+            return done(false);
+        }
 
-//    if(tournament->fileName().isEmpty() || m_enableSaveAs)
-//    {
-//        QString newfileName = QFileDialog::getSaveFileName(dynamic_cast<QWidget *>(parent()), "Save", JMApp()->lastSaveDir().absolutePath(), "Tournament Files (*.ecj);;JSON Files (*.json)");
-//        if(newfileName.isEmpty())
-//        {
-//            return done(false);
-//        }
+        QFileInfo finfo(newfileName);
+        JMApp()->setLastSaveDir(finfo.absoluteDir());
 
-//        QFileInfo finfo(newfileName);
-//        JMApp()->setLastSaveDir(finfo.absoluteDir());
+        if(!doc->save(newfileName))
+        {
+            // TODO - error msg here.
+        }
+    }
+    else
+    {
+        if(!doc->save())
+        {
+            // TODO - error msg here.
+        }
+    }
 
-//        tournament->setFileName(newfileName);
-//    }
 
-//    QFile saveFile(tournament->fileName());
-
-//    if(!saveFile.open(QIODevice::WriteOnly))
-//    {
-//        qWarning("Could not open file for writing");
-//    }
-
-//    QJsonObject trnObj;
-//    tournament->write(trnObj);
-
-//    QJsonDocument saveDoc(trnObj);
-//    if(-1 == saveFile.write(saveDoc.toJson()))
-//    {
-//        return done(false);
-//    }
-
-//    return done(true);
+    return done(true);
 }

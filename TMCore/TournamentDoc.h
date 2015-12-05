@@ -21,8 +21,6 @@ public:
     TournamentDoc();
     virtual ~TournamentDoc();
 
-    bool isModified();
-
     // Tournament methods
     const Tournament& tournament() const override;
     void updateTournament(const Tournament& tournament) override;
@@ -61,8 +59,11 @@ public:
     bool updateMatch(const Match& src) override;
 
     bool load(QString filename) override;
+    QString name() override;
     bool save() override;
     bool save(QString filename) override;
+
+    bool isModified() override;
 
 
 private:

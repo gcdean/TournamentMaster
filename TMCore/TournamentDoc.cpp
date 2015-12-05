@@ -396,6 +396,11 @@ bool TournamentDoc::load(QString filename)
     return true;
 }
 
+QString TournamentDoc::name()
+{
+    return m_filename;
+}
+
 bool TournamentDoc::save()
 {
     return save(m_filename);
@@ -425,6 +430,7 @@ bool TournamentDoc::save(QString filename)
         return false;
     }
 
+    m_filename = filename;
     m_modified = false;
 
     return true;
@@ -644,7 +650,7 @@ void TournamentDoc::writeCompetitors(QJsonObject &root) const
     QJsonArray judokas;
     foreach(Competitor judoka, m_competitors)
     {
-        qDebug() << "Saving Competitor: " << judoka.lastName() << ", " << judoka.firstName();
+//        qDebug() << "Saving Competitor: " << judoka.lastName() << ", " << judoka.firstName();
         QJsonObject jobj;
 
         jobj["id"] = judoka.id();
