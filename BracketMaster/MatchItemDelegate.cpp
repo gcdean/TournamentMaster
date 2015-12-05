@@ -8,11 +8,11 @@
 
 #include <QComboBox>
 
-MatchItemDelegate::MatchItemDelegate(Bracket *bracket, QObject *parent) :
+MatchItemDelegate::MatchItemDelegate(Bracket bracket, QObject *parent) :
     QStyledItemDelegate(parent)
     , m_bracket(bracket)
 {
-    Q_ASSERT(bracket != 0);
+    Q_ASSERT(bracket.isValid());
 }
 
 
@@ -34,65 +34,67 @@ QWidget *MatchItemDelegate::createEditor(QWidget *parent, const QStyleOptionView
     return widget;
 }
 
-//void MatchItemDelegate::setCommandControllerData(QWidget *editor, const QModelIndex &index) const
-//{
+void MatchItemDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const
+{
 
-//    switch(index.column())
-//    {
-//        case MatchTableModel::firstCompetitor:
-//        case MatchTableModel::secondCompetitor:
-//        case MatchTableModel::winner:
-//        {
-//            const QList<Match *> matches = JMApp()->matchController()->matches(m_bracket->id());
-//            Q_ASSERT(matches.size() > index.row());
+    switch(index.column())
+    {
+        case MatchTableModel::firstCompetitor:
+        case MatchTableModel::secondCompetitor:
+        case MatchTableModel::winner:
+        {
+            const QList<Match> matches = JMApp()->matchController()->matches(m_bracket.id());
+            Q_ASSERT(matches.size() > index.row());
 
-//            Match *match = matches[index.row()];
+            Match match = matches[index.row()];
 
-//            QComboBox *combo = dynamic_cast<QComboBox *>(editor);
-//            if(combo)
-//            {
-//                combo->addItem("<None>", QVariant(-1));
-//                int currentIndex = 0;
-//                int x = 1;
-//                // TODO - Fix with Command
-////                foreach(Competitor *competitor, m_bracket->competitors())
-////                {
-////                    combo->addItem(QString("%1 %2").arg(competitor->firstName()).arg(competitor->lastName()), QVariant(competitor->id()));
-////                    if(index.column() == MatchTableModel::firstCompetitor)
-////                    {
-////                        if(match->competitor1() && match->competitor1()->id() == competitor->id())
-////                        {
-////                            currentIndex = x;
-////                        }
-////                    }
-////                    else if(index.column() == MatchTableModel::secondCompetitor)
-////                    {
-////                        if(match->competitor2() && match->competitor2()->id() == competitor->id())
-////                        {
-////                            currentIndex = x;
-////                        }
-////                    }
-////                    else if(index.column() == MatchTableModel::winner)
-////                    {
-////                        if(match->winner() && match->winner()->id() == competitor->id())
-////                        {
-////                            currentIndex = x;
-////                        }
-////                    }
-////                    x++;
-////                }
+            QComboBox *combo = dynamic_cast<QComboBox *>(editor);
+            if(combo)
+            {
+                combo->addItem("<None>", QVariant(-1));
+                int currentIndex = 0;
+                int x = 1;
+                // TODO - Fix with Command
+                QList<Competitor> competitors = JMApp()->bracketController()->competitors(m_bracket.id());
+                foreach(Competitor competitor, competitors)
+                {
+                    combo->addItem(QString("%1 %2").arg(competitor.firstName()).arg(competitor.lastName()), QVariant(competitor.id()));
+                    if(index.column() == MatchTableModel::firstCompetitor)
+                    {
 
-//                combo->setCurrentIndex(currentIndex);
+                        if(match.competitor1Id() == competitor.id())
+                        {
+                            currentIndex = x;
+                        }
+                    }
+                    else if(index.column() == MatchTableModel::secondCompetitor)
+                    {
+                        if(match.competitor2Id() == competitor.id())
+                        {
+                            currentIndex = x;
+                        }
+                    }
+                    else if(index.column() == MatchTableModel::winner)
+                    {
+                        if(match.winnerId() == competitor.id())
+                        {
+                            currentIndex = x;
+                        }
+                    }
+                    x++;
+                }
 
-//            }
-//        }
-//        break;
+                combo->setCurrentIndex(currentIndex);
 
-//        default:
-//            QStyledItemDelegate::setCommandControllerData(editor, index);
-//    }
+            }
+        }
+        break;
 
-//}
+        default:
+            QStyledItemDelegate::setEditorData(editor, index);
+    }
+
+}
 
 void MatchItemDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
 {

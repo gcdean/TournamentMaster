@@ -12,7 +12,7 @@
 MatchTableModel::MatchTableModel(QObject *parent) :
     QAbstractTableModel(parent)
 {
-    connect(JMApp()->matchController(), &BaseController::addedDataObj, this, &MatchTableModel::bracketAdded);
+    connect(JMApp()->matchController(), &MatchController::matchAdded, this, &MatchTableModel::matchAdded);
 }
 
 void MatchTableModel::setBracketId(int id)
@@ -60,14 +60,12 @@ QVariant MatchTableModel::data(const QModelIndex &index, int role) const
             {
                 case MatchTableModel::firstCompetitor:
                 {
-                    // TODO - Replace with command.
                     Competitor c1 = JMApp()->competitorController()->find(match.competitor1Id());
                     return QVariant(c1.isValid() ? QString("%1 %2").arg(c1.firstName()).arg(c1.lastName()) : "<Not Set>");
                 }
 
                 case MatchTableModel::secondCompetitor:
                 {
-                    // Replace with Command
 //                    qDebug() << "Match Competitor 2 is: " << match->competitor2();
                     Competitor c2 = JMApp()->competitorController()->find(match.competitor2Id());
                     return QVariant(c2.isValid() ? QString("%1 %2").arg(c2.firstName()).arg(c2.lastName()) : "<Not Set>");
@@ -75,7 +73,6 @@ QVariant MatchTableModel::data(const QModelIndex &index, int role) const
 
                 case MatchTableModel::winner:
                 {
-                    // TODO - Replace with command
 //                    qDebug() << "Match winner is: " << match->winner();
                     Competitor winner = JMApp()->competitorController()->find(match.winnerId());
                     return QVariant(winner.isValid() ? QString("%1 %2").arg(winner.firstName()).arg(winner.lastName()) : "<Not Set>");
@@ -99,8 +96,6 @@ bool MatchTableModel::setData(const QModelIndex &index, const QVariant &value, i
 {
     qDebug() << "MatchTableModel::setData(). role is: " << role;
 
-    // TODO - Should use commands here to modify the data.
-
     const QList<Match> matches = JMApp()->matchController()->matches(m_bracketId);
 
     if(index.row() >= matches.size())
@@ -115,21 +110,18 @@ bool MatchTableModel::setData(const QModelIndex &index, const QVariant &value, i
     {
         case firstCompetitor:
         {
-            // TODO - use command.
             match.setCompetitor1Id(value.toInt());
         }
             break;
 
         case secondCompetitor:
         {
-            // TODO - use command
             match.setCompetitor2Id(value.toInt());
         }
             break;
 
         case winner:
         {
-            // TODO - Switch to command.
             match.setWinnerId(value.toInt());
         }
             break;
@@ -140,6 +132,7 @@ bool MatchTableModel::setData(const QModelIndex &index, const QVariant &value, i
 
         case notes:
             match.setNotes(value.toString());
+        break;
 
         default:
             updated = false;
@@ -182,11 +175,13 @@ QVariant MatchTableModel::headerData(int section, Qt::Orientation orientation, i
     return QVariant();
 }
 
-void MatchTableModel::bracketAdded(JMDataObj *data)
+void MatchTableModel::matchAdded(int id)
 {
     // TODO - Fix
+    qDebug() << "MatchTableMOdel::matchAdded(" << id << ")";
 //    int index = JMApp()->matchController()->indexOf(data->id());
-    int index = 0;
+    // TODO - Change below to actual index.
+    int index = rowCount(QModelIndex());
     beginInsertRows(QModelIndex(), index, index);
     endInsertRows();
 }

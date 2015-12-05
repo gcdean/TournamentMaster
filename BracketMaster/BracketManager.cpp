@@ -32,7 +32,6 @@
 BracketManager::BracketManager(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::BracketManager)
-    , m_currentBracket(0)
 {
     ui->setupUi(this);
 
@@ -159,8 +158,8 @@ void BracketManager::printSelectedBrackets()
 
 
     // TODO - Can command params be changed?
-    PrintBracketsCommand cmd(QString("IS THIS NEEDED?"), bracketIds);
-    cmd.run(nullptr);
+    PrintBracketsCmdPtr cmd = PrintBracketsCmdPtr(new PrintBracketsCommand);
+    JMApp()->commandController()->doCommand(cmd);
 
 }
 
@@ -207,10 +206,9 @@ void BracketManager::rowChanged(const QModelIndex &current, const QModelIndex &p
         // Set the id in the competitor list.
         if(qv.isValid())
         {
-            // TODO Fix getting the bracket
-//            m_currentBracket = dynamic_cast<Bracket *>(JMApp()->bracketController()->find(qv.toInt()));
-//            CompetitorTableModel* cmodel = dynamic_cast<CompetitorTableModel *>(ui->bracketCompetitors->tableModel());
-//            cmodel->setParentId(qv.toInt());
+            m_currentBracket = JMApp()->bracketController()->find(qv.toInt());
+            CompetitorTableModel* cmodel = dynamic_cast<CompetitorTableModel *>(ui->bracketCompetitors->tableModel());
+            cmodel->setParentId(qv.toInt());
         }
     }
 
@@ -229,13 +227,13 @@ void BracketManager::competitorFilterChanged(const CompetitorFilter &filter)
 
 void BracketManager::removeCompetitorFromBracket()
 {
-    if(!m_currentBracket)
+    if(!m_currentBracket.isValid())
         return;
 
     QModelIndexList lst = ui->bracketCompetitors->tableView()->selectionModel()->selectedRows();
     foreach(const QModelIndex& index, lst)
     {
-        // TODO - Fix with command(s).
+        // TODO - Fix with command(s). Looks like need to get a competitor at a index of the list of compeitors in the bracket.
 //        Competitor *competitor = m_currentBracket->competitors().at(index.row());
 //        JMApp()->bracketController()->removeCompetitorFromBracket(m_currentBracket->id(), competitor->id());
     }
@@ -270,9 +268,7 @@ void BracketManager::editBracket()
 
     QModelIndex modelIndex = selected[0];
     QVariant qv = m_bracketModel->data(modelIndex, Qt::UserRole);
-    // TODO - Fix gettting bracekt.
-    Bracket* bracket = nullptr;
-//    Bracket *bracket = dynamic_cast<Bracket *>(JMApp()->bracketController()->find(qv.toInt()));
+    Bracket bracket = JMApp()->bracketController()->find(qv.toInt());
 
     BracketEditor be(bracket, this);
     be.exec();
@@ -292,14 +288,10 @@ void BracketManager::editCompetitor()
 
     CompetitorTableModel *cmodel = allCompetitorModel();
     QVariant qv = cmodel->data(rootIndex, Qt::UserRole);
-    // TODO - Fix getting competitor
-    Competitor* competitor = nullptr;
-//    Competitor *competitor = dynamic_cast<Competitor *>(JMApp()->competitorController()->find(qv.toInt()));
+    Competitor competitor = JMApp()->competitorController()->find(qv.toInt());
 
     CompetitorEditor editor(competitor, this);
     editor.exec();
-
-    //QMessageBox::information(this, "Competitor", QString("Edit %1 %2 Here").arg(competitor->firstName()).arg(competitor->lastName()));
 }
 
 CompetitorTableModel *BracketManager::allCompetitorModel()

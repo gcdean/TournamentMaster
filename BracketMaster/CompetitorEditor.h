@@ -2,18 +2,19 @@
 
 #include <QDialog>
 
+#include "data/Competitor.h"
+
 namespace Ui {
 class CompetitorEditor;
 }
 
-class Competitor;
 
 class CompetitorEditor : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit CompetitorEditor(Competitor *competitor, QWidget *parent = 0);
+    explicit CompetitorEditor(Competitor competitor, QWidget *parent = 0);
     ~CompetitorEditor();
 
     // QDialog interface
@@ -22,7 +23,7 @@ public slots:
 
 private:
     Ui::CompetitorEditor *ui;
-    Competitor *m_competitor;
+    Competitor m_competitor;
 
 };
 

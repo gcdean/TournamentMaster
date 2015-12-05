@@ -22,6 +22,7 @@ void MatchController::add(int parentId)
     {
         // TODO - fix signal signature
     //    emit addedDataObj(match);
+        emit matchAdded(cmd->match().id());
     }
 
 }
@@ -46,7 +47,10 @@ void MatchController::remove(int id)
     Match match = find(id);
     RemoveMatchCmdPtr cmd = RemoveMatchCmdPtr(new RemoveMatchCommand(match));
 
-    JMApp()->commandController()->doCommand(cmd);
+    if(JMApp()->commandController()->doCommand(cmd))
+    {
+        emit matchRemoved(id);
+    }
 }
 
 int MatchController::size() const

@@ -9,11 +9,16 @@ public:
         : m_id(-1)
         , m_bracketId(-1)
         , m_matchNum(-1)
+        , m_competitor1Id(-1)
+        , m_competitor2Id(-1)
+        , m_winnerId(-1)
         , m_score(-1)
     {}
     MatchData(int id) : m_id(id)
-      , m_bracketId(-1)
       , m_matchNum(-1)
+      , m_competitor1Id(-1)
+      , m_competitor2Id(-1)
+      , m_winnerId(-1)
       , m_score(-1)
     {}
 

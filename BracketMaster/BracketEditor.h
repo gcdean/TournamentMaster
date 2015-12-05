@@ -1,12 +1,12 @@
 #pragma once
 
+#include "data/Bracket.h"
 #include <QDialog>
 
 namespace Ui {
 class BracketEditor;
 }
 
-class Bracket;
 class MatchTableModel;
 
 class BracketEditor : public QDialog
@@ -14,7 +14,7 @@ class BracketEditor : public QDialog
     Q_OBJECT
 
 public:
-    explicit BracketEditor(Bracket *bracket, QWidget *parent = 0);
+    explicit BracketEditor(Bracket bracket, QWidget *parent = 0);
     ~BracketEditor();
 
     // QDialog interface
@@ -27,7 +27,7 @@ private slots:
 
 private:
     Ui::BracketEditor *ui;
-    Bracket *m_bracket;
+    Bracket m_bracket;
     MatchTableModel *m_matchTableModel;
 
 };

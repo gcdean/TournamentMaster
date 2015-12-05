@@ -4,8 +4,6 @@
 
 #include <QObject>
 
-class IEditor;
-
 class BaseUndoCommand : public BaseCommand
 {
 public:

@@ -2,7 +2,6 @@
 #include "AutoTest.h"
 
 #include "data/Club.h"
-#include "IEditor.h"
 #include <QObject>
 
 class CommandController;

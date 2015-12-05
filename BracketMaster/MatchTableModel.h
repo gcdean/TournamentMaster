@@ -38,7 +38,7 @@ public:
     Qt::ItemFlags flags(const QModelIndex &index) const override;
 
 private slots:
-    void bracketAdded(JMDataObj *data);
+    void matchAdded(int id);
 
 private:
     int m_bracketId;

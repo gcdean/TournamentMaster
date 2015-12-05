@@ -22,5 +22,8 @@ public:
 
     const QList<Match> matches(int bracketId) const;
 
+signals:
+    void matchAdded(int id);
+    void matchRemoved(int id);
 };
 

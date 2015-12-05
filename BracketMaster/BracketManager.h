@@ -2,7 +2,8 @@
 
 #include <QWidget>
 
-class Bracket;
+#include "data/Bracket.h"
+
 class BracketCompetitorTableModel;
 class BracketTableModel;
 class BracketTypeItemDelegate;
@@ -42,7 +43,7 @@ private:
 
 private:
     Ui::BracketManager *ui;
-    Bracket *m_currentBracket;
+    Bracket m_currentBracket;
     BracketTableModel *m_bracketModel;
     BracketCompetitorTableModel *m_bracketCompetitorModel;
     BracketTypeItemDelegate *m_bracketItemDelegate;

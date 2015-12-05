@@ -37,49 +37,49 @@ QWidget *BracketTypeItemDelegate::createEditor(QWidget *parent, const QStyleOpti
     return widget;
 }
 
-//void BracketTypeItemDelegate::setCommandControllerData(QWidget *editor, const QModelIndex &index) const
-//{
-//    switch(index.column())
-//    {
-//        case bracket::Gender:
-//        {
-//            QComboBox *combo = dynamic_cast<QComboBox *>(editor);
-//            if(combo)
-//            {
-//                combo->addItem("Male");
-//                combo->addItem("Female");
+void BracketTypeItemDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const
+{
+    switch(index.column())
+    {
+        case bracket::Gender:
+        {
+            QComboBox *combo = dynamic_cast<QComboBox *>(editor);
+            if(combo)
+            {
+                combo->addItem("Male");
+                combo->addItem("Female");
 
-//                // Need to select the right one.
-//                QVariant var = index.model()->data(index);
-//                if(genderFromString(var.toString()) == JM::Male)
-//                    combo->setCurrentIndex(0);
-//                else
-//                    combo->setCurrentIndex(1);
-//            }
-//            break;
-//        }
-//        case bracket::Type:
-//        {
-//            QComboBox *combo = dynamic_cast<QComboBox *>(editor);
-//            if(combo)
-//            {
-//                combo->addItem("Light");
-//                combo->addItem("Medium");
-//                combo->addItem("Heavy");
-//                combo->addItem("Super Heavy");
-//                combo->addItem("IFJ");
+                // Need to select the right one.
+                QVariant var = index.model()->data(index);
+                if(genderFromString(var.toString()) == JM::Male)
+                    combo->setCurrentIndex(0);
+                else
+                    combo->setCurrentIndex(1);
+            }
+            break;
+        }
+        case bracket::Type:
+        {
+            QComboBox *combo = dynamic_cast<QComboBox *>(editor);
+            if(combo)
+            {
+                combo->addItem("Light");
+                combo->addItem("Medium");
+                combo->addItem("Heavy");
+                combo->addItem("Super Heavy");
+                combo->addItem("IFJ");
 
-//                // Need to select the right one.
-//                QVariant var = index.model()->data(index);
-//                combo->setCurrentIndex(Bracket::weightTypeFromStr(var.toString()));
-//            }
-//            break;
-//        }
+                // Need to select the right one.
+                QVariant var = index.model()->data(index);
+                combo->setCurrentIndex(Bracket::weightTypeFromStr(var.toString()));
+            }
+            break;
+        }
 
-//        default:
-//            QStyledItemDelegate::setCommandControllerData(editor, index);
-//    }
-//}
+        default:
+            QStyledItemDelegate::setEditorData(editor, index);
+    }
+}
 
 void BracketTypeItemDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
 {

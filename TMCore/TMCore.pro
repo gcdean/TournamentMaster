@@ -44,7 +44,6 @@ HEADERS += \
     data/Tournament.h \
     commands/BaseCommand.h \
     commands/BaseUndoCommand.h \
-    IEditor.h \
     commands/ClubCommands.h \
     data/ClubData.h \
     data/CompetitorData.h \
