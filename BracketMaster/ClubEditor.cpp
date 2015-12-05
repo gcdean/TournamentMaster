@@ -1,6 +1,8 @@
 #include "ClubEditor.h"
 #include "ui_ClubEditor.h"
 
+#include "JudoMasterApplication.h"
+
 namespace
 {
     QString states = "AL,AK,AZ,AR,CA,CO,CT,DE,FL,GA,HI,ID,IL,IN,IA,KS,KY,LA,ME,MD,MA,MI,MN,MS,MO,MT,NE,NV,NH,NJ,NM,NY,NC,ND,OH,OK,OR,PA,RI,SC,SD,TN,TX,UT,VT,VA,WA,WV,WI,WY";
@@ -39,52 +41,50 @@ void ClubEditor::editClub(Club club)
 void ClubEditor::updateClubName()
 {
     Q_ASSERT(true);
-    //m_club->setClubName(ui->clubNameEdit->text());
+    //m_club.setClubName(ui->clubNameEdit->text());
 }
 
 void ClubEditor::updateControls()
 {
     Q_ASSERT(true);
 
-//    ui->clubNameEdit->setText(m_club->clubName());
-//    ui->coachNameEdit->setText(m_club->coachName());
-//    ui->address1Edit->setText(m_club->address1());
-//    ui->address2Edit->setText(m_club->address2());
-//    ui->cityEdit->setText(m_club->city());
-//    ui->zipEdit->setText(m_club->zip());
-//    ui->stateCombo->clear();
-//    if(m_club->country().isEmpty() || m_club->country().compare("usa", Qt::CaseInsensitive) == 0)
-//    {
-//        ui->usaBtn->setChecked(true);
-//    }
-//    else if(m_club->country().compare("canada", Qt::CaseInsensitive) == 0)
-//    {
-//        ui->canadaBtn->setChecked(true);
-//    }
-//    else
-//    {
-//        ui->otherCountryBtn->setChecked(true);
-//    }
+    ui->clubNameEdit->setText(m_club.clubName());
+    ui->coachNameEdit->setText(m_club.coachName());
+    ui->address1Edit->setText(m_club.address1());
+    ui->address2Edit->setText(m_club.address2());
+    ui->cityEdit->setText(m_club.city());
+    ui->zipEdit->setText(m_club.zip());
+    ui->stateCombo->clear();
+    if(m_club.country().isEmpty() || m_club.country().compare("usa", Qt::CaseInsensitive) == 0)
+    {
+        ui->usaBtn->setChecked(true);
+    }
+    else if(m_club.country().compare("canada", Qt::CaseInsensitive) == 0)
+    {
+        ui->canadaBtn->setChecked(true);
+    }
+    else
+    {
+        ui->otherCountryBtn->setChecked(true);
+    }
     updateStateList();
 }
 
 void ClubEditor::updateCoachName()
 {
     Q_ASSERT(true);
-//    m_club->setCoachName(ui->coachNameEdit->text());
+//    m_club.setCoachName(ui->coachNameEdit->text());
 }
 
 void ClubEditor::updateClub()
 {
-    // This should be done with a controller
-    Q_ASSERT(true);
 
-//    m_club->setClubName(ui->clubNameEdit->text());
-//    m_club->setCoachName(ui->coachNameEdit->text());
-//    m_club->setAddress1(ui->address1Edit->text());
-//    m_club->setAddress2(ui->address2Edit->text());
-//    m_club->setCity(ui->cityEdit->text());
-//    m_club->setState(ui->stateCombo->currentText());
+    m_club.setClubName(ui->clubNameEdit->text());
+    m_club.setCoachName(ui->coachNameEdit->text());
+    m_club.setAddress1(ui->address1Edit->text());
+    m_club.setAddress2(ui->address2Edit->text());
+    m_club.setCity(ui->cityEdit->text());
+    m_club.setState(ui->stateCombo->currentText());
     QString country;
     if(ui->usaBtn->isChecked())
     {
@@ -98,9 +98,10 @@ void ClubEditor::updateClub()
     {
         country = ui->otherCountryEdit->text();
     }
-//    m_club->setCountry(country);
-//    m_club->setZip(ui->zipEdit->text());
+    m_club.setCountry(country);
+    m_club.setZip(ui->zipEdit->text());
 
+    JMApp()->clubController()->updateClub(m_club);
 }
 
 void ClubEditor::revertClub()
