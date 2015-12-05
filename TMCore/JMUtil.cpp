@@ -126,7 +126,7 @@ QString prepareStringForCSV(QString str)
     return str.replace(QString(","), QString(";"));
 }
 
-bool compareClubNames(Club* club1, Club* club2)
+bool compareClubNames(Club club1, Club club2)
 {
-    return club1->clubName().compare(club2->clubName(), Qt::CaseInsensitive) < 0;
+    return club1.clubName().compare(club2.clubName(), Qt::CaseInsensitive) < 0;
 }

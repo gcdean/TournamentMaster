@@ -51,10 +51,10 @@ CompetitorEditor::CompetitorEditor(Competitor *competitor, QWidget *parent) :
     ui->notes->setText(competitor->notes());
 
     // Fill in the brackets.
-    const QList<Bracket *> brackets = JMApp()->bracketController()->competitorBrackets(competitor->id());
-    foreach(Bracket *bracket, brackets)
+    const QList<Bracket> brackets = JMApp()->bracketController()->competitorBrackets(competitor->id());
+    foreach(Bracket bracket, brackets)
     {
-        ui->bracketList->addItem(QString("%1 %2 %3").arg(bracket->name()).arg(Bracket::weightTypeToStr(bracket->weightType())).arg(genderToString(bracket->gender())));
+        ui->bracketList->addItem(QString("%1 %2 %3").arg(bracket.name()).arg(Bracket::weightTypeToStr(bracket.weightType())).arg(genderToString(bracket.gender())));
     }
 
 }

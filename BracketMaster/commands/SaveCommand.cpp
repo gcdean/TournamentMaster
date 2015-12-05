@@ -26,9 +26,8 @@ SaveCommand::~SaveCommand()
 
 bool SaveCommand::run(IDocument *const doc)
 {
-    Q_ASSERT(false);
-    // TODO - Use to editor/doc
-    return false;
+    // TODO - Set the filename if necessary.
+    return doc->save();
 
 //    // Get the tournament info
 //    const std::unique_ptr<Tournament> &tournament = JMApp()->tournament();

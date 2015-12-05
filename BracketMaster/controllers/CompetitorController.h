@@ -16,26 +16,21 @@ class CompetitorController : public BaseController
 public:
     explicit CompetitorController(QObject *parent = 0);
 
-    Competitor *createCompetitor(QString firstName, QString lastName, JM::Gender gender, int age , double weight, JM::Rank rank, int clubId);
+    Competitor createCompetitor(QString firstName, QString lastName, JM::Gender gender, int age , double weight, JM::Rank rank, int clubId);
+    void updateCompetitor(Competitor competitor);
 
     int size() const /*override*/;
     int size(int id) const /*override*/;
 
-    Competitor *findByName(QString firstName, QString lastName);
+    Competitor findByName(QString firstName, QString lastName);
 
-    const QList<Competitor *> clubCompetitors(int clubId) const;
-    const QList<Competitor *> competitors(int parentId = -1) const override;
-    JMDataObj* find(int id) const override;
+//    const QList<Competitor *> clubCompetitors(int clubId) const;
+    const QList<Competitor> competitors(int parentId = -1) const override;
+    Competitor find(int id) const;
     void add(int parentId) override;
 
 signals:
     void competitorAdded(Competitor *competitor);
-
-public slots:
-
-
-protected:
-    int findNextId() /*override*/;
 
 };
 

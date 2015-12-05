@@ -29,8 +29,8 @@ public:
     void remove(int id);
     void removeIndex(int index);
     int indexOf(int id);
-    virtual JMDataObj *find(int id) const override;
-    virtual const QList<Competitor *> competitors(int parentId = -1) const;
+    virtual JMDataObj *find(int id) const;
+    virtual const QList<Competitor> competitors(int parentId = -1) const override;
 
 signals:
     void clubAdded(Club* club);
@@ -41,7 +41,6 @@ public slots:
 
 private:
 //    Club* findClub(int id);
-    int findNextId() override;
 
 };
 

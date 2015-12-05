@@ -13,3 +13,5 @@ public slots:
     bool run(IDocument* const doc);
 };
 
+typedef QSharedPointer<OpenCommand> OpenCmdPtr;
+

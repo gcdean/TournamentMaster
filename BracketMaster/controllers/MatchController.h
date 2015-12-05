@@ -13,17 +13,14 @@ public:
     // BaseController interface
 public:
     void add(int parentId) override;
-    JMDataObj *find(int id) const override;
+    void update(Match match);
+    Match find(int id) const;
     int indexOf(int id) override;
     void remove(int id) override;
     int size() const override;
     int size(int id) const override;
 
-    const QList<Match *> matches(int bracketId) const;
-
-    // BaseController interface
-protected:
-    virtual int findNextId();
+    const QList<Match> matches(int bracketId) const;
 
 };
 

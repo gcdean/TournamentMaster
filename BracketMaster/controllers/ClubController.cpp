@@ -2,6 +2,7 @@
 
 #include "JudoMasterApplication.h"
 #include "commands/ClubCommands.h"
+#include "commands/CompetitorCommands.h"
 #include "data/Club.h"
 #include "data/Tournament.h"
 
@@ -94,20 +95,11 @@ void ClubController::add(int parentId)
 {
     Q_UNUSED(parentId);
 
-    if(!tournament())
-        return;
-
     createClub();
 }
 
 int ClubController::size() const
 {
-//    if(!tournament())
-//    {
-//        return 0;
-//    }
-
-//    return tournament()->clubs().size();
 
     return clubs().size();
 }
@@ -169,25 +161,6 @@ int ClubController::indexOf(int id)
 //    return club;
 //}
 
-int ClubController::findNextId()
-{
-    int nextId = 0;
-    if(tournament())
-    {
-        // TODO - Remove this method.
-//        foreach (Club* club, tournament()->clubs())
-//        {
-
-//            nextId = std::max(nextId, club->id());
-//        }
-    }
-
-    // We now have the max club id.
-    nextId++;
-
-    return nextId;
-}
-
 
 JMDataObj *ClubController::find(int id) const
 {
@@ -201,16 +174,12 @@ JMDataObj *ClubController::find(int id) const
     return 0;
 }
 
-const QList<Competitor *> ClubController::competitors(int parentId) const
+const QList<Competitor> ClubController::competitors(int parentId) const
 {
     // TODO - Fix this.
-//    Club *club = dynamic_cast<Club *>(find(parentId));
+    GetClubCompetitorsCmdPtr cmd = GetClubCompetitorsCmdPtr(new GetClubCompetitorsCommand(parentId));
+    JMApp()->commandController()->doCommand(cmd);
 
-//    if(club)
-//    {
-//        // TODO - Fix below
-////        return club->competitors();
-//    }
+    return cmd->competitors();
 
-    return NOCOMPETITORS;
 }

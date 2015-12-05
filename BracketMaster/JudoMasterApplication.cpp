@@ -1,7 +1,6 @@
 #include "JudoMasterApplication.h"
 
 #include "CommandController.h"
-#include "data/Tournament.h"
 #include "TournamentDoc.h"
 
 JudoMasterApplication *JMApp()
@@ -12,7 +11,6 @@ JudoMasterApplication *JMApp()
 
 JudoMasterApplication::JudoMasterApplication(int &argc, char **argv) :
     QApplication(argc, argv)
-    , m_tournament(nullptr)
     , m_lastSaveDir(QDir::home())
 {
 
@@ -23,25 +21,12 @@ JudoMasterApplication::JudoMasterApplication(int &argc, char **argv) :
 
 }
 
-void JudoMasterApplication::setTournament(std::unique_ptr<Tournament> tournament)
-{
-    m_tournament = std::move(tournament);
-    m_matchController.setTournament(m_tournament);
-    m_clubController.setTournament(m_tournament);
-    m_competitorController.setTournament(m_tournament);
-    m_bracketController.setTournament(m_tournament);
-}
-
 void JudoMasterApplication::setCommandController(QSharedPointer<CommandController> editor)
 {
     m_commandController = editor;
 
-    // TODO - Set controllers?
-}
+    emit tournamentChanged();
 
-const std::unique_ptr<Tournament> &JudoMasterApplication::tournament() const
-{
-    return m_tournament;
 }
 
 CommandController* JudoMasterApplication::commandController()

@@ -40,13 +40,13 @@ bool BracketCompetitorTableModel::dropMimeData(const QMimeData *data, Qt::DropAc
     if(data->hasFormat("application/x-qabstractitemmodeldatalist"))
     {
         // Internal move.
-        BaseController* cntrl = controller();
+        BracketController* cntrl = dynamic_cast<BracketController *>(controller());
 
         int pId = parentId();
-        Bracket* bracket = dynamic_cast<Bracket *>(cntrl->find(pId));
-        if(bracket)
+        Bracket bracket = cntrl->find(pId);
+        if(bracket.isValid())
         {
-            qDebug() << "Bracket is: " << bracket->name();
+            qDebug() << "Bracket is: " << bracket.name();
             qDebug() << "HAVE MODLE DATA LIST INFO.";
             QByteArray encoded = data->data("application/x-qabstractitemmodeldatalist");
             QDataStream stream(&encoded, QIODevice::ReadOnly);
@@ -61,7 +61,7 @@ bool BracketCompetitorTableModel::dropMimeData(const QMimeData *data, Qt::DropAc
                 if(destRow == -1)
                 {
                     // TODO - Fix with command.
-//                    destRow = bracket->competitors().size() - 1;
+                    destRow = bracket.competitorIds().size() - 1;
                 }
                 /* do something with the data */
 

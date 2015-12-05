@@ -23,3 +23,4 @@ private:
     QList<int> m_bracketIds;
 };
 
+typedef QSharedPointer<PrintBracketsCommand> PrintBracketsCmdPtr;

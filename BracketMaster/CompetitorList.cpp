@@ -22,7 +22,7 @@ CompetitorList::CompetitorList(QWidget *parent) :
 
     connect(ui->addBtn, &QPushButton::clicked, this, &CompetitorList::add);
     connect(ui->deleteBtn, &QPushButton::clicked, this, &CompetitorList::remove);
-    connect(JMApp()->clubController(), &ClubController::tournamentChanged, this, &CompetitorList::tournamentChanged);
+    connect(JMApp(), &JudoMasterApplication::tournamentChanged, this, &CompetitorList::tournamentChanged);
 }
 
 CompetitorList::~CompetitorList()

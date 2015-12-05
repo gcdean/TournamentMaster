@@ -1,5 +1,6 @@
 #include "MatchTableModel.h"
 
+#include "commands/MatchCommands.h"
 #include "data/Competitor.h"
 #include "JudoMasterApplication.h"
 #include "data/Match.h"
@@ -40,14 +41,14 @@ int MatchTableModel::columnCount(const QModelIndex &parent) const
 
 QVariant MatchTableModel::data(const QModelIndex &index, int role) const
 {
-    const QList<Match *> matches = JMApp()->matchController()->matches(m_bracketId);
+    const QList<Match> matches = JMApp()->matchController()->matches(m_bracketId);
 
     if(index.row() >= matches.size())
     {
         return QVariant();
     }
 
-    Match *match = matches[index.row()];
+    Match match = matches[index.row()];
 
 //    qDebug() << "MatchTableModel::data(). Match is: " << match;
     switch(role)
@@ -60,29 +61,31 @@ QVariant MatchTableModel::data(const QModelIndex &index, int role) const
                 case MatchTableModel::firstCompetitor:
                 {
                     // TODO - Replace with command.
-//                    qDebug() << "Match Competitor 1 is: " << match->competitor1();
-//                    return QVariant(match->competitor1() ? QString("%1 %2").arg(match->competitor1()->firstName()).arg(match->competitor1()->lastName()) : "<Not Set>");
+                    Competitor c1 = JMApp()->competitorController()->find(match.competitor1Id());
+                    return QVariant(c1.isValid() ? QString("%1 %2").arg(c1.firstName()).arg(c1.lastName()) : "<Not Set>");
                 }
 
                 case MatchTableModel::secondCompetitor:
                 {
                     // Replace with Command
 //                    qDebug() << "Match Competitor 2 is: " << match->competitor2();
-//                    return QVariant(match->competitor2() ? QString("%1 %2").arg(match->competitor2()->firstName()).arg(match->competitor2()->lastName()) : "<Not Set>");
+                    Competitor c2 = JMApp()->competitorController()->find(match.competitor2Id());
+                    return QVariant(c2.isValid() ? QString("%1 %2").arg(c2.firstName()).arg(c2.lastName()) : "<Not Set>");
                 }
 
                 case MatchTableModel::winner:
                 {
                     // TODO - Replace with command
 //                    qDebug() << "Match winner is: " << match->winner();
-//                    return QVariant(match->winner() ? QString("%1 %2").arg(match->winner()->firstName()).arg(match->winner()->lastName()) : "<Not Set>");
+                    Competitor winner = JMApp()->competitorController()->find(match.winnerId());
+                    return QVariant(winner.isValid() ? QString("%1 %2").arg(winner.firstName()).arg(winner.lastName()) : "<Not Set>");
                 }
 
                 case MatchTableModel::score:
-                    return QVariant(match->score());
+                    return QVariant(match.score());
 
                 case MatchTableModel::notes:
-                    return QVariant(match->notes());
+                    return QVariant(match.notes());
             }
         }
         break;
@@ -98,56 +101,56 @@ bool MatchTableModel::setData(const QModelIndex &index, const QVariant &value, i
 
     // TODO - Should use commands here to modify the data.
 
-    const QList<Match *> matches = JMApp()->matchController()->matches(m_bracketId);
+    const QList<Match> matches = JMApp()->matchController()->matches(m_bracketId);
 
     if(index.row() >= matches.size())
     {
         return false;
     }
 
-    Match *match = matches[index.row()];
+    Match match = matches[index.row()];
 
-    bool valid = false;
+    bool updated = true;
     switch(index.column())
     {
         case firstCompetitor:
         {
             // TODO - use command.
-//            Competitor *competitor = dynamic_cast<Competitor *>(JMApp()->competitorController()->find(value.toInt()));
-//            match->setCompetitor1(competitor);
-            valid = true;
+            match.setCompetitor1Id(value.toInt());
         }
             break;
 
         case secondCompetitor:
         {
             // TODO - use command
-//            Competitor *competitor = dynamic_cast<Competitor *>(JMApp()->competitorController()->find(value.toInt()));
-//            match->setCompetitor2(competitor);
-            valid = true;
+            match.setCompetitor2Id(value.toInt());
         }
             break;
 
         case winner:
         {
             // TODO - Switch to command.
-            //            Competitor *competitor = dynamic_cast<Competitor *>(JMApp()->competitorController()->find(value.toInt()));
-//            match->setWinner(competitor);
-            valid = true;
+            match.setWinnerId(value.toInt());
         }
             break;
 
         case score:
-            match->setScore(value.toInt());
-            valid = true;
+            match.setScore(value.toInt());
             break;
 
         case notes:
-            match->setNotes(value.toString());
-            valid = true;
+            match.setNotes(value.toString());
+
+        default:
+            updated = false;
     }
 
-    return valid;
+    if(updated)
+    {
+        JMApp()->matchController()->update(match);
+    }
+
+    return updated;
 }
 
 QVariant MatchTableModel::headerData(int section, Qt::Orientation orientation, int role) const

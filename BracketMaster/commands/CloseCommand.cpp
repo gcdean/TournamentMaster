@@ -31,8 +31,6 @@ bool CloseCommand::run(IDocument *const doc)
         }
     }
 
-    JMApp()->setTournament(nullptr);
-    JMApp()->setModified(false);
-
+    // TODO - more to do here.
     return done(true);
 }

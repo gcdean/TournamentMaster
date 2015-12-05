@@ -14,14 +14,16 @@ public:
     ImportDataCommand(QObject *parent = 0);
     ~ImportDataCommand();
 
-    const QList<Competitor *> importedCompetitors() const;
-    const QList<Competitor *> skippedCompetitors() const;
+    const QList<Competitor> importedCompetitors() const;
+    const QList<Competitor> skippedCompetitors() const;
 
     // BaseCommand interface
     virtual bool run(IDocument* const doc);
 
 private:
-    QList<Competitor *> m_importedCompetitors;
-    QList<Competitor *> m_skippedCompetitors;
+    QList<Competitor> m_importedCompetitors;
+    QList<Competitor> m_skippedCompetitors;
 };
+
+typedef QSharedPointer<ImportDataCommand> ImportDataCmdPtr;
 

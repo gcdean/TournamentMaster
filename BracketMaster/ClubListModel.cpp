@@ -24,7 +24,8 @@ Club ClubListModel::club(const QModelIndex &index)
 
 int ClubListModel::rowCount(const QModelIndex &) const
 {
-    return (JMApp()->clubController()->clubs().size());
+    int rows = JMApp()->clubController()->clubs().size();
+    return rows;
 }
 
 QVariant ClubListModel::data(const QModelIndex &index, int role) const

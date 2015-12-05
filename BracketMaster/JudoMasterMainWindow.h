@@ -46,13 +46,13 @@ private:
     BaseCommandPtr m_tournamentInfoCommand;
     BaseCommandPtr m_createTournamentCommand;
     // TODO - Either convert all to BaseCommandPtr or specific typedef
-    PrintBracketsCommand m_printBracketsCommand;
-    CloseCommand m_closeCommand;
-    SaveCommand m_saveCommand;
-    SaveCommand m_saveAsCommand;
-    OpenCommand m_openCommand;
-    ImportDataCommand m_importDataCommand;
-    ExportCSVCommand m_exportCSVCommand;
+    PrintBracketsCmdPtr m_printBracketsCommand;
+    CloseCmdPtr m_closeCommand;
+    SaveCmdPtr m_saveCommand;
+    SaveCmdPtr m_saveAsCommand;
+    OpenCmdPtr m_openCommand;
+    ImportDataCmdPtr m_importDataCommand;
+    ExportCSVCmdPtr m_exportCSVCommand;
 
 };
 

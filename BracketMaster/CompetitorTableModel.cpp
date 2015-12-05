@@ -1,5 +1,7 @@
 #include "CompetitorTableModel.h"
 
+#include "commands/BracketCommands.h"
+#include "controllers/CompetitorController.h"
 #include "data/Bracket.h"
 #include "data/Competitor.h"
 #include "data/JMDataObj.h"
@@ -48,7 +50,8 @@ bool CompetitorTableModel::editable()
 
 int CompetitorTableModel::rowCount(const QModelIndex &) const
 {
-    return m_controller->competitors(m_filter, m_parentId).size();
+    int rows = m_controller->competitors(m_filter, m_parentId).size();
+    return rows;
 }
 
 int CompetitorTableModel::columnCount(const QModelIndex &) const
@@ -69,9 +72,11 @@ QVariant CompetitorTableModel::headerData(int section, Qt::Orientation orientati
                 if(idx.isValid())
                 {
                     QVariant qv = data(idx, Qt::UserRole);
-                    Competitor *competitor = dynamic_cast<Competitor *>(this->m_controller->find(qv.toInt()));
-                    const QList<Bracket *> brackets = JMApp()->bracketController()->competitorBrackets(qv.toInt());
-                    if(competitor && competitor->numBrackets() != brackets.size())
+                    CompetitorController *controller = dynamic_cast<CompetitorController *>(m_controller);
+                    Competitor competitor = controller->find(qv.toInt());
+
+                    const QList<Bracket> brackets = JMApp()->bracketController()->competitorBrackets(qv.toInt());
+                    if(competitor.isValid() && competitor.numBrackets() != brackets.size())
                     {
                         return QVariant(QColor(Qt::red));
                     }
@@ -103,35 +108,35 @@ QVariant CompetitorTableModel::headerData(int section, Qt::Orientation orientati
         {
             case competitor::FirstName:
                 return QVariant("First");
-            break;
+                break;
 
             case competitor::LastName:
                 return QVariant("Last");
-            break;
+                break;
 
             case competitor::Gender:
                 return QVariant("Gender");
-            break;
+                break;
 
             case competitor::Age:
                 return QVariant("Age");
-            break;
+                break;
 
             case competitor::Weight:
                 return QVariant("Wt.");
-            break;
+                break;
 
             case competitor::Rank:
                 return QVariant("Rank");
-            break;
+                break;
 
             case competitor::NumDivs:
                 return QVariant("Divs");
 
             case competitor::Notes:
                 return QVariant("Notes");
-        default:
-            return QVariant();
+            default:
+                return QVariant();
         }
     }
     return QVariant();
@@ -140,20 +145,20 @@ QVariant CompetitorTableModel::headerData(int section, Qt::Orientation orientati
 QVariant CompetitorTableModel::data(const QModelIndex &index, int role) const
 {
     // Get the competitor.
-    const QList<Competitor *> competitors = m_controller->competitors(m_filter, m_parentId);
+    const QList<Competitor> competitors = m_controller->competitors(m_filter, m_parentId);
     if(index.row() >= competitors.size())
     {
         qDebug() << "ERROR!!! CompetitorTableModel::data() attempting to access row: " << index.row() << " with only " << competitors.size() << " Competitors with filter?";
         return QVariant("ERROR");
     }
 
-    const Competitor *judoka = competitors.at(index.row());
+    const Competitor judoka = competitors.at(index.row());
     switch(role)
     {
         case Qt::BackgroundRole:
             return QVariant(this->columnBackground(judoka, index.column()));
 
-        break;
+            break;
 
         case Qt::DecorationRole:
         {
@@ -162,7 +167,7 @@ QVariant CompetitorTableModel::data(const QModelIndex &index, int role) const
                 case competitor::Rank:
                 {
 
-                    switch(judoka->rank())
+                    switch(judoka.rank())
                     {
                         case JM::White:
                             return QIcon(":/images/white.png");
@@ -204,41 +209,41 @@ QVariant CompetitorTableModel::data(const QModelIndex &index, int role) const
             switch(index.column())
             {
                 case competitor::FirstName:
-                    return QVariant(judoka->firstName());
-                break;
+                    return QVariant(judoka.firstName());
+                    break;
 
                 case competitor::LastName:
-                    return QVariant(judoka->lastName());
-                break;
+                    return QVariant(judoka.lastName());
+                    break;
 
                 case competitor::Gender:
-                    return QVariant(genderToString(judoka->gender()));
-                break;
+                    return QVariant(genderToString(judoka.gender()));
+                    break;
 
                 case competitor::Age:
-                    return QVariant(judoka->age());
-                break;
+                    return QVariant(judoka.age());
+                    break;
 
                 case competitor::Weight:
-                    return QVariant(judoka->weight());
-                break;
+                    return QVariant(judoka.weight());
+                    break;
 
                 case competitor::Rank:
-                    return QVariant(rankToString(judoka->rank()));
+                    return QVariant(rankToString(judoka.rank()));
 
-                break;
+                    break;
 
                 case competitor::NumDivs:
-                    return QVariant(judoka->numBrackets());
+                    return QVariant(judoka.numBrackets());
 
                 case competitor::Notes:
-                    return QVariant(judoka->notes());
+                    return QVariant(judoka.notes());
 
             }
 
-        break;
+            break;
         case Qt::UserRole:
-            return QVariant(judoka->id());
+            return QVariant(judoka.id());
             break;
     }
 
@@ -264,50 +269,53 @@ bool CompetitorTableModel::setData(const QModelIndex &index, const QVariant &val
 {
     Q_UNUSED(role);
 
-    bool updated = false;
+    bool updated = true;
 
-    const QList<Competitor *> competitors = m_controller->competitors(m_filter, m_parentId);
-    Competitor *judoka = competitors.at(index.row());
+    const QList<Competitor > competitors = m_controller->competitors(m_filter, m_parentId);
+    Competitor judoka = competitors.at(index.row());
 
     switch(index.column())
     {
         case competitor::FirstName: // First Name
-            judoka->setFirstName(value.toString());
-            updated = true;
-        break;
+            judoka.setFirstName(value.toString());
+            break;
 
         case competitor::LastName: // Last Name
-            judoka->setLastName(value.toString());
-            updated = true;
-        break;
+            judoka.setLastName(value.toString());
+            break;
 
         case competitor::Gender:
-            judoka->setGender(genderFromString(value.toString()));
-        break;
+            judoka.setGender(genderFromString(value.toString()));
+            break;
 
         case competitor::Age:
-            judoka->setAge(value.toInt());
+            judoka.setAge(value.toInt());
             break;
 
         case competitor::Weight:
-            judoka->setWeight(value.toDouble());
+            judoka.setWeight(value.toDouble());
             break;
 
         case competitor::Rank:
-            judoka->setRank(rankFromString(value.toString()));
+            judoka.setRank(rankFromString(value.toString()));
             break;
 
         case competitor::NumDivs:
-            judoka->setNumBrackets(value.toInt());
+            judoka.setNumBrackets(value.toInt());
             break;
 
         case competitor::Notes:
-            judoka->setNotes(value.toString());
+            judoka.setNotes(value.toString());
             break;
+
+        default:
+            updated = false;
     }
 
     if(updated)
     {
+        // Update the competitor.
+        JMApp()->competitorController()->updateCompetitor(judoka);
         emit dataChanged(index, index);
     }
     return updated;
@@ -334,7 +342,7 @@ QStringList CompetitorTableModel::mimeTypes() const
 
 QMimeData *CompetitorTableModel::mimeData(const QModelIndexList &indexes) const
 {
-    const QList<Competitor *> competitors = m_controller->competitors(m_filter, m_parentId);
+    const QList<Competitor > competitors = m_controller->competitors(m_filter, m_parentId);
 //    QMimeData *mimeData = new QMimeData();
     QMimeData *mimeData = QAbstractTableModel::mimeData(indexes);
 
@@ -346,11 +354,11 @@ QMimeData *CompetitorTableModel::mimeData(const QModelIndexList &indexes) const
 
     foreach(const QModelIndex& index, indexes)
     {
-        Competitor *competitor = competitors.at(index.row());
-        if(competitor && !competitorIds.contains(competitor->id()))
+        Competitor competitor = competitors.at(index.row());
+        if(competitor.isValid() && !competitorIds.contains(competitor.id()))
         {
-            competitorIds[competitor->id()] = 1;
-            stream << competitor->id();
+            competitorIds[competitor.id()] = 1;
+            stream << competitor.id();
         }
 
     }
@@ -382,35 +390,34 @@ bool CompetitorTableModel::dropMimeData(const QMimeData *data, Qt::DropAction ac
 
             // Find the Competitor
             // TODO - Needs to be reworked
-            const QList<Competitor *> competitors = m_controller->competitors();
-            Competitor *competitor = 0;
-            foreach(Competitor *c, competitors)
+            const QList<Competitor> competitors = m_controller->competitors();
+            Competitor competitor;
+            foreach(Competitor c, competitors)
             {
-                if(c->id() == compId)
+                if(c.id() == compId)
                 {
                     competitor = c;
                     break;
                 }
             }
 
-            if(competitor && (0 != dynamic_cast<BracketController *>(m_controller)))
+            if(competitor.isValid() && (0 != dynamic_cast<BracketController *>(m_controller)))
             {
                 // We know we have a bracket controller, now get the bracket.
-                Bracket* bracket = dynamic_cast<Bracket *>(m_controller->find(m_parentId));
-                if(bracket)
+                BracketController* controller = dynamic_cast<BracketController *>(m_controller);
+
+                Bracket bracket = controller->find(m_parentId);
+                if(bracket.isValid())
                 {
-                    // TODO - Fix with command
-//                    // Now add the competitor to the bracket.
-//                    if(bracket->addCompetitor(competitor, parent.row()))
-//                    {
-//                        beginInsertRows(QModelIndex(), bracket->competitors().size(), bracket->competitors().size());
-//                        success = true;
-//                        endInsertRows();
-//                    }
-//                    else
-//                    {
-//                        // The add failed, maybe it's a move.
-//                    }
+                    // Now add the competitor to the bracket.
+                    bracket.addCompetitor(competitor.id());
+                    UpdateBracketCmdPtr updaCmd = UpdateBracketCmdPtr(new UpdateBracketCommand(bracket));
+                    if(JMApp()->commandController()->doCommand(updaCmd))
+                    {
+                        beginInsertRows(QModelIndex(), bracket.competitorIds().size(), bracket.competitorIds().size());
+                        success = true;
+                        endInsertRows();
+                    }
                 }
             }
         }
@@ -421,42 +428,52 @@ bool CompetitorTableModel::dropMimeData(const QMimeData *data, Qt::DropAction ac
 void CompetitorTableModel::addCompetitor(JMDataObj *competitor)
 {
     Q_UNUSED(competitor);
-   int numCompetitors = m_controller->competitors(m_filter, m_parentId).size() - 1;
-   beginInsertRows(QModelIndex(), numCompetitors, numCompetitors);
-   endInsertRows();
+    int numCompetitors = m_controller->competitors(m_filter, m_parentId).size() - 1;
+    beginInsertRows(QModelIndex(), numCompetitors, numCompetitors);
+    endInsertRows();
 }
 
-QVariant CompetitorTableModel::columnBackground(const Competitor* judoka, int col) const
+BaseController *CompetitorTableModel::controller()
+{
+    return m_controller;
+}
+
+int CompetitorTableModel::parentId() const
+{
+    return m_parentId;
+}
+
+QVariant CompetitorTableModel::columnBackground(const Competitor judoka, int col) const
 {
     switch(col)
     {
         case competitor::FirstName:
-            if(judoka->firstName().isEmpty())
+            if(judoka.firstName().isEmpty())
                 return QVariant(QColor(Qt::red));
             break;
         case competitor::LastName:
-            if(judoka->lastName().isEmpty())
+            if(judoka.lastName().isEmpty())
                 return QVariant(QColor(Qt::red));
             break;
 
         case competitor::Age: // Age
-            if(judoka->age() <= 0)
+            if(judoka.age() <= 0)
                 return QVariant(QColor(Qt::red));
             break;
 
         case competitor::Weight: // Weight
-            if(judoka->weight() <= 0.0)
+            if(judoka.weight() <= 0.0)
                 return QVariant(QColor(Qt::red));
             break;
 
         case competitor::NumDivs:
         {
-            const QList<Bracket *> brackets = JMApp()->bracketController()->competitorBrackets(judoka->id());
-            if(brackets.size() == 0 && judoka->numBrackets() > 0)
+            const QList<Bracket> brackets = JMApp()->bracketController()->competitorBrackets(judoka.id());
+            if(brackets.size() == 0 && judoka.numBrackets() > 0)
                 return QVariant(QColor(Qt::red));
-            else if(brackets.size() < judoka->numBrackets())
+            else if(brackets.size() < judoka.numBrackets())
                 return QVariant(QColor(Qt::yellow));
-            else if(brackets.size() > judoka->numBrackets())
+            else if(brackets.size() > judoka.numBrackets())
                 return QVariant(QColor(Qt::cyan));
 
         }

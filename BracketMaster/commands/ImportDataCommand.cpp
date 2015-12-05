@@ -23,12 +23,12 @@ ImportDataCommand::~ImportDataCommand()
     m_importedCompetitors.clear();
 }
 
-const QList<Competitor *> ImportDataCommand::importedCompetitors() const
+const QList<Competitor> ImportDataCommand::importedCompetitors() const
 {
     return m_importedCompetitors;
 }
 
-const QList<Competitor *> ImportDataCommand::skippedCompetitors() const
+const QList<Competitor> ImportDataCommand::skippedCompetitors() const
 {
     return m_skippedCompetitors;
 }
@@ -116,15 +116,16 @@ bool ImportDataCommand::run(IDocument *const doc)
                 auto mf = genderFromString(gender);
 
                 // See if the competitor is already added (from previous import)
-                Competitor *competitor = JMApp()->competitorController()->findByName(fname, lname);
+                Competitor competitor = JMApp()->competitorController()->findByName(fname, lname);
 
-                if(!competitor)
+                if(!competitor.isValid())
                 {
                     // Competitor not found, so add.
                     competitor = JMApp()->competitorController()->createCompetitor(fname,lname, mf, age.toInt(), weight.toDouble(), rank, club.id());
                     // TODO add the following to the constructor.
-                    competitor->setNumBrackets(numDivs);
-                    competitor->setNotes(notes);
+                    competitor.setNumBrackets(numDivs);
+                    competitor.setNotes(notes);
+                    doc->addCompetitor(competitor);
 
                     m_importedCompetitors.append(competitor);
                 }

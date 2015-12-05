@@ -1,8 +1,9 @@
 #include "MatchController.h"
 
+#include "commands/MatchCommands.h"
 #include "data/Match.h"
-#include "JudoMasterApplication.h"
 #include "data/Tournament.h"
+#include "JudoMasterApplication.h"
 
 MatchController::MatchController(QObject *parent)
     : BaseController(parent)
@@ -13,53 +14,39 @@ MatchController::MatchController(QObject *parent)
 void MatchController::add(int parentId)
 {
 
-    Match *match = new Match(findNextId());
-    match->setBracketId(parentId);
+    Match match;
+    match.setBracketId(parentId);
 
-    // TODO - use command
-//    tournament()->matches().append(match);
-
-    JMApp()->setModified(true);
-    // TODO - fix signal signature
-//    emit addedDataObj(match);
-}
-
-JMDataObj *MatchController::find(int id) const
-{
-    // TODO - Change return value.
-//    foreach(Match *match, tournament()->matches())
-//    {
-//        if(id == match->id())
-//        {
-//            return match;
-//        }
-//    }
-
-    return nullptr;
-}
-
-int MatchController::findNextId()
-{
-    int nextId = 0;
-    if(tournament())
+    AddMatchCmdPtr cmd = AddMatchCmdPtr(new AddMatchCommand(parentId, match));
+    if(JMApp()->commandController()->doCommand(cmd))
     {
-        // TODO - Remove this method
-//        foreach (Match* match, tournament()->matches())
-//        {
-
-//            nextId = std::max(nextId, match->id());
-//        }
+        // TODO - fix signal signature
+    //    emit addedDataObj(match);
     }
 
-    // We now have the max match id.
-    nextId++;
+}
 
-    return nextId;
+void MatchController::update(Match match)
+{
+    UpdateMatchCmdPtr cmd = UpdateMatchCmdPtr(new UpdateMatchCommand(match));
+
+    JMApp()->commandController()->doCommand(cmd);
+}
+
+Match MatchController::find(int id) const
+{
+    FindMatchCmdPtr cmd = FindMatchCmdPtr(new FindMatchCommand(id));
+    JMApp()->commandController()->doCommand(cmd);
+
+    return cmd->match();
 }
 
 void MatchController::remove(int id)
 {
-    Q_UNUSED(id);
+    Match match = find(id);
+    RemoveMatchCmdPtr cmd = RemoveMatchCmdPtr(new RemoveMatchCommand(match));
+
+    JMApp()->commandController()->doCommand(cmd);
 }
 
 int MatchController::size() const
@@ -72,22 +59,13 @@ int MatchController::size(int id) const
     return matches(id).size();
 }
 
-const QList<Match *> MatchController::matches(int bracketId) const
+const QList<Match> MatchController::matches(int bracketId) const
 {
-//    if(bracketId == -1)
-//        return tournament()->matches();
-
     // TODO - use command
-    QList<Match *> matches;
-//    foreach(Match *match, tournament()->matches())
-//    {
-//        if(bracketId == match->bracketId())
-//        {
-//            matches.append(match);
-//        }
-//    }
+    GetAllMatchesCmdPtr cmd = GetAllMatchesCmdPtr(new GetAllMatchesCommand(bracketId));
+    JMApp()->commandController()->doCommand(cmd);
 
-    return matches;
+    return cmd->matches();
 }
 
 

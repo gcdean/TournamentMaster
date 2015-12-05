@@ -12,7 +12,7 @@ class BracketController : public BaseController
 public:
     BracketController(QObject *parent = 0);
 
-    const QList <Bracket *> *brackets() const;
+    const QList<Bracket> brackets() const;
 
     // Overrides
     int size() const override;
@@ -22,19 +22,19 @@ public:
     void add(int parentId) override;
     void remove(int id) override;
     void removeIndex(int index) override;
-    JMDataObj *find(int id) const override;
+    Bracket find(int id) const;
+    Bracket findById(int id) const;
     int indexOf(int id);
+
+    void updateBracket(Bracket bracket);
 
     void removeCompetitorFromBracket(int bracketId, int competitorId);
 
-    const QList<Competitor *> competitors(int parentId = -1) const override;
-    const QList<Bracket *> competitorBrackets(int competitorId) const;
+    const QList<Competitor> competitors(int parentId = -1) const override;
+    const QList<Bracket> competitorBrackets(int competitorId) const;
 
 signals:
     void competitorRemoved(int index);
-
-private:
-    int findNextId() override;
 
 };
 

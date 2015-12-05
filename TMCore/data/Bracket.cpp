@@ -344,10 +344,14 @@ void Bracket::addCompetitor(int id)
 
 }
 
-//const QList<Competitor *> Bracket::competitors() const
-//{
-//    return m_competitors;
-//}
+void Bracket::removeCompetitor(int id)
+{
+    int index = m_data->m_competitorIds.indexOf(id);
+    if(index >= 0)
+    {
+        m_data->m_competitorIds.removeAt(index);
+    }
+}
 
 ///**
 // * @brief Bracket::addCompetitor - Add a competitor to the bracket

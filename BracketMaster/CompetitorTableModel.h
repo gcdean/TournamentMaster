@@ -39,11 +39,11 @@ public slots:
     void addCompetitor(JMDataObj *competitor);
 
 protected:
-    BaseController* controller()  {return m_controller;}
-    int parentId() const {return m_parentId;}
+    BaseController* controller();
+    int parentId() const;
 
 private:    // Methods
-    QVariant columnBackground(const Competitor *judoka, int col) const;
+    QVariant columnBackground(const Competitor judoka, int col) const;
 
 private:    // Data Members
     int m_parentId;   // This is the id of the parent, club or bracket.

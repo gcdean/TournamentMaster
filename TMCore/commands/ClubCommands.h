@@ -20,6 +20,8 @@ private:
     QList<Club> m_clubs;
 };
 
+typedef QSharedPointer<GetClubsCommand> GetClubsCmdPtr;
+
 
 class GetClubCommand : public BaseCommand
 {
@@ -43,6 +45,8 @@ private:
 
 };
 
+typedef QSharedPointer<GetClubCommand> GetClubCmdPtr;
+
 
 class CreateClubCommand : public BaseUndoCommand
 {
@@ -61,6 +65,8 @@ public slots:
 private:
     Club m_club;
 };
+
+typedef QSharedPointer<CreateClubCommand> CreatClubCmdPtr;
 
 
 class UpdateClubCommand : public BaseUndoCommand
@@ -81,6 +87,8 @@ private:
     Club m_origClub;
 };
 
+typedef QSharedPointer<UpdateClubCommand> UpdateClubCmdPtr;
+
 class RemoveClubCommand : public BaseUndoCommand
 {
     Q_OBJECT
@@ -98,3 +106,6 @@ private:
     Club m_origClub;
 
 };
+
+typedef QSharedPointer<RemoveClubCommand> RemoveClubCmdPtr;
+

@@ -1,5 +1,7 @@
 #include "BracketController.h"
 
+#include "commands/BracketCommands.h"
+
 #include "data/Bracket.h"
 #include "data/Competitor.h"
 #include "data/Tournament.h"
@@ -13,7 +15,7 @@
 
 namespace
 {
-    const QList<Bracket *> NOBRACKETS;
+    const QList<Bracket> NOBRACKETS;
 }
 
 BracketController::BracketController(QObject *parent)
@@ -21,25 +23,18 @@ BracketController::BracketController(QObject *parent)
 {
 }
 
-const QList<Bracket *> *BracketController::brackets() const
+const QList<Bracket> BracketController::brackets() const
 {
-    if(!tournament())
-        return &NOBRACKETS;
 
-    // TODO - Use command
-//    return &tournament()->brackets();
-    return &NOBRACKETS;
+    GetBracketsCommandPtr cmd = GetBracketsCommandPtr(new GetBracketsCommand);
+    JMApp()->commandController()->doCommand(cmd);
 
+    return cmd->brackets();
 }
 
 int BracketController::size() const
 {
-    if(!tournament())
-        return 0;
-
-    // TODO - Use command
-//    return tournament()->brackets().size();
-    return 0;
+    return brackets().size();
 }
 
 int BracketController::size(int id) const
@@ -53,16 +48,11 @@ void BracketController::add(int parentId)
 {
     Q_UNUSED(parentId);
 
-    if(!tournament())
-    {
-        return;
-    }
-    int id = findNextId();
-    Bracket *bracket = new Bracket(id);
+    Bracket bracket;
+    AddBracketCommandPtr cmd = AddBracketCommandPtr(new AddBracketCommand(bracket));
 
-    // TODO - use command
-//    tournament()->brackets().append(bracket);
-//    JMApp()->setModified(true);
+    JMApp()->commandController()->doCommand(cmd);
+
     // TODO - Change signature
 //    emit addedDataObj(bracket);
 
@@ -70,20 +60,16 @@ void BracketController::add(int parentId)
 
 void BracketController::remove(int id)
 {
-    if(!tournament())
+    Bracket bracket = findById(id);
+    if(bracket.isValid())
     {
-        return;
-    }
 
-    Bracket* bracket = dynamic_cast<Bracket *>(find(id));
-    if(bracket)
-    {
+        RemoveBracketCommandPtr cmd = RemoveBracketCommandPtr(new RemoveBracketCommand(bracket));
+        if(JMApp()->commandController()->doCommand(cmd))
+        {
         // TODO - Change signature.
 //        emit removedDataObj(bracket);
-
-        // TODO - Use command
-//        tournament()->brackets().removeOne(bracket);
-        JMApp()->setModified(true);
+        }
     }
 }
 
@@ -104,18 +90,20 @@ void BracketController::removeIndex(int index)
 
 
 
-JMDataObj* BracketController::find(int id) const
+Bracket BracketController::find(int id) const
 {
-    // TODO - Change return type.
-//    foreach (Bracket *bracket, tournament()->brackets())
-//    {
-//        if(bracket->id() == id)
-//        {
-//            return bracket;
-//        }
-//    }
+    GetBracketCommandPtr cmd = GetBracketCommandPtr(new GetBracketCommand(id));
+    JMApp()->commandController()->doCommand(cmd);
 
-    return 0;
+    return cmd->bracket();
+}
+
+Bracket BracketController::findById(int id) const
+{
+    GetBracketCommandPtr cmd = GetBracketCommandPtr(new GetBracketCommand(id));
+    JMApp()->commandController()->doCommand(cmd);
+
+    return cmd->bracket();
 }
 
 int BracketController::indexOf(int id)
@@ -134,89 +122,68 @@ int BracketController::indexOf(int id)
     return -1;
 }
 
+void BracketController::updateBracket(Bracket bracket)
+{
+    UpdateBracketCmdPtr cmd = UpdateBracketCmdPtr(new UpdateBracketCommand(bracket));
+    JMApp()->commandController()->doCommand(cmd);
+    // TODO - emit signal?
+}
+
 void BracketController::removeCompetitorFromBracket(int bracketId, int competitorId)
 {
     qDebug() << "BracketController - Remove competitor " << competitorId << " from Bracket " << bracketId;
-    Bracket *bracket = dynamic_cast<Bracket *>(find(bracketId));
-    if(bracket)
+    Bracket bracket = find(bracketId);
+    if(bracket.isValid())
     {
-        int index = 0;
-        // TODO - Use command
-//        foreach(Competitor *competitor, bracket->competitors())
-//        {
-//            if(competitor->id() == competitorId)
-//            {
-//                bracket->removeCompetitor(index);
-//                emit competitorRemoved(index);
-//                JMApp()->setModified(true);
-//                break;
-//            }
-//            index++;
-//        }
+        bracket.removeCompetitor(competitorId);
+
+        UpdateBracketCmdPtr cmd = UpdateBracketCmdPtr(new UpdateBracketCommand(bracket));
+        JMApp()->commandController()->doCommand(cmd);
     }
 }
 
-const QList<Competitor *> BracketController::competitors(int parentId) const
+const QList<Competitor> BracketController::competitors(int parentId) const
 {
-    if(!tournament())
-        return QList<Competitor *>();
+    QList<Competitor> competitors;
 
     if(parentId != -1)
     {
         // First, find the bracket.
         // TODO - use command
-//        foreach(Bracket *bracket, tournament()->brackets())
-//        {
-//            if(bracket->id() == parentId)
-//            {
-//                // TODO - Use command.
-////                return bracket->competitors();
-//            }
-//        }
-        return QList<Competitor *>();
+        GetBracketCompetitorsCommandPtr cmd = GetBracketCompetitorsCommandPtr(new GetBracketCompetitorsCommand(parentId));
+        if(JMApp()->commandController()->doCommand(cmd))
+        {
+            competitors = cmd->competitors();
+        }
     }
 
-    const QList<Competitor *> allComps = JMApp()->competitorController()->competitors();
-
-    return allComps;
+    // NOTE - Not returning all comopetitors if the bracket id is -1.
+    return competitors;
 }
 
-const QList<Bracket *> BracketController::competitorBrackets(int competitorId) const
+const QList<Bracket> BracketController::competitorBrackets(int competitorId) const
 {
     // Find the brackets that the specified competitor is in.
-    QList <Bracket *> brackets;
+    QList <Bracket > brackets;
     // TODO - use command
-//    foreach(Bracket *bracket, tournament()->brackets())
-//    {
-        // TODO - Use command
-//        foreach(Competitor *competitor, bracket->competitors())
-//        {
-//            if(competitorId == competitor->id())
-//            {
-//                brackets.append(bracket);
-//                break;
-//            }
-//        }
-//    }
+    GetBracketsCommandPtr cmd = GetBracketsCommandPtr(new GetBracketsCommand);
+    if(JMApp()->commandController()->doCommand(cmd))
+    {
+
+        foreach(Bracket bracket, cmd->brackets())
+        {
+            foreach(int id, bracket.competitorIds())
+            {
+                if(competitorId == id)
+                {
+                    brackets.append(bracket);
+                    break;
+                }
+            }
+        }
+    }
 
     return brackets;
 }
 
-int BracketController::findNextId()
-{
-    int nextId = 0;
-    if(tournament())
-    {
-//        foreach (Bracket* bracket, tournament()->brackets())
-//        {
-
-//            nextId = std::max(nextId, bracket->id());
-//        }
-    }
-
-    // We now have the max club id.
-    nextId++;
-
-    return nextId;
-}
 

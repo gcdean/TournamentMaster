@@ -14,16 +14,16 @@
 
 class JudoMasterApplication : public QApplication
 {
+    Q_OBJECT
+
 public:
-    explicit JudoMasterApplication(int& argc, char** argv);
+    JudoMasterApplication(int& argc, char** argv);
 
     ClubController* clubController()  {return &m_clubController;}
     CompetitorController *competitorController() {return &m_competitorController;}
     BracketController *bracketController() {return &m_bracketController;}
     MatchController *matchController() {return &m_matchController;}
-    void setTournament(std::unique_ptr<Tournament> tournament);
     void setCommandController(QSharedPointer<CommandController> editor);
-    const std::unique_ptr<Tournament> &tournament() const;
     CommandController* commandController();
 
     bool isModified() const;
@@ -31,13 +31,15 @@ public:
     const QDir lastSaveDir() const;
     void setLastSaveDir(QDir dirname);
 
+signals:
+
+    void tournamentChanged();
+
 private:
     ClubController m_clubController;
     CompetitorController m_competitorController;
     BracketController m_bracketController;
     MatchController m_matchController;
-//    Tournament *m_tournament;
-    std::unique_ptr<Tournament> m_tournament; // OLD
 
     QSharedPointer<CommandController> m_commandController;
 
@@ -46,4 +48,4 @@ private:
     QDir m_lastSaveDir;
 };
 
-JudoMasterApplication *JMApp(); //{return dynamic_cast<JudoMasterApplication *>(qApp);}
+JudoMasterApplication *JMApp();

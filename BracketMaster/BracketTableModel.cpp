@@ -82,8 +82,8 @@ QVariant BracketTableModel::headerData(int section, Qt::Orientation orientation,
 
 QVariant BracketTableModel::data(const QModelIndex &index, int role) const
 {
-    const QList<Bracket *> *brackets = JMApp()->bracketController()->brackets();
-    const Bracket *selectedBracket = brackets->at(index.row());
+    const QList<Bracket> brackets = JMApp()->bracketController()->brackets();
+    const Bracket selectedBracket = brackets.at(index.row());
     switch(role)
     {
         case Qt::DisplayRole:
@@ -94,41 +94,41 @@ QVariant BracketTableModel::data(const QModelIndex &index, int role) const
             switch(col)
             {
                 case bracket::Name: // Name
-                    return QVariant(selectedBracket->name());
+                    return QVariant(selectedBracket.name());
                 break;
 
                 case bracket::Gender:
-                    return QVariant(genderToString(selectedBracket->gender()));
+                    return QVariant(genderToString(selectedBracket.gender()));
                     break;
 
                 case bracket::Type: // Type
-                    return QVariant(Bracket::weightTypeToStr(selectedBracket->weightType()));
+                    return QVariant(Bracket::weightTypeToStr(selectedBracket.weightType()));
 
                 break;
 
                 case bracket::MinAge: // Min Age
-                    return QVariant(selectedBracket->minAge());
+                    return QVariant(selectedBracket.minAge());
                 break;
 
                 case bracket::MaxAge: // Max Age
-                    return QVariant(selectedBracket->maxAge());
+                    return QVariant(selectedBracket.maxAge());
                 break;
 
                 case bracket::MaxWeight: // Max Weight
-                    return QVariant(selectedBracket->maxWeight());
+                    return QVariant(selectedBracket.maxWeight());
                 break;
 
                 case bracket::Time:
-                    return QVariant(selectedBracket->time());
+                    return QVariant(selectedBracket.time());
 
                 case bracket::AllowChokes:
-                    return QVariant(selectedBracket->chokesAllowed());
+                    return QVariant(selectedBracket.chokesAllowed());
 
                 case bracket::AllowArmBars:
-                    return QVariant(selectedBracket->armbarsAllowed());
+                    return QVariant(selectedBracket.armbarsAllowed());
 
                 case bracket::MatNum:
-                    return QVariant(selectedBracket->matNumber());
+                    return QVariant(selectedBracket.matNumber());
                 case bracket::Competitors:
                         // TODO - Fix with command?
 //                    return QVariant(selectedBracket->competitors().size());
@@ -143,7 +143,7 @@ QVariant BracketTableModel::data(const QModelIndex &index, int role) const
             {
                 case bracket::AllowChokes:
                 {
-                    if(selectedBracket->chokesAllowed())
+                    if(selectedBracket.chokesAllowed())
                         return Qt::Checked;
                     else
                         return Qt::Unchecked;
@@ -151,7 +151,7 @@ QVariant BracketTableModel::data(const QModelIndex &index, int role) const
                 }
                 case bracket::AllowArmBars:
                 {
-                    if(selectedBracket->armbarsAllowed())
+                    if(selectedBracket.armbarsAllowed())
                         return Qt::Checked;
                     else
                         return Qt::Unchecked;
@@ -161,7 +161,7 @@ QVariant BracketTableModel::data(const QModelIndex &index, int role) const
             break;
 
         case Qt::UserRole:
-            return QVariant(selectedBracket->id());
+            return QVariant(selectedBracket.id());
             break;
 
     }
@@ -196,52 +196,52 @@ bool BracketTableModel::setData(const QModelIndex &index, const QVariant &value,
     Q_UNUSED(role);
 
     bool updated = true;
-    const QList<Bracket *> *brackets = JMApp()->bracketController()->brackets();
-    Bracket *bracket = brackets->at(index.row());
+    const QList<Bracket> brackets = JMApp()->bracketController()->brackets();
+    Bracket bracket = brackets.at(index.row());
 
     switch(index.column())
     {
         case bracket::Name: // First Name
-            bracket->setName(value.toString());
+            bracket.setName(value.toString());
         break;
 
         case bracket::Gender:
-            bracket->setGender(genderFromString(value.toString()));
+            bracket.setGender(genderFromString(value.toString()));
             break;
 
         case bracket::Type: // Weight Type
         {
             int t = value.toInt();
-            bracket->setWeightType((JM::WeightType)t);
+            bracket.setWeightType((JM::WeightType)t);
             break;
         }
 
         case bracket::MinAge: // Min Age
-            bracket->setMinAge(value.toInt());
+            bracket.setMinAge(value.toInt());
             break;
 
         case bracket::MaxAge: // Max Age
-            bracket->setMaxAge(value.toInt());
+            bracket.setMaxAge(value.toInt());
             break;
 
         case bracket::MaxWeight: // Max Weight
-            bracket->setMaxWeight(value.toDouble());
+            bracket.setMaxWeight(value.toDouble());
             break;
 
         case bracket::Time:
-            bracket->setTime(value.toInt());
+            bracket.setTime(value.toInt());
             break;
 
         case bracket::AllowChokes:
-            bracket->setChokesAllowed(value.toBool());
+            bracket.setChokesAllowed(value.toBool());
             break;
 
         case bracket::AllowArmBars:
-            bracket->setArmbarsAllowed(value.toBool());
+            bracket.setArmbarsAllowed(value.toBool());
             break;
 
         case bracket::MatNum:
-            bracket->setMatNumber(value.toInt());
+            bracket.setMatNumber(value.toInt());
             break;
 
         default:
@@ -250,6 +250,8 @@ bool BracketTableModel::setData(const QModelIndex &index, const QVariant &value,
 
     if(updated)
     {
+        // Now we need to update the bracket.
+        JMApp()->bracketController()->updateBracket(bracket);
         emit dataChanged(index, index);
     }
     return updated;

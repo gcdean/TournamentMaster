@@ -15,6 +15,7 @@
 #include "data/Tournament.h"
 #include "actions/PrintBracketsAction.h"
 #include "commands/PrintBrancketsCommand.h"
+#include "commands/TournamentCommands.h"
 
 #include <QCheckBox>
 #include <QComboBox>
@@ -72,7 +73,7 @@ BracketManager::BracketManager(QWidget *parent) :
 
     connect(ui->bracketList->tableView()->selectionModel(), &QItemSelectionModel::currentRowChanged, this, &BracketManager::rowChanged);
     connect(ui->allCompetitorsFilter, &CompetitorFilterWidget::applyFilter, this, &BracketManager::competitorFilterChanged);
-    connect(JMApp()->bracketController(), &ClubController::tournamentChanged, this, &BracketManager::tournamentChanged);
+    connect(JMApp(), &JudoMasterApplication::tournamentChanged, this, &BracketManager::tournamentChanged);
     connect(ui->removeBtn, &QPushButton::clicked, this, &BracketManager::removeCompetitorFromBracket);
     connect(ui->allCompetitors->tableView()->verticalHeader(), &QHeaderView::sectionDoubleClicked, this, &BracketManager::viewCompetitor);
     connect(ui->bracketList->tableView()->verticalHeader(), &QHeaderView::sectionDoubleClicked, this, &BracketManager::editBracket);
@@ -95,14 +96,14 @@ void BracketManager::resetMatCompetitors()
     int mat1 = 0;
     int mat2 = 0;
 
-    const QList<Bracket *> *brackets = JMApp()->bracketController()->brackets();
-    foreach(Bracket *bracket, *brackets)
+    const QList<Bracket > brackets = JMApp()->bracketController()->brackets();
+    foreach(Bracket bracket, brackets)
     {
         // TODO - Fix
-//        if(bracket->matNumber() == 1)
-//            mat1 += bracket->competitors().size();
-//        if(bracket->matNumber() == 2)
-//            mat2 += bracket->competitors().size();
+        if(bracket.matNumber() == 1)
+            mat1 += bracket.competitorIds().size();
+        if(bracket.matNumber() == 2)
+            mat2 += bracket.competitorIds().size();
     }
 
     ui->mat1Cntr->display(mat1);
@@ -156,7 +157,9 @@ void BracketManager::printSelectedBrackets()
         bracketIds.append(m_bracketModel->data(index, Qt::UserRole).toInt());
     }
 
-    PrintBracketsCommand cmd(JMApp()->tournament()->name(), bracketIds);
+
+    // TODO - Can command params be changed?
+    PrintBracketsCommand cmd(QString("IS THIS NEEDED?"), bracketIds);
     cmd.run(nullptr);
 
 }

@@ -1,5 +1,7 @@
 #include "PrintBrancketsCommand.h"
 
+#include "commands/BracketCommands.h"
+#include "commands/TournamentCommands.h"
 #include "data/Bracket.h"
 #include "JudoMasterApplication.h"
 #include "controllers/PrintController.h"
@@ -33,7 +35,10 @@ bool PrintBracketsCommand::run(IDocument *const doc)
     // Open the print dialog
     // Set the print options.
 
-    m_tournament = JMApp()->tournament()->name();
+
+    GetTournamentCmdPtr trnCmd = GetTournamentCmdPtr(new GetTournamentCommand);
+    JMApp()->commandController()->doCommand(trnCmd);
+    m_tournament = trnCmd->tournament().name();
     if(m_bracketIds.size() > 0)
     {
         PrintController pc(m_tournament);
@@ -43,12 +48,16 @@ bool PrintBracketsCommand::run(IDocument *const doc)
             {
                 int bracketId = m_bracketIds[x];
                 // TODO - Change method signature
-                Bracket *bracket = nullptr;
+
+                GetBracketCommandPtr getBracketCmd = GetBracketCommandPtr(new GetBracketCommand(bracketId));
+                JMApp()->commandController()->doCommand(getBracketCmd);
+
+                Bracket bracket = getBracketCmd->bracket();
 //                Bracket *bracket = dynamic_cast<Bracket *>(JMApp()->bracketController()->find(bracketId));
-                if(bracket)
+                if(bracket.isValid())
                 {
-                    qDebug() << "Print Bracket: " << bracket->name();
-                    bool printed = pc.printBracket(bracket);
+                    qDebug() << "Print Bracket: " << bracket.name();
+                    bool printed = pc.printBracket(&bracket);
                     if(printed && x < m_bracketIds.size() - 1)
                         pc.nextPage();
                 }
@@ -60,29 +69,29 @@ bool PrintBracketsCommand::run(IDocument *const doc)
             qDebug() << "Print failed";
         }
     }
-    else if(JMApp()->bracketController()->brackets()->size() > 0)
-    {
+    else if(JMApp()->bracketController()->brackets().size() > 0)
+    {        
         PrintController pc(m_tournament);
         if (pc.prepare("Print Brackets"))
         {
             bool newPage = false;
-            foreach(Bracket *bracket, *JMApp()->bracketController()->brackets())
+            foreach(Bracket bracket, JMApp()->bracketController()->brackets())
             {
                 // TODO - Fix with command to get competitors
-//                if (bracket->competitors().size() > 1)
-//                {
-//                    if (newPage)
-//                    {
-//                        pc.nextPage();
-//                    }
+                if (bracket.competitorIds().size() > 1)
+                {
+                    if (newPage)
+                    {
+                        pc.nextPage();
+                    }
 
-//                    newPage = pc.printBracket(bracket);
-//                    qDebug() << "Print Bracket: " << bracket->name();
-//                }
-//                else if (bracket->competitors().size() == 1)
-//                {
-//                    qDebug() << "WARNING: Bracket with only one competitor: " << bracket->name();
-//                }
+                    newPage = pc.printBracket(&bracket);
+                    qDebug() << "Print Bracket: " << bracket.name();
+                }
+                else if (bracket.competitorIds().size() == 1)
+                {
+                    qDebug() << "WARNING: Bracket with only one competitor: " << bracket.name();
+                }
             }
             pc.endPrint();
         }

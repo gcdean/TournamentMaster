@@ -1,5 +1,8 @@
 #include "PrintRegistrationCommand.h"
 
+#include "commands/ClubCommands.h"
+#include "commands/TournamentCommands.h"
+
 #include "data/Club.h"
 #include "data/Competitor.h"
 #include "JudoMasterApplication.h"
@@ -34,7 +37,10 @@ bool PrintRegistrationCommand::run(IDocument *const doc)
 
     QList<Club >sortedClubs = getClubs();
 
-    PrintController pc(JMApp()->tournament()->name(), QPrinter::Portrait);
+    GetTournamentCmdPtr trncmd = GetTournamentCmdPtr(new GetTournamentCommand);
+    JMApp()->commandController()->doCommand(trncmd);
+
+    PrintController pc(trncmd->tournament().name(), QPrinter::Portrait);
     if(pc.prepare("Print Registration"))
     {
         bool newPage = false;
@@ -58,18 +64,23 @@ QList<Club > PrintRegistrationCommand::getClubs()
 
     QList<Club >sortedClubs;
 
-//    if(m_clubs.size() == 0)
-//    {
-//        const QList<Club > clubs = JMApp()->clubController()->clubs();
+    if(m_clubs.size() == 0)
+    {
+        CommandController* cntrl = JMApp()->commandController();
 
-//        sortedClubs.append(clubs);
-//    }
-//    else
-//    {
-//        sortedClubs.append(m_clubs);
-//    }
+        GetClubsCmdPtr cmd = GetClubsCmdPtr(new GetClubsCommand);
+        cntrl->doCommand(cmd);
 
-//    std::sort(sortedClubs.begin(), sortedClubs.end(), JM::compareClubNames);
+        const QList<Club> clubs = cmd->clubs();
+
+        sortedClubs.append(clubs);
+    }
+    else
+    {
+        sortedClubs.append(m_clubs);
+    }
+
+    std::sort(sortedClubs.begin(), sortedClubs.end(), compareClubNames);
 
     return sortedClubs;
 }

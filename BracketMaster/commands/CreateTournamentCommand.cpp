@@ -30,20 +30,16 @@ bool CreateTournamentCommand::run(IDocument *const doc)
 
     qDebug() << "Create a New Tournament";
 
-    std::unique_ptr <Tournament> tournament(new Tournament());
-    tournament->setName("Test");
-    tournament->setDate(QDate::currentDate());
-
-    JMApp()->setTournament(std::move(tournament));
-
-    JMApp()->setModified(true);
-
+    Tournament tournament;
+    tournament.setName("Test");
+    tournament.setDate(QDate::currentDate());
 
     QSharedPointer<TournamentDoc> newdoc = QSharedPointer<TournamentDoc>(new TournamentDoc);
     QSharedPointer<CommandController> teditor = QSharedPointer<CommandController>(new CommandController(newdoc));
-//    std::unique_ptr<IEditor> teditor(new CommandController(new TournamentDoc));
 
     JMApp()->setCommandController(teditor);
+
+    newdoc->updateTournament(tournament);
 
     return done(true);
 }

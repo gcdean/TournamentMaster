@@ -8,6 +8,7 @@ class Club;
 namespace JM
 {
 
+
 /**
  * @brief The Rank enum - Used for Competitor's rank
  */
@@ -45,7 +46,6 @@ enum WeightType
 };
 
 
-
 }
 
 Q_DECLARE_METATYPE(JM::Rank)
@@ -58,6 +58,7 @@ JM::Rank rankFromString(QString rankStr);
 QString genderToString(JM::Gender gender);
 JM::Gender genderFromString(QString genderStr);
 
+bool compareClubNames(Club club1, Club club2);
+
 QString prepareStringForCSV(QString str);
 
-bool compareClubNames(Club* club1, Club* club2);

@@ -16,3 +16,5 @@ private:
     bool m_enableSaveAs;
 };
 
+typedef QSharedPointer<SaveCommand> SaveCmdPtr;
+
