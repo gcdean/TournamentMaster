@@ -100,6 +100,8 @@ public slots:
     // BaseUndoCommand interface
     bool undo(IDocument *doc) override;
 
+private:
+    bool m_addEmptyCompetitor;
 };
 
 typedef QSharedPointer<AddCompetitorCommand> AddCompetitorCmdPtr;

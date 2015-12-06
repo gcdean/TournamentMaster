@@ -65,9 +65,15 @@ AddBracketCommand::AddBracketCommand(Bracket b, QObject *parent)
 {
 }
 
+Bracket AddBracketCommand::bracket()
+{
+    return m_bracket;
+}
+
 bool AddBracketCommand::run(IDocument *const doc)
 {
-    return doc->addBracket(m_bracket);
+    m_bracket = doc->addBracket(m_bracket);
+    return m_bracket.isValid();
 }
 
 bool AddBracketCommand::undo(IDocument *doc)
@@ -89,7 +95,8 @@ bool RemoveBracketCommand::run(IDocument *const doc)
 
 bool RemoveBracketCommand::undo(IDocument *doc)
 {
-    return doc->addBracket(m_bracket);
+    m_bracket = doc->addBracket(m_bracket);
+    return m_bracket.isValid();
 }
 
 

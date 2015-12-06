@@ -52,6 +52,12 @@ void CompetitorList::setClubId(int id)
 
 QAbstractTableModel* CompetitorList::tableModel()
 {
+    QSortFilterProxyModel* proxyModel = dynamic_cast<QSortFilterProxyModel *>(ui->competitorTable->model());
+    if(proxyModel)
+    {
+        return dynamic_cast<QAbstractTableModel *>(proxyModel->sourceModel());
+    }
+
     return dynamic_cast<QAbstractTableModel *>(ui->competitorTable->model());
 }
 
@@ -90,7 +96,7 @@ void CompetitorList::add()
 {
     if(m_controller)
     {
-        m_controller->add(m_clubId);
+        tableModel()->insertRow(tableModel()->rowCount()-1);
     }
 }
 
@@ -102,10 +108,10 @@ void CompetitorList::remove()
         QModelIndexList lst = ui->competitorTable->selectionModel()->selectedRows();
         foreach(const QModelIndex& index, lst)
         {
-            qDebug() << "CompetitorList::remove() - Row: " << index.row();
-            m_controller->removeIndex(index.row());
+            QVariant var = ui->competitorTable->model()->data(index, Qt::UserRole);
+            qDebug() << "CompetitorList::remove() - Row: " << index.row() << ". ID is: " << var.toInt();
+            tableModel()->removeRow(index.row());
         }
-
     }
 }
 

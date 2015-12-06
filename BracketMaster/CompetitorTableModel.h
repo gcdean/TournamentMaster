@@ -26,6 +26,8 @@ public:
     QVariant data(const QModelIndex &index, int role) const;
     Qt::ItemFlags flags(const QModelIndex &index) const;
     bool setData(const QModelIndex &index, const QVariant &value, int role);
+    bool insertRows(int row, int count, const QModelIndex &parent) override;
+    bool removeRows(int row, int count, const QModelIndex &parent) override;
 
     // Drag Drop methods
     Qt::DropActions supportedDragActions() const override;
@@ -36,7 +38,6 @@ public:
 signals:
 
 public slots:
-    void addCompetitor(JMDataObj *competitor);
 
 protected:
     BaseController* controller();

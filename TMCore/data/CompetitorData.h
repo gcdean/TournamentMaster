@@ -7,8 +7,24 @@
 class CompetitorData : public QSharedData
 {
 public:
-    CompetitorData() : m_id(-1) {}
-    CompetitorData(int id) : m_id(id) {}
+    CompetitorData()
+        : m_id(-1)
+        , m_gender(JM::Male)
+        , m_age(1)
+        , m_weight(20.0)
+        , m_rank(JM::White)
+        , m_numBrackets(1)
+        , m_clubId(-1)
+    {}
+    CompetitorData(int id)
+        : m_id(id)
+        , m_gender(JM::Male)
+        , m_age(1)
+        , m_weight(20.0)
+        , m_rank(JM::White)
+        , m_numBrackets(1)
+        , m_clubId(-1)
+    {}
     CompetitorData(const CompetitorData& other)
         : QSharedData(other)
         , m_id(other.m_id)

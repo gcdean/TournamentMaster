@@ -45,7 +45,7 @@ public:
     const QList<Bracket> brackets() const override;
     const Bracket& bracket(int id) override;
     const QList<Competitor> bracketCompetitors(int bracketId) override;
-    bool addBracket(Bracket bracket) override;
+    Bracket addBracket(Bracket bracket) override;
     bool removeBracket(int id) override;
     bool updateBracket(const Bracket& src) override;
 
@@ -86,6 +86,8 @@ private:
     QString m_filename;
 
     QList <Bracket> m_brackets;
+    int m_nextBracketId;
+
     QList <Club> m_clubs;
     int m_nextClubId;
 

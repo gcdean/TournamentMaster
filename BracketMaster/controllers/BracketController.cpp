@@ -51,10 +51,10 @@ void BracketController::add(int parentId)
     Bracket bracket;
     AddBracketCommandPtr cmd = AddBracketCommandPtr(new AddBracketCommand(bracket));
 
-    JMApp()->commandController()->doCommand(cmd);
-
-    // TODO - Change signature
-//    emit addedDataObj(bracket);
+    if(JMApp()->commandController()->doCommand(cmd))
+    {
+        emit bracketAdded(cmd->bracket().id());
+    }
 
 }
 
@@ -67,14 +67,14 @@ void BracketController::remove(int id)
         RemoveBracketCommandPtr cmd = RemoveBracketCommandPtr(new RemoveBracketCommand(bracket));
         if(JMApp()->commandController()->doCommand(cmd))
         {
-        // TODO - Change signature.
-//        emit removedDataObj(bracket);
+            emit bracketRemoved(id);
         }
     }
 }
 
 void BracketController::removeIndex(int index)
 {
+    Q_ASSERT(false);
     // TODO - use command
 //    if(!tournament() || index < 0 || index >= tournament()->brackets().size())
 //    {
@@ -85,7 +85,6 @@ void BracketController::removeIndex(int index)
 //    emit removedDataObj(tournament()->brackets().at(index));
     // TODO - use command
 //    tournament()->brackets().removeAt(index);
-    JMApp()->setModified(true);
 }
 
 
@@ -149,7 +148,6 @@ const QList<Competitor> BracketController::competitors(int parentId) const
     if(parentId != -1)
     {
         // First, find the bracket.
-        // TODO - use command
         GetBracketCompetitorsCommandPtr cmd = GetBracketCompetitorsCommandPtr(new GetBracketCompetitorsCommand(parentId));
         if(JMApp()->commandController()->doCommand(cmd))
         {
@@ -165,7 +163,6 @@ const QList<Bracket> BracketController::competitorBrackets(int competitorId) con
 {
     // Find the brackets that the specified competitor is in.
     QList <Bracket > brackets;
-    // TODO - use command
     GetBracketsCommandPtr cmd = GetBracketsCommandPtr(new GetBracketsCommand);
     if(JMApp()->commandController()->doCommand(cmd))
     {

@@ -84,26 +84,28 @@ Competitor BaseSingleCompetitorCommand::competitor()
 
 AddCompetitorCommand::AddCompetitorCommand(QObject *parent)
     : BaseSingleCompetitorCommand(parent)
+    , m_addEmptyCompetitor(true)
 {
 
 }
 
 AddCompetitorCommand::AddCompetitorCommand(Competitor competitor, QObject *parent)
     : BaseSingleCompetitorCommand(competitor, parent)
+    , m_addEmptyCompetitor(false)
 {
 }
 
 bool AddCompetitorCommand::run(IDocument *const doc)
 {
     bool success = false;
-    if(m_competitor.isValid())
-    {
-        success = doc->addCompetitor(m_competitor);
-    }
-    else
+    if(m_addEmptyCompetitor)
     {
         m_competitor = doc->addCompetitor();
         success = m_competitor.isValid();
+    }
+    else
+    {
+        success = doc->addCompetitor(m_competitor);
     }
 
     return success;

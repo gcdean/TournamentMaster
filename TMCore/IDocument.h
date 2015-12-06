@@ -38,7 +38,7 @@ public:
     virtual const QList<Bracket> brackets() const = 0;
     virtual const Bracket& bracket(int id) = 0;
     virtual const QList<Competitor> bracketCompetitors(int bracketId) = 0;
-    virtual bool addBracket(Bracket bracket) = 0;
+    virtual Bracket addBracket(Bracket bracket) = 0;
     virtual bool removeBracket(int id) = 0;
     virtual bool updateBracket(const Bracket& src) = 0;
 

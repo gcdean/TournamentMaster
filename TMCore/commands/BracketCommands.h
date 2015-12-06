@@ -69,6 +69,8 @@ class AddBracketCommand : public BaseUndoCommand
 public:
     AddBracketCommand(Bracket b, QObject* parent = 0);
 
+    Bracket bracket();
+
 public slots:
     // BaseCommand interface
     bool run(IDocument *const doc) override;

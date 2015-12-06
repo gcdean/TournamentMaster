@@ -10,8 +10,6 @@
 BracketTableModel::BracketTableModel(QObject *parent) :
     QAbstractTableModel(parent)
 {
-    connect(JMApp()->bracketController(), &BracketController::addedDataObj, this, &BracketTableModel::addBracket);
-    connect(JMApp()->bracketController(), &BracketController::removedDataObj, this, &BracketTableModel::removeBracket);
 }
 
 int BracketTableModel::rowCount(const QModelIndex &parent) const
@@ -32,7 +30,7 @@ QVariant BracketTableModel::headerData(int section, Qt::Orientation orientation,
     {
         if(role == Qt::DisplayRole)
         {
-            return QVariant(section);
+            return QVariant(section+1);
         }
         return QVariant();
     }
@@ -258,17 +256,25 @@ bool BracketTableModel::setData(const QModelIndex &index, const QVariant &value,
 
 }
 
-void BracketTableModel::addBracket(JMDataObj *bracket)
+bool BracketTableModel::insertRows(int row, int count, const QModelIndex &parent)
 {
-    Q_UNUSED(bracket);
-    int numBrackets = JMApp()->bracketController()->size() - 1;
-    beginInsertRows(QModelIndex(), numBrackets, numBrackets);
+    beginInsertRows(parent, row, row + (count - 1));
+    for(int x = 0; x < count; x++)
+    {
+        QModelIndex index = createIndex(row + x, 0);
+        JMApp()->bracketController()->add(-1);
+    }
     endInsertRows();
 }
 
-void BracketTableModel::removeBracket(JMDataObj *bracket)
+bool BracketTableModel::removeRows(int row, int count, const QModelIndex &parent)
 {
-    int row = JMApp()->bracketController()->indexOf(bracket->id());
-    beginRemoveRows(QModelIndex(), row, row);
+    beginRemoveRows(parent, row, row + (count - 1));
+    for(int x = 0; x < count; x++)
+    {
+        QModelIndex index = createIndex(row + x, 0);
+        QVariant var = data(index, Qt::UserRole);
+        JMApp()->bracketController()->remove(var.toInt());
+    }
     endRemoveRows();
 }

@@ -29,6 +29,7 @@ ClubsEditor::ClubsEditor(QWidget *parent) :
 //    ui->clubList->setDropIndicatorShown(true);
 //    ui->clubList->setAcceptDrops(true);
 //    ui->clubList->setSelectionMode(QAbstractItemView::ExtendedSelection);
+
     ui->clubList->setContextMenuPolicy(Qt::CustomContextMenu);
 
 
@@ -40,6 +41,7 @@ ClubsEditor::ClubsEditor(QWidget *parent) :
     ui->competitorsList->tableView()->setModel(proxyModel);
     ui->competitorsList->setTableItemDelegate(new CompetitorItemDelegate);
     ui->competitorsList->setController(JMApp()->competitorController());
+    ui->competitorsList->tableView()->verticalHeader()->setVisible(true);
 
     connect(ui->addClubBtn, &QPushButton::clicked, this, &ClubsEditor::addClub);
     connect(ui->removeClubBtn, &QPushButton::clicked, this, &ClubsEditor::removeClub);

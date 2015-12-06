@@ -28,6 +28,7 @@ namespace
 TournamentDoc::TournamentDoc()
     : m_tournament()
     , m_modified(false)
+    , m_nextBracketId(1)
     , m_nextClubId(1)
     , m_nextCompetitorId(1)
     , m_nextMatchNum(1)
@@ -54,7 +55,6 @@ const Tournament &TournamentDoc::tournament() const
 void TournamentDoc::updateTournament(const Tournament &tournament)
 {
     m_tournament = tournament;
-//    m_tournament.updateTournament(tournament);
     m_modified = true;
 }
 
@@ -116,6 +116,7 @@ bool TournamentDoc::updateClub(const Club &src)
     if(index >= 0)
     {
         m_clubs[index] = src;
+        m_modified = true;
         return true;
     }
 
@@ -191,6 +192,7 @@ bool TournamentDoc::updateCompetitor(const Competitor &src)
     if(index >= 0)
     {
         m_competitors[index] = src;
+        m_modified = true;
         return true;
     }
 
@@ -215,27 +217,36 @@ const Bracket &TournamentDoc::bracket(int id)
 
 const QList<Competitor> TournamentDoc::bracketCompetitors(int bracketId)
 {
-    Bracket bracket = m_brackets.at(m_brackets.indexOf(bracketId));
 
     QList<Competitor> competitors;
-    foreach(int id, bracket.competitorIds())
+    int index = m_brackets.indexOf(bracketId);
+    if(index >= 0)
     {
-        competitors.append(m_competitors.at(m_competitors.indexOf(id)));
+        Bracket bracket = m_brackets.at(index);
+        foreach(int id, bracket.competitorIds())
+        {
+            competitors.append(m_competitors.at(m_competitors.indexOf(id)));
+        }
     }
 
     return competitors;
 }
 
-bool TournamentDoc::addBracket(Bracket bracket)
+Bracket TournamentDoc::addBracket(Bracket bracket)
 {
+    if(!bracket.isValid() || m_brackets.contains(bracket))
+    {
+        bracket.setId(m_nextBracketId++);
+    }
+
     if(!m_brackets.contains(bracket))
     {
         m_brackets.append(bracket);
         m_modified = true;
 
-        return true;
+        return bracket;
     }
-    return false;
+    return Bracket();
 }
 
 bool TournamentDoc::removeBracket(int id)
@@ -380,7 +391,6 @@ bool TournamentDoc::load(QString filename)
     QJsonDocument loadDoc(QJsonDocument::fromJson(saveData));
 
     m_filename = filename;
-//    m_tournament.setFileName(filename);
 
     QJsonObject jobj = loadDoc.object();
 
@@ -490,7 +500,12 @@ void TournamentDoc::readBrackets(const QJsonObject &root)
         }
 
         m_brackets.append(bracket);
+
+        m_nextBracketId = std::max(m_nextBracketId, bracket.id());
+
     }
+
+    m_nextBracketId++;
 }
 
 void TournamentDoc::readClubs(const QJsonObject &root)

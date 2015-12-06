@@ -34,6 +34,8 @@ public:
     const QList<Bracket> competitorBrackets(int competitorId) const;
 
 signals:
+    void bracketAdded(int id);
+    void bracketRemoved(int id);
     void competitorRemoved(int index);
 
 };

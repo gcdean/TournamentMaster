@@ -21,7 +21,6 @@ CompetitorTableModel::CompetitorTableModel(BaseController *controller, QObject *
     , m_editable(true)
     , m_filter()
 {
-    connect(JMApp()->competitorController(), &CompetitorController::addedDataObj, this, &CompetitorTableModel::addCompetitor);
 }
 
 void CompetitorTableModel::setParentId(int id)
@@ -89,7 +88,7 @@ QVariant CompetitorTableModel::headerData(int section, Qt::Orientation orientati
             break;
             case Qt::DisplayRole:
             {
-                return QVariant(section);
+                return QVariant(section+1);
             }
             break;
 
@@ -425,14 +424,6 @@ bool CompetitorTableModel::dropMimeData(const QMimeData *data, Qt::DropAction ac
     return success;
 }
 
-void CompetitorTableModel::addCompetitor(JMDataObj *competitor)
-{
-    Q_UNUSED(competitor);
-    int numCompetitors = m_controller->competitors(m_filter, m_parentId).size() - 1;
-    beginInsertRows(QModelIndex(), numCompetitors, numCompetitors);
-    endInsertRows();
-}
-
 BaseController *CompetitorTableModel::controller()
 {
     return m_controller;
@@ -482,4 +473,30 @@ QVariant CompetitorTableModel::columnBackground(const Competitor judoka, int col
     }
 
     return QVariant();
+}
+
+
+bool CompetitorTableModel::removeRows(int row, int count, const QModelIndex &parent)
+{
+    beginRemoveRows(parent, row, row + (count - 1));
+    for(int x = 0; x < count; x++)
+    {
+        QModelIndex index = createIndex(row + x, 0);
+        QVariant var = data(index, Qt::UserRole);
+        JMApp()->competitorController()->remove(var.toInt());
+    }
+    endRemoveRows();
+}
+
+
+bool CompetitorTableModel::insertRows(int row, int count, const QModelIndex &parent)
+{
+    beginInsertRows(parent, row, row + (count - 1));
+    for(int x = 0; x < count; x++)
+    {
+        QModelIndex index = createIndex(row + x, 0);
+        QVariant var = data(index, Qt::UserRole);
+        JMApp()->competitorController()->add(parentId());
+    }
+    endInsertRows();
 }
