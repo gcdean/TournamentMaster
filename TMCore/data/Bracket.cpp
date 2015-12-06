@@ -335,13 +335,14 @@ bool Bracket::isValid()
  * @param id - The id of the competitor to add
  * @return
  */
-void Bracket::addCompetitor(int id)
+bool Bracket::addCompetitor(int id)
 {
     if(id < 0 || m_data->m_competitorIds.contains(id))
-        return;
+        return false;
 
    m_data->m_competitorIds.append(id);
 
+   return true;
 }
 
 void Bracket::removeCompetitor(int id)

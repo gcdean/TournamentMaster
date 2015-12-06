@@ -72,12 +72,8 @@ public:
 
     bool isValid();
 
-    void addCompetitor(int id);
+    bool addCompetitor(int id);
     void removeCompetitor(int id);
-//    const QList< Competitor *> competitors() const;
-//    bool addCompetitor(Competitor *competitor, int location = -1);
-//    void removeCompetitor(int index);
-//    void moveCompetitor(int srcRow, int destRow);
 
 //    bool addCompetitor(int id, int location = -1);
     const QList<int> competitorIds() const;

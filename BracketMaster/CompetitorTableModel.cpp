@@ -371,6 +371,7 @@ bool CompetitorTableModel::dropMimeData(const QMimeData *data, Qt::DropAction ac
 {
     Q_UNUSED(row);
     Q_UNUSED(column);
+    Q_UNUSED(parent);
 
     if(action == Qt::IgnoreAction)
         return true;
@@ -382,44 +383,50 @@ bool CompetitorTableModel::dropMimeData(const QMimeData *data, Qt::DropAction ac
         QByteArray encoded = data->data("application/jm.comp.list");
         QDataStream stream(&encoded, QIODevice::ReadOnly);
 
-        while (!stream.atEnd())
+        BracketController* controller = dynamic_cast<BracketController *>(m_controller);
+        if(controller)
         {
-            int compId;
-            stream >> compId;
-
-            // Find the Competitor
-            // TODO - Needs to be reworked
-            const QList<Competitor> competitors = m_controller->competitors();
-            Competitor competitor;
-            foreach(Competitor c, competitors)
+            // This is only for adding competitors to a bracket.
+            Bracket bracket = controller->find(m_parentId);
+            if(!bracket.isValid())
             {
-                if(c.id() == compId)
-                {
-                    competitor = c;
-                    break;
-                }
+                return success;
             }
 
-            if(competitor.isValid() && (0 != dynamic_cast<BracketController *>(m_controller)))
+            int addedCompetitors = 0;
+            while (!stream.atEnd())
             {
-                // We know we have a bracket controller, now get the bracket.
-                BracketController* controller = dynamic_cast<BracketController *>(m_controller);
+                int compId;
+                stream >> compId;
 
-                Bracket bracket = controller->find(m_parentId);
-                if(bracket.isValid())
+                // Find the Competitor
+                // TODO - Needs to be reworked
+                Competitor competitor = JMApp()->competitorController()->find(compId);
+
+                if(competitor.isValid() && (0 != dynamic_cast<BracketController *>(m_controller)))
                 {
                     // Now add the competitor to the bracket.
-                    bracket.addCompetitor(competitor.id());
-                    UpdateBracketCmdPtr updaCmd = UpdateBracketCmdPtr(new UpdateBracketCommand(bracket));
-                    if(JMApp()->commandController()->doCommand(updaCmd))
+                    if(bracket.addCompetitor(competitor.id()))
                     {
-                        beginInsertRows(QModelIndex(), bracket.competitorIds().size(), bracket.competitorIds().size());
-                        success = true;
-                        endInsertRows();
+                        addedCompetitors++;
                     }
                 }
             }
+
+            if(addedCompetitors > 0)
+            {
+                UpdateBracketCmdPtr updaCmd = UpdateBracketCmdPtr(new UpdateBracketCommand(bracket));
+                beginInsertRows(QModelIndex(), bracket.competitorIds().size(), bracket.competitorIds().size() + addedCompetitors - 1);
+                if(JMApp()->commandController()->doCommand(updaCmd))
+                {
+                    success = true;
+                }
+                endInsertRows();
+
+            }
+
         }
+
     }
     return success;
 }
