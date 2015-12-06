@@ -5,7 +5,6 @@
 #include "data/Bracket.h"
 #include "data/Competitor.h"
 #include "data/Tournament.h"
-#include "data/JMDataObj.h" // TODO - delete this.
 
 #include "JudoMasterApplication.h"  // DEBUG ONLY. DELETE
 #include "data/Competitor.h"             // DEBUG ONLY. DELETE

@@ -31,7 +31,7 @@ private:
     void printRoundRobinFour(const Bracket *bracket);
     void printCompetitor(float y, float height, Competitor *comp, QVector<bool> &boxes);
     float printCompetitorRegistration(float y, Competitor *competitor);
-    Club * getClub(int clubId);
+    Club  getClub(int clubId);
     void joinMatch(float baseY, float height, int comp1, int comp2, int match);
     void printClubHeader(const Club& club);
     void printHeader(const Bracket *bracket);

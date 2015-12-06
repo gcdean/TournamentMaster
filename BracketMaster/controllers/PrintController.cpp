@@ -4,20 +4,13 @@
 #include "data/Bracket.h"
 #include "data/Competitor.h"
 #include "data/Club.h"
-#include "data/JMDataObj.h" // TODO - Delete this
 #include "JMUtil.h"
 #include "JudoMasterApplication.h"
 
 #include <QDebug>
 #include <QtGui>
 
-//#include <QFontMetrics>
-//#include <QList>
-//#include <QtPrintSupport>
 #include <QPrintDialog>
-//#include <QRect>
-//#include <QString>
-//#include <QWidget>
 
 namespace
 {
@@ -398,10 +391,10 @@ void PrintController::printCompetitor(float y, float height, Competitor *comp, Q
     compName += " " + comp->lastName();
     drawNormalText(x+0.0625, y+0.25, compName);
 
-    Club * club = getClub(comp->clubId());
-    if (club)
+    Club club = getClub(comp->clubId());
+    if (club.isValid())
     {
-        drawText(x+0.125, y+0.625, club->clubName(), 10.0);
+        drawText(x+0.125, y+0.625, club.clubName(), 10.0);
     }
 }
 
@@ -425,9 +418,9 @@ float PrintController::printCompetitorRegistration(float y, Competitor *competit
     return top;
 }
 
-Club * PrintController::getClub(int clubId)
+Club PrintController::getClub(int clubId)
 {
-    return dynamic_cast<Club *>(JMApp()->clubController()->find(clubId));
+    return JMApp()->clubController()->find(clubId);
 }
 
 void PrintController::joinMatch(float baseY, float height, int comp1, int comp2, int match)

@@ -2,9 +2,6 @@
 
 #include <QAbstractTableModel>
 
-class Bracket;
-class JMDataObj;
-
 namespace bracket
 {
     ///

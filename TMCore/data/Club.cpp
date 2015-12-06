@@ -105,7 +105,6 @@ bool Club::operator ==(const Club &src)
 
 //void Club::write(QTextStream &stream) const
 //{
-//    JMDataObj::write(stream);
 //    stream << "," << m_clubName;
 //    stream << "," << m_coachName;
 //    stream << "," << m_address1;

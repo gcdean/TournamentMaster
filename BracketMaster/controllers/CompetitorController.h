@@ -16,7 +16,7 @@ class CompetitorController : public BaseController
 public:
     explicit CompetitorController(QObject *parent = 0);
 
-    Competitor createCompetitor(QString firstName, QString lastName, JM::Gender gender, int age , double weight, JM::Rank rank, int clubId);
+    Competitor createCompetitor(QString firstName, QString lastName, JM::Gender gender, int age , double weight, JM::Rank rank, int clubId, int numBrackets = 1, QString notes = QString());
     void updateCompetitor(Competitor competitor);
 
     int size() const /*override*/;

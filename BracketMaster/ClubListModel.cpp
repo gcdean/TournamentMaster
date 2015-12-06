@@ -13,8 +13,7 @@
 ClubListModel::ClubListModel(QObject *parent) :
     QAbstractListModel(parent)
 {
-    connect(JMApp()->clubController(), &ClubController::addedDataObj, this, &ClubListModel::clubAdded);
-    connect(JMApp()->clubController(), &ClubController::removedDataObj, this, &ClubListModel::clubRemoved);
+    // TODO - Add Add/remove clubs or notifation of them.
 }
 
 Club ClubListModel::club(const QModelIndex &index)
@@ -62,26 +61,26 @@ Qt::ItemFlags ClubListModel::flags(const QModelIndex &) const
 }
 
 
-void ClubListModel::clubAdded(JMDataObj *)
-{
-    // The club has already been added.
-    int numClubs = JMApp()->clubController()->clubs().size();
-    beginInsertRows(QModelIndex(), numClubs - 1, numClubs);
-    endInsertRows();
-}
+//void ClubListModel::clubAdded(JMDataObj *)
+//{
+//    // The club has already been added.
+//    int numClubs = JMApp()->clubController()->clubs().size();
+//    beginInsertRows(QModelIndex(), numClubs - 1, numClubs);
+//    endInsertRows();
+//}
 
-void ClubListModel::clubRemoved(JMDataObj *club)
-{
-    // Find the club that's being removed.
-    // Find the index.
-    int row = JMApp()->clubController()->indexOf(club->id());
-    if(row >= 0)
-    {
-        beginRemoveRows(QModelIndex(), row, row);
-        endRemoveRows();
-    }
+//void ClubListModel::clubRemoved(JMDataObj *club)
+//{
+//    // Find the club that's being removed.
+//    // Find the index.
+//    int row = JMApp()->clubController()->indexOf(club->id());
+//    if(row >= 0)
+//    {
+//        beginRemoveRows(QModelIndex(), row, row);
+//        endRemoveRows();
+//    }
 
-}
+//}
 
 bool ClubListModel::dropMimeData(const QMimeData *mimeData, Qt::DropAction action, int row, int column, const QModelIndex &parent)
 {
@@ -104,8 +103,8 @@ bool ClubListModel::dropMimeData(const QMimeData *mimeData, Qt::DropAction actio
             int srcClubId = data(srcIndex, Qt::UserRole).toInt();
             int destClubId = data(destIndex, Qt::UserRole).toInt();
 
-            Club *srcClub = dynamic_cast<Club *>(JMApp()->clubController()->find(srcClubId));
-            Club *destClub = dynamic_cast<Club *>(JMApp()->clubController()->find(destClubId));
+            Club srcClub = JMApp()->clubController()->find(srcClubId);
+            Club destClub = JMApp()->clubController()->find(destClubId);
 
             MergeClubsCommand mergeCmd(srcClub, destClub);
             mergeCmd.run(nullptr);

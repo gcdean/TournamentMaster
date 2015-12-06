@@ -6,7 +6,7 @@
 #include <QDebug>
 #include <QMessageBox>
 
-MergeClubsCommand::MergeClubsCommand(Club *src, Club *dest)
+MergeClubsCommand::MergeClubsCommand(Club src, Club dest)
     :BaseCommand()
     , m_srcClub(src)
     , m_destClub(dest)
@@ -16,11 +16,11 @@ MergeClubsCommand::MergeClubsCommand(Club *src, Club *dest)
 
 bool MergeClubsCommand::run(IDocument *const doc)
 {
-    if(!m_srcClub || !m_destClub)
+    if(!m_srcClub.isValid() || !m_destClub.isValid())
         return done(false);
 
     // Confirm the Merge
-    if(QMessageBox::No == QMessageBox::question(0, "Merge Clubs", QString("Are you sure you want to merge %1 with %2").arg(m_srcClub->clubName()).arg(m_destClub->clubName())))
+    if(QMessageBox::No == QMessageBox::question(0, "Merge Clubs", QString("Are you sure you want to merge %1 with %2").arg(m_srcClub.clubName()).arg(m_destClub.clubName())))
     {
         return done(false);
     }
@@ -33,6 +33,6 @@ bool MergeClubsCommand::run(IDocument *const doc)
 //    }
 
     // Delete the src club.
-    JMApp()->clubController()->remove(m_srcClub->id());
+//    JMApp()->clubController()->remove(m_srcClub->id());
     return done(true);
 }

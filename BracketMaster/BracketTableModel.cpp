@@ -2,7 +2,6 @@
 
 #include "data/Bracket.h"
 #include "controllers/BracketController.h"
-#include "data/JMDataObj.h"
 #include "JudoMasterApplication.h"
 
 #include <QDebug>

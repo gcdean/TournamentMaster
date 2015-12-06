@@ -3,10 +3,9 @@
 #include "commands/CompetitorCommands.h"
 #include "data/Club.h"
 #include "data/Competitor.h"
-#include "JudoMasterApplication.h"
-#include "JMUtil.h"
 #include "data/Tournament.h"
-#include "data/JMDataObj.h" // TODO - delete this.
+#include "JMUtil.h"
+#include "JudoMasterApplication.h"
 
 #include <QString>
 
@@ -15,7 +14,7 @@ CompetitorController::CompetitorController(QObject *parent) :
 {
 }
 
-Competitor CompetitorController::createCompetitor(QString firstName, QString lastName, JM::Gender gender, int age, double weight, JM::Rank rank, int clubId)
+Competitor CompetitorController::createCompetitor(QString firstName, QString lastName, JM::Gender gender, int age, double weight, JM::Rank rank, int clubId, int numBrackets, QString notes)
 {
 
     Competitor competitor;
@@ -26,6 +25,8 @@ Competitor CompetitorController::createCompetitor(QString firstName, QString las
     competitor.setWeight(weight);
     competitor.setRank(rank);
     competitor.setClubId(clubId);
+    competitor.setNumBrackets(numBrackets);
+    competitor.setNotes(notes);
 
     AddCompetitorCmdPtr addCmd = AddCompetitorCmdPtr(new AddCompetitorCommand(competitor));
     JMApp()->commandController()->doCommand(addCmd);

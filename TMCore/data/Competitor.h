@@ -2,11 +2,7 @@
 
 #include "TMCore.h"
 
-//#include <QChar>
-//#include <QJsonObject>
-//#include <QObject>
 #include <QSharedDataPointer>
-//#include <QString>
 
 
 #include "data/CompetitorData.h"
@@ -33,7 +29,7 @@ void writeCompetitorHeader(QTextStream &stream);
 
 class CompetitorData;
 
-class TMCORE_DLLSPEC Competitor// : public JMDataObj
+class TMCORE_DLLSPEC Competitor
 {
 
 public:
@@ -65,12 +61,8 @@ public:
     void setNotes(QString notes);
 
     bool isValid() const;
-//    Competitor &operator =(const Competitor& src);
     virtual bool operator == (const Competitor& src);
-//    virtual void read(const QJsonObject& json);
 
-//    void write(QJsonObject& json) const override;
-//    void write(QTextStream &stream) const override;
 
 private:
     QSharedDataPointer<CompetitorData> m_data;

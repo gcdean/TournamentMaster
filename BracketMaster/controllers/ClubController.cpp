@@ -162,7 +162,7 @@ int ClubController::indexOf(int id)
 //}
 
 
-JMDataObj *ClubController::find(int id) const
+Club ClubController::find(int id) const
 {
     // TODO - Fix return
 //    foreach(Club *club, tournament()->clubs())

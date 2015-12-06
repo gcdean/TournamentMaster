@@ -4,7 +4,6 @@
 #include "controllers/CompetitorController.h"
 #include "data/Bracket.h"
 #include "data/Competitor.h"
-#include "data/JMDataObj.h"
 #include "JudoMasterApplication.h"
 #include "JMUtil.h"
 

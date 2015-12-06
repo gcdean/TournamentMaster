@@ -6,7 +6,6 @@
 
 class BaseController;
 class Competitor;
-class JMDataObj;
 
 class CompetitorTableModel : public QAbstractTableModel
 {

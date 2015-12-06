@@ -5,7 +5,6 @@
 class Competitor;
 class CompetitorFilter;
 class Tournament;
-class JMDataObj;
 
 class BaseController : public QObject
 {
@@ -25,10 +24,6 @@ public:
 
     virtual const QList<Competitor > competitors(int parentId = -1) const;
     virtual const QList<Competitor> competitors(const CompetitorFilter& filter, int parentId = -1) const;
-
-signals:
-    void addedDataObj(JMDataObj *obj);
-    void removedDataObj(JMDataObj *obj);
 
 public slots:
 

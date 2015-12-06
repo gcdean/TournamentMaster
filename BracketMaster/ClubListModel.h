@@ -1,6 +1,5 @@
 #pragma once
 
-#include "data/JMDataObj.h" // TODO: REMOVE ME
 #include "data/Club.h"
 
 #include <QAbstractListModel>
@@ -25,8 +24,6 @@ public:
 signals:
 
 public slots:
-    void clubAdded(JMDataObj *club);
-    void clubRemoved(JMDataObj *club);
 
 
     // QAbstractItemModel interface

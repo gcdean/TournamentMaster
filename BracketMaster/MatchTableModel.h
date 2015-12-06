@@ -2,8 +2,6 @@
 
 #include <QAbstractTableModel>
 
-class JMDataObj;
-
 class MatchTableModel : public QAbstractTableModel
 {
     Q_OBJECT

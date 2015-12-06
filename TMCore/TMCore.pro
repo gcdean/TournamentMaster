@@ -14,7 +14,6 @@ CONFIG += c++11
 SOURCES += \
     TMCore.cpp \
     data/TMBaseData.cpp \
-    data/JMDataObj.cpp \
     data/Club.cpp \
     JMUtil.cpp \
     data/Competitor.cpp \
@@ -34,7 +33,6 @@ SOURCES += \
 HEADERS += \
     TMCore.h \
     data/TMBaseData.h \
-    data/JMDataObj.h \
     data/Club.h \
     JMUtil.h \
     data/Competitor.h \

@@ -121,10 +121,7 @@ bool ImportDataCommand::run(IDocument *const doc)
                 if(!competitor.isValid())
                 {
                     // Competitor not found, so add.
-                    competitor = JMApp()->competitorController()->createCompetitor(fname,lname, mf, age.toInt(), weight.toDouble(), rank, club.id());
-                    // TODO add the following to the constructor.
-                    competitor.setNumBrackets(numDivs);
-                    competitor.setNotes(notes);
+                    competitor = JMApp()->competitorController()->createCompetitor(fname,lname, mf, age.toInt(), weight.toDouble(), rank, club.id(), numDivs, notes);
                     doc->addCompetitor(competitor);
 
                     m_importedCompetitors.append(competitor);

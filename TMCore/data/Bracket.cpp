@@ -52,7 +52,6 @@ Bracket::~Bracket()
 
 //void Bracket::read(const QJsonObject &json, const QList<Competitor *>competitors)
 //{
-//    JMDataObj::read(json);
 //    m_name = json["name"].toString();
 //    m_gender = genderFromString(json["gender"].toString());
 //    m_weightType = weightTypeFromStr(json["weightType"].toString());
@@ -90,7 +89,6 @@ Bracket::~Bracket()
 
 //void Bracket::write(QJsonObject &json) const
 //{
-//    JMDataObj::write(json);
 //    json["name"] = m_name;
 //    json["gender"] = genderToString(m_gender);
 //    json["weightType"] = weightTypeToStr(m_weightType);
@@ -127,7 +125,6 @@ void writeBracketHeader(QTextStream &stream)
 
 //void Bracket::write(QTextStream &stream) const
 //{
-//    JMDataObj::write(stream);
 
 //    stream << "," << m_name;
 //    stream << "," << genderToString(m_gender);
@@ -155,7 +152,6 @@ void writeBracketCompetitorHeader(QTextStream &stream)
 //{
 //    foreach(Competitor *competitor, m_competitors)
 //    {
-//        JMDataObj::write(stream);
 //        stream << "," << competitor->id() << endl;
 //    }
 //}
@@ -167,11 +163,8 @@ void writeBracketPlaceHeader(QTextStream &stream)
 
 //void Bracket::writePlaces(QTextStream &stream) const
 //{
-//    JMDataObj::write(stream);
 //    stream << "," << "1" << "," << m_firstPlace << endl;
-//    JMDataObj::write(stream);
 //    stream << "," << "2" << "," << m_secondPlace << endl;
-//    JMDataObj::write(stream);
 //    stream << "," << "3" << "," << m_thirdPlace_1 << endl;
 //}
 
@@ -353,33 +346,6 @@ void Bracket::removeCompetitor(int id)
         m_data->m_competitorIds.removeAt(index);
     }
 }
-
-///**
-// * @brief Bracket::addCompetitor - Add a competitor to the bracket
-// * @param competitor - The competitor to add
-// * @param location - The location within the list. -1 is append.
-// * @return
-// */
-//bool Bracket::addCompetitor(Competitor *competitor, int location)
-//{
-//    if(0 == competitor)
-//        return false;
-
-//    if(m_competitors.indexOf(competitor) < 0)
-//    {
-//        // We can add the competitor, now find out where.
-//        if(location == -1 || location > m_competitors.size())
-//        {
-//            m_competitors.append(competitor);
-//        }
-//        else
-//        {
-//            m_competitors.insert(location, competitor);
-//        }
-//        return true;
-//    }
-//    return false;
-//}
 
 //void Bracket::removeCompetitor(int index)
 //{

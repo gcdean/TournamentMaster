@@ -119,7 +119,6 @@ bool Match::operator ==(const Match &src)
 
 //void Match::read(const QJsonObject &json, const QList<Competitor *> competitors)
 //{
-//    JMDataObj::read(json);
 //    m_bracketId = json["bracketId"].toInt();
 //    m_matchNum = json["matchNumber"].toInt();
 //    int cid1 = json["competitor1"].toInt();
@@ -161,7 +160,6 @@ bool Match::operator ==(const Match &src)
 
 //void Match::write(QJsonObject &json) const
 //{
-//    JMDataObj::write(json);
 //    json["bracketId"] = m_bracketId;
 //    json["matchNumber"] = m_matchNum;
 //    if(m_competitor1)
@@ -184,21 +182,18 @@ void writeMatchHeader(QTextStream &stream)
 //    QString notes = prepareStringForCSV(QString(m_notes));
 
 //    // Want to write out 3 records, white, blue, winner
-//    JMDataObj::write(stream);
 //    stream << "," << m_bracketId;
 //    stream << "," << (m_competitor1 ? m_competitor1->id() : -1);
 //    stream << "," << "white";
 //    stream << "," << notes;
 //    stream << endl;
 
-//    JMDataObj::write(stream);
 //    stream << "," << m_bracketId;
 //    stream << "," << (m_competitor2 ? m_competitor2->id() : -1);
 //    stream << "," << "blue";
 //    stream << "," << notes;
 //    stream << endl;
 
-//    JMDataObj::write(stream);
 //    stream << "," << m_bracketId;
 //    stream << "," << (m_winner ? m_winner->id() : -1);
 //    stream << "," << "winner";

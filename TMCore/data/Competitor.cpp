@@ -91,7 +91,6 @@ bool Competitor::operator ==(const Competitor &src)
 
 //Competitor &Competitor::operator =(const Competitor &src)
 //{
-//    JMDataObj::operator =(src);
 
 //    setFirstName(src.firstName());
 //    setLastName(src.lastName());
@@ -109,7 +108,6 @@ bool Competitor::operator ==(const Competitor &src)
 
 //void Competitor::read(const QJsonObject &json)
 //{
-//    JMDataObj::read(json);
 
 //    m_firstName = json["fname"].toString();
 //    m_lastName = json["lname"].toString();
@@ -127,7 +125,6 @@ bool Competitor::operator ==(const Competitor &src)
 
 //void Competitor::write(QJsonObject &json) const
 //{
-//    JMDataObj::write(json);
 //    json["fname"] = m_firstName;
 //    json["lname"] = m_lastName;
 //    json["gender"] = genderToString(m_gender);
@@ -148,7 +145,6 @@ void writeCompetitorHeader(QTextStream &stream)
 
 //void Competitor::write(QTextStream &stream) const
 //{
-//    JMDataObj::write(stream);
 
 //    stream << "," << m_firstName;
 //    stream << "," << m_lastName;
