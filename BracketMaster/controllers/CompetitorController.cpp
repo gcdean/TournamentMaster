@@ -58,13 +58,12 @@ Competitor CompetitorController::find(int id) const
 
 void CompetitorController::add(int parentId)
 {
-    // TODO - CHange to use commands
-    createCompetitor(QString("Competitor"), QString("Last Name"), JM::Female, 0, 0, JM::White, parentId);
-//    Competitor *competitor = new Competitor(compId, QString("Competitor"), QString("%1").arg(compId), JM::Female, 0, 0, JM::White, parentId);
-//    tournament()->competitors().append(competitor);
+    Competitor competitor = createCompetitor(QString("Competitor"), QString("Last Name"), JM::Female, 0, 0, JM::White, parentId);
 
-    // TODO change signal
-//    emit addedDataObj(competitor);
+    if(competitor.isValid())
+    {
+        emit competitorAdded(&competitor);
+    }
 }
 
 int CompetitorController::size() const

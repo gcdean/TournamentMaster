@@ -20,8 +20,6 @@ void MatchController::add(int parentId)
     AddMatchCmdPtr cmd = AddMatchCmdPtr(new AddMatchCommand(parentId, match));
     if(JMApp()->commandController()->doCommand(cmd))
     {
-        // TODO - fix signal signature
-    //    emit addedDataObj(match);
         emit matchAdded(cmd->match().id());
     }
 
@@ -65,7 +63,6 @@ int MatchController::size(int id) const
 
 const QList<Match> MatchController::matches(int bracketId) const
 {
-    // TODO - use command
     GetAllMatchesCmdPtr cmd = GetAllMatchesCmdPtr(new GetAllMatchesCommand(bracketId));
     JMApp()->commandController()->doCommand(cmd);
 

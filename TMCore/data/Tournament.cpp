@@ -15,6 +15,7 @@
 Tournament::Tournament(int id)
 {
     m_data = new TournamentData;
+    setId(id);
 }
 
 Tournament::Tournament(const Tournament &src)

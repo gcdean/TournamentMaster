@@ -14,10 +14,21 @@ JudoMasterApplication::JudoMasterApplication(int &argc, char **argv) :
     , m_lastSaveDir(QDir::home())
 {
 
+    QCoreApplication::setOrganizationName("Emerald City Judo");
+    QCoreApplication::setOrganizationName("emeraldcityjudo.com");
+    QCoreApplication::setApplicationName("TournamentMaster");
+
+
+    QSettings settings;
+    m_lastSaveDir = settings.value("lastSaveDir").toString();
+
     QSharedPointer<TournamentDoc> doc = QSharedPointer<TournamentDoc>(new TournamentDoc);
     QSharedPointer<CommandController> teditor = QSharedPointer<CommandController>(new CommandController(doc));
 
     setCommandController(teditor);
+
+    connect(this, &QCoreApplication::aboutToQuit, this, &JudoMasterApplication::saveState);
+
 
 }
 
@@ -53,4 +64,10 @@ const QDir JudoMasterApplication::lastSaveDir() const
 void JudoMasterApplication::setLastSaveDir(QDir dirname)
 {
     m_lastSaveDir = dirname;
+}
+
+void JudoMasterApplication::saveState()
+{
+    QSettings settings;
+    settings.setValue("lastSaveDir", m_lastSaveDir.absolutePath());
 }

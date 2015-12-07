@@ -98,6 +98,5 @@ const QList<Competitor> BaseController::competitors(const CompetitorFilter &filt
             filteredCompetitors.append(competitor);
     }
 
-    // TODO This is wrong in that a local object is being returned.
     return filteredCompetitors;
 }

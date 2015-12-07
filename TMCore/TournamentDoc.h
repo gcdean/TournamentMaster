@@ -1,5 +1,9 @@
 #pragma once
 
+#include "data/Bracket.h"
+#include "data/Club.h"
+#include "data/Competitor.h"
+#include "data/Match.h"
 #include "data/Tournament.h"
 
 #include "IDocument.h"
@@ -19,6 +23,7 @@ class TMCORE_DLLSPEC TournamentDoc : public IDocument
 {
 public:
     TournamentDoc();
+    TournamentDoc(IDocument &doc);
     virtual ~TournamentDoc();
 
     // Tournament methods

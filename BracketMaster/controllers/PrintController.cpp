@@ -21,9 +21,9 @@ namespace
     const QRectF regWeightRect(5.5, 2.0, 1.0, 0.2);
     const QRectF actWeightRect(6.5, 2.0, 1.0, 0.2);
 
-    bool compareCompetitorNames(Competitor* competitor1, Competitor* competitor2)
+    bool compareCompetitorNames(Competitor competitor1, Competitor competitor2)
     {
-        int lastNameCompare = competitor1->lastName().compare(competitor2->lastName());
+        int lastNameCompare = competitor1.lastName().compare(competitor2.lastName());
         if( lastNameCompare < 0)
         {
             return true;
@@ -32,7 +32,7 @@ namespace
         if(lastNameCompare == 0)
         {
             // Last names are the same, compare the first name.
-            return competitor1->firstName().compare(competitor2->firstName()) < 0;
+            return competitor1.firstName().compare(competitor2.firstName()) < 0;
         }
 
         return false;
@@ -96,24 +96,24 @@ void PrintController::endPrint()
 
 bool PrintController::printBracket(const Bracket *bracket)
 {
-    // TODO - Use Command to get competitors
-//    if(bracket->competitors().size() == 0)
-//    {
-//        // Don't print a bracket with now competitors.
-//        return false;
-//    }
-//    else if (bracket->competitors().size() > 8)
-//    {
-//        // Not sure what to do here
-//    }
-//    else if (bracket->competitors().size() > 4)
-//    {
-//        printDoubleEliminationBracket(bracket);
-//    }
-//    else if (bracket->competitors().size() > 1)
-//    {
-//        printRoundRobinBracket(bracket);
-//    }
+    QList<Competitor> competitors = JMApp()->bracketController()->competitors(bracket->id());
+    if(competitors.size() == 0)
+    {
+        // Don't print a bracket with now competitors.
+        return false;
+    }
+    else if (competitors.size() > 8)
+    {
+        // Not sure what to do here
+    }
+    else if (competitors.size() > 4)
+    {
+        printDoubleEliminationBracket(bracket);
+    }
+    else if (competitors.size() > 1)
+    {
+        printRoundRobinBracket(bracket);
+    }
 
     return true;
 }
@@ -127,12 +127,11 @@ bool PrintController::printClubRegistration(const Club& club)
     printClubHeader(club);
 
     float y = 2.2;
-//    QList<Competitor *> clubCompetitors(club->competitors());
-    QList<Competitor *> clubCompetitors;    // DUMMY DECLARATION
+    QList<Competitor> clubCompetitors = JMApp()->clubController()->competitors(club.id());
     std::sort(clubCompetitors.begin(), clubCompetitors.end(), compareCompetitorNames);
-    foreach(Competitor *competitor, clubCompetitors)
+    foreach(Competitor competitor, clubCompetitors)
     {
-        y = printCompetitorRegistration(y, competitor);
+        y = printCompetitorRegistration(y, &competitor);
     }
 
     return true;
@@ -182,28 +181,27 @@ void PrintController::printDoubleEliminationBracket(const Bracket *bracket)
 
     QList<QString> compNames;
     QList<QString> clubNames;
-    // TODO - COmmand to get competitors
-//    const QList<Competitor *> comps = bracket->competitors();
+    const QList<Competitor> comps = JMApp()->bracketController()->competitors(bracket->id());
     QString bye("BYE");
     compNames << bye << bye << bye << bye << bye << bye << bye << bye;
     clubNames << "" << "" << "" << "" << "" << "" << "" << "";
     int indices[8] = { 4, 4, 4, 6, 4, 5, 4, 7 };
 
-//    int count = comps.size();
-//    int j = 0;
-//    for (int i=0; i < 8; i++)
-//    {
-//        if (count > indices[i])
-//        {
-//            compNames[i] = comps[j]->firstName() + " " + comps[j]->lastName();
-//            Club * club = getClub(comps[j]->clubId());
-//            if (club)
-//            {
-//                clubNames[i] = QString(club->clubName().left(22));
-//            }
-//            j++;
-//        }
-//    }
+    int count = comps.size();
+    int j = 0;
+    for (int i=0; i < 8; i++)
+    {
+        if (count > indices[i])
+        {
+            compNames[i] = comps[j].firstName() + " " + comps[j].lastName();
+            Club club = getClub(comps[j].clubId());
+            if (club.isValid())
+            {
+                clubNames[i] = QString(club.clubName().left(22));
+            }
+            j++;
+        }
+    }
 
     float startY = 2.8125;
     for (int i=0; i < 4; i++)
@@ -293,20 +291,19 @@ void PrintController::printRoundRobinBracket(const Bracket *bracket)
     drawCenteredText(x, y, "WINS", 12.0, true);
     drawCenteredText(x+1.0, y, "POINTS", 12.0, true);
 
-
-    // TODO - Use command to get competiitors
-//    switch (bracket->competitors().size())
-//    {
-//    case 2:
-//        printRoundRobinTwo(bracket);
-//        break;
-//    case 3:
-//        printRoundRobinThree(bracket);
-//        break;
-//    case 4:
-//        printRoundRobinFour(bracket);
-//        break;
-//    }
+    QList<Competitor> competitors = JMApp()->bracketController()->competitors(bracket->id());
+    switch (competitors.size())
+    {
+    case 2:
+        printRoundRobinTwo(bracket);
+        break;
+    case 3:
+        printRoundRobinThree(bracket);
+        break;
+    case 4:
+        printRoundRobinFour(bracket);
+        break;
+    }
 
     y = 7.5;
     x = 10.0;
@@ -325,9 +322,11 @@ void PrintController::printRoundRobinTwo(const Bracket *bracket)
     float y = 3.25;
     QVector<bool> boxes(5, true);
     boxes[3] = false; boxes[4] = false;
-    // TODO - COmmand to get competitors
-//    printCompetitor(y, 0.75, bracket->competitors()[0], boxes);
-//    printCompetitor(y+1.0, 0.75, bracket->competitors()[1], boxes);
+
+    QList<Competitor> competitors = JMApp()->bracketController()->competitors(bracket->id());
+    printCompetitor(y, 0.75, &competitors[0], boxes);
+    printCompetitor(y+1.0, 0.75, &competitors[1], boxes);
+
     joinMatch(y, 0.75, 1, 2, 1);
     joinMatch(y, 0.75, 1, 2, 2);
     joinMatch(y, 0.75, 1, 2, 3);
@@ -338,12 +337,12 @@ void PrintController::printRoundRobinThree(const Bracket *bracket)
     float y = 3.25;
     QVector<bool> boxes(5, true);
     boxes[1] = false; boxes[3] = false; boxes[4] = false;
-    // TODO - COmmand to get comopetitors
-//    printCompetitor(y, 0.75, bracket->competitors()[0], boxes);
-//    boxes[1] = true; boxes[2] = false;
-//    printCompetitor(y+1.0, 0.75, bracket->competitors()[1], boxes);
-//    boxes[0] = false; boxes[2] = true;
-//    printCompetitor(y+2.0, 0.75, bracket->competitors()[2], boxes);
+    QList<Competitor> competitors = JMApp()->bracketController()->competitors(bracket->id());
+    printCompetitor(y, 0.75, &competitors[0], boxes);
+    boxes[1] = true; boxes[2] = false;
+    printCompetitor(y+1.0, 0.75, &competitors[1], boxes);
+    boxes[0] = false; boxes[2] = true;
+    printCompetitor(y+2.0, 0.75, &competitors[2], boxes);
     joinMatch(y, 0.75, 1, 2, 1);
     joinMatch(y, 0.75, 2, 3, 2);
     joinMatch(y, 0.75, 1, 3, 3);
@@ -354,14 +353,14 @@ void PrintController::printRoundRobinFour(const Bracket *bracket)
     float y = 3.25;
     QVector<bool> boxes(5, true);
     boxes[1] = false; boxes[2] = true; boxes[3] = false; boxes[4] = true;
-    // TODO - Command to get competitors
-//    printCompetitor(y, 0.75, bracket->competitors()[0], boxes);
-//    boxes[1] = true; boxes[2] = false; boxes[3] = true; boxes[4] = false;
-//    printCompetitor(y+1.0, 0.75, bracket->competitors()[1], boxes);
-//    boxes[1] = false; boxes[2] = true; boxes[3] = true; boxes[4] = false;
-//    printCompetitor(y+2.0, 0.75, bracket->competitors()[2], boxes);
-//    boxes[1] = true; boxes[2] = false; boxes[3] = false; boxes[4] = true;
-//    printCompetitor(y+3.0, 0.75, bracket->competitors()[3], boxes);
+    QList<Competitor> competitors = JMApp()->bracketController()->competitors(bracket->id());
+    printCompetitor(y, 0.75, &competitors[0], boxes);
+    boxes[1] = true; boxes[2] = false; boxes[3] = true; boxes[4] = false;
+    printCompetitor(y+1.0, 0.75, &competitors[1], boxes);
+    boxes[1] = false; boxes[2] = true; boxes[3] = true; boxes[4] = false;
+    printCompetitor(y+2.0, 0.75, &competitors[2], boxes);
+    boxes[1] = true; boxes[2] = false; boxes[3] = false; boxes[4] = true;
+    printCompetitor(y+3.0, 0.75, &competitors[3], boxes);
     joinMatch(y, 0.75, 1, 2, 1);
     joinMatch(y, 0.75, 3, 4, 1);
     joinMatch(y, 0.75, 2, 4, 2);

@@ -34,6 +34,10 @@ bool OpenCommand::run(IDocument *const doc)
         return false;
     }
 
+    QFileInfo finfo(openFileName);
+    JMApp()->setLastSaveDir(finfo.absoluteDir());
+
+
     QFile tournFile(openFileName);
 
 
@@ -43,20 +47,6 @@ bool OpenCommand::run(IDocument *const doc)
         return done(false);
     }
 
-    // TODO - Delete commented out lines.
-//    QByteArray saveData = tournFile.readAll();
-//    qDebug() << "Data Size: " << saveData.size();
-
-
-//    QJsonDocument loadDoc(QJsonDocument::fromJson(saveData));
-
-//    std::unique_ptr<Tournament> tournament(new Tournament);
-
-    // TODO - cleanup
-//    tournament->setFileName(openFileName);
-
-//    QJsonObject jobj = loadDoc.object();
-//    tournament->read(jobj);
 
     // New Document
     tournFile.close();
@@ -67,10 +57,6 @@ bool OpenCommand::run(IDocument *const doc)
     newdoc->load(openFileName);
 
     JMApp()->setCommandController(teditor);
-
-    // TODO - This should go away after conversion to editor/doc is complete.
-//    JMApp()->setTournament(std::move(tournament));
-
 
     return done(true);
 }

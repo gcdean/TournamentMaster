@@ -36,6 +36,21 @@ TournamentDoc::TournamentDoc()
 
 }
 
+TournamentDoc::TournamentDoc(IDocument& doc)
+{
+//    // Create a document from another one.
+    m_clubs = doc.clubs();
+    m_competitors = doc.competitors();
+    m_brackets = doc.brackets();
+
+    foreach(Bracket bracket, m_brackets)
+    {
+        m_matches[bracket.id()] = doc.matches(bracket.id());
+    }
+
+//    // TODO - Complete this constructor. Will be used for document that writes csv output.
+}
+
 TournamentDoc::~TournamentDoc()
 {
     qDebug() << "TournamentDoc being deleted.";

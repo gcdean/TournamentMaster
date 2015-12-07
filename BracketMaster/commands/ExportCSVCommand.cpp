@@ -30,7 +30,6 @@ bool ExportCSVCommand::run(IDocument *const doc)
 
     // TODO - Fix this. Use editor/doc
     doc->save();
-//    JMApp()->tournament()->write(dir);
 
     return done(true);
 }

@@ -35,6 +35,9 @@ signals:
 
     void tournamentChanged();
 
+private slots:
+    void saveState();
+
 private:
     ClubController m_clubController;
     CompetitorController m_competitorController;
