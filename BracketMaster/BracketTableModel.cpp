@@ -128,7 +128,7 @@ QVariant BracketTableModel::data(const QModelIndex &index, int role) const
                     return QVariant(selectedBracket.matNumber());
                 case bracket::Competitors:
                         // TODO - Fix with command?
-//                    return QVariant(selectedBracket->competitors().size());
+                    return QVariant(JMApp()->bracketController()->competitors(selectedBracket.id()).size());
                 default:
                     return QVariant("Unknown");
             }

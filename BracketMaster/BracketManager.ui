@@ -13,23 +13,17 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout">
-   <property name="topMargin">
-    <number>0</number>
-   </property>
-   <property name="bottomMargin">
-    <number>0</number>
-   </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QSplitter" name="splitter_2">
+    <widget class="QSplitter" name="splitter">
      <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+      <enum>Qt::Vertical</enum>
      </property>
      <widget class="QGroupBox" name="bracketGroupBox">
       <property name="title">
        <string>Brackets</string>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout">
+      <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,3">
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_2">
          <item>
@@ -88,38 +82,43 @@
         </layout>
        </item>
        <item>
-        <widget class="QSplitter" name="splitter">
-         <property name="lineWidth">
-          <number>0</number>
-         </property>
+        <widget class="QSplitter" name="splitter_2">
          <property name="orientation">
-          <enum>Qt::Vertical</enum>
+          <enum>Qt::Horizontal</enum>
          </property>
          <widget class="CompetitorList" name="bracketList" native="true"/>
-         <widget class="CompetitorList" name="bracketCompetitors" native="true"/>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="removeBtn">
-         <property name="minimumSize">
-          <size>
-           <width>16</width>
-           <height>16</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16</width>
-           <height>16</height>
-          </size>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="Resources.qrc">
-           <normaloff>:/images/minus.png</normaloff>:/images/minus.png</iconset>
-         </property>
+         <widget class="QWidget" name="">
+          <layout class="QVBoxLayout" name="verticalLayout_3">
+           <item>
+            <widget class="CompetitorList" name="bracketCompetitors" native="true">
+             <zorder>removeBtn</zorder>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="removeBtn">
+             <property name="minimumSize">
+              <size>
+               <width>16</width>
+               <height>16</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16</width>
+               <height>16</height>
+              </size>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="Resources.qrc">
+               <normaloff>:/images/minus.png</normaloff>:/images/minus.png</iconset>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
         </widget>
        </item>
       </layout>
@@ -150,7 +149,10 @@
         </widget>
        </item>
        <item>
-        <widget class="CompetitorList" name="allCompetitors" native="true"/>
+        <widget class="CompetitorList" name="allCompetitors" native="true">
+         <zorder>splitter</zorder>
+         <zorder>splitter</zorder>
+        </widget>
        </item>
       </layout>
      </widget>
