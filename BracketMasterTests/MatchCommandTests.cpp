@@ -16,7 +16,6 @@ namespace
 
 void MatchCommandTests::initTestCase()
 {
-    int matchid = 0;
     for(int x = 0; x < MAXBRACKETS; x++)
     {
         JM::Gender gender = x % 2 == 0 ? JM::Male : JM::Female;

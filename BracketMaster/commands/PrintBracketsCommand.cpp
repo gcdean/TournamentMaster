@@ -31,6 +31,7 @@ PrintBracketsCommand::~PrintBracketsCommand()
 
 bool PrintBracketsCommand::run(IDocument *const doc)
 {
+    // TODO - maybe replace some of the controller cals with direct doc calls?
     // TODO
     // Open the print dialog
     // Set the print options.

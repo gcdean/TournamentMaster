@@ -127,6 +127,14 @@ void BracketController::updateBracket(Bracket bracket)
     // TODO - emit signal?
 }
 
+void BracketController::moveCompetitor(Bracket bracket, int src, int dest)
+{
+    QList<int> competitorIds = bracket.competitorIds();
+    competitorIds.move(src, dest);
+    bracket.setCompetitorIds(competitorIds);
+    updateBracket(bracket);
+}
+
 void BracketController::removeCompetitorFromBracket(int bracketId, int competitorId)
 {
     qDebug() << "BracketController - Remove competitor " << competitorId << " from Bracket " << bracketId;

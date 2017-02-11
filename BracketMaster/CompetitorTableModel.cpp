@@ -492,6 +492,8 @@ bool CompetitorTableModel::removeRows(int row, int count, const QModelIndex &par
         JMApp()->competitorController()->remove(var.toInt());
     }
     endRemoveRows();
+
+    return true;
 }
 
 
@@ -505,4 +507,5 @@ bool CompetitorTableModel::insertRows(int row, int count, const QModelIndex &par
         JMApp()->competitorController()->add(parentId());
     }
     endInsertRows();
+    return true;
 }

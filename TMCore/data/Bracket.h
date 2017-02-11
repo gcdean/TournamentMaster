@@ -68,6 +68,7 @@ public:
 
 //    bool addCompetitor(int id, int location = -1);
     const QList<int> competitorIds() const;
+    void setCompetitorIds(QList<int> ids);
 
 //    int numberOfMatches();
 

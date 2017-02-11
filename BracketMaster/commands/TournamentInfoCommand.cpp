@@ -19,6 +19,7 @@ bool TournamentInfoCommand::run(IDocument *const doc)
 {
     // Get the tournament info
     GetTournamentCmdPtr getTrnCmd = GetTournamentCmdPtr(new GetTournamentCommand);
+    // TODO - Maybe replace with direct doc call?
     if(JMApp()->commandController()->doCommand(getTrnCmd))
     {
 

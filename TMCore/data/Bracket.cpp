@@ -385,6 +385,11 @@ const QList<int> Bracket::competitorIds() const
     return m_data->m_competitorIds;
 }
 
+void Bracket::setCompetitorIds(QList<int> ids)
+{
+    m_data->m_competitorIds = ids;
+}
+
 //int Bracket::numberOfMatches()
 //{
 //    // Round Robin Brackets

@@ -87,12 +87,10 @@
           <enum>Qt::Horizontal</enum>
          </property>
          <widget class="CompetitorList" name="bracketList" native="true"/>
-         <widget class="QWidget" name="">
+         <widget class="QWidget" name="layoutWidget">
           <layout class="QVBoxLayout" name="verticalLayout_3">
            <item>
-            <widget class="CompetitorList" name="bracketCompetitors" native="true">
-             <zorder>removeBtn</zorder>
-            </widget>
+            <widget class="CompetitorList" name="bracketCompetitors" native="true"/>
            </item>
            <item>
             <widget class="QPushButton" name="removeBtn">
@@ -124,7 +122,10 @@
       </layout>
      </widget>
      <widget class="QFrame" name="allCompetitorFrame">
-      <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,0,1">
+      <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,1,0">
+       <property name="bottomMargin">
+        <number>1</number>
+       </property>
        <item>
         <widget class="QLabel" name="label">
          <property name="sizePolicy">
@@ -149,10 +150,7 @@
         </widget>
        </item>
        <item>
-        <widget class="CompetitorList" name="allCompetitors" native="true">
-         <zorder>splitter</zorder>
-         <zorder>splitter</zorder>
-        </widget>
+        <widget class="CompetitorList" name="allCompetitors" native="true"/>
        </item>
       </layout>
      </widget>

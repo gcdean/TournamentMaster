@@ -260,10 +260,12 @@ bool BracketTableModel::insertRows(int row, int count, const QModelIndex &parent
     beginInsertRows(parent, row, row + (count - 1));
     for(int x = 0; x < count; x++)
     {
-        QModelIndex index = createIndex(row + x, 0);
+//        QModelIndex index = createIndex(row + x, 0);
         JMApp()->bracketController()->add(-1);
     }
     endInsertRows();
+
+    return true;
 }
 
 bool BracketTableModel::removeRows(int row, int count, const QModelIndex &parent)
@@ -276,4 +278,5 @@ bool BracketTableModel::removeRows(int row, int count, const QModelIndex &parent
         JMApp()->bracketController()->remove(var.toInt());
     }
     endRemoveRows();
+    return true;
 }

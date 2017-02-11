@@ -28,6 +28,7 @@ public:
 
     void updateBracket(Bracket bracket);
 
+    void moveCompetitor(Bracket bracket, int src, int dest);
     void removeCompetitorFromBracket(int bracketId, int competitorId);
 
     const QList<Competitor> competitors(int parentId = -1) const override;

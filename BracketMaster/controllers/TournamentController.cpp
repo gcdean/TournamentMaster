@@ -30,5 +30,6 @@ void TournamentController::removeIndex(int index)
 int TournamentController::indexOf(int id)
 {
     Q_UNUSED(id)
+    return -1;
 }
 

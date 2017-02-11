@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>518</width>
-    <height>124</height>
+    <width>737</width>
+    <height>94</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -20,8 +20,8 @@
    <string>Form</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
-   <property name="spacing">
-    <number>4</number>
+   <property name="sizeConstraint">
+    <enum>QLayout::SetMinimumSize</enum>
    </property>
    <property name="leftMargin">
     <number>0</number>
@@ -36,7 +36,7 @@
     <number>0</number>
    </property>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_3">
+    <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0,0,0,0,0,0,0,1">
      <item>
       <widget class="QGroupBox" name="groupBox">
        <property name="title">
@@ -153,23 +153,6 @@
       </widget>
      </item>
      <item>
-      <spacer name="horizontalSpacer_2">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-    </layout>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_4">
-     <item>
       <widget class="QLabel" name="label_5">
        <property name="text">
         <string>Last Name:</string>
@@ -206,10 +189,23 @@
        </property>
       </spacer>
      </item>
+     <item>
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>0</width>
+         <height>0</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_5">
+    <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="0,0,1">
      <item>
       <widget class="QPushButton" name="applyBtn">
        <property name="text">
@@ -231,8 +227,8 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>40</width>
-         <height>20</height>
+         <width>0</width>
+         <height>0</height>
         </size>
        </property>
       </spacer>

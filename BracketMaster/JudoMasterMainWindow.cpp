@@ -43,7 +43,7 @@ JudoMasterMainWindow::JudoMasterMainWindow(QWidget *parent) :
 
     ui->mainToolBar->setVisible(false);
 
-    ui->tabWidget->setTabText(0, QString("General"));
+    ui->tabWidget->setTabText(0, QString("Clubs"));
     ui->tabWidget->setTabText(1, QString("Brackets"));
 
     m_printBracketsAction = new PrintBracketsAction(this);
