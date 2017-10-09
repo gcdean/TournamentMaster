@@ -86,6 +86,16 @@ void Tournament::setTexasMatchCards(bool use)
     m_data->m_useTexasMatchCards = use;
 }
 
+int Tournament::numMats() const
+{
+    return m_data->m_numMats;
+}
+
+void Tournament::setNumMats(int numMats)
+{
+    m_data->m_numMats = numMats;
+}
+
 //void Tournament::read(QJsonObject &json)
 //{
 //    m_name = json["name"].toString();

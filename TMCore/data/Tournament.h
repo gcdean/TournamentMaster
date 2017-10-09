@@ -19,6 +19,8 @@ public:
     void setStartTime(QTime startTime);
     bool useTexasMatchCards() const;
     void setTexasMatchCards(bool use);
+    int numMats() const;
+    void setNumMats(int numMats);
 
     bool operator ==(const Tournament& src);
 

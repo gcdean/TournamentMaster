@@ -14,6 +14,7 @@ public:
         , m_date(other.m_date)
         , m_startTime(other.m_startTime)
         , m_useTexasMatchCards(other.m_useTexasMatchCards)
+        , m_numMats(other.m_numMats)
     {}
 
     int m_id;
@@ -21,6 +22,7 @@ public:
     QDate m_date;
     QTime m_startTime;
     bool m_useTexasMatchCards;
+    int m_numMats;
 
 
 };
