@@ -5,8 +5,8 @@
 class TournamentData : public QSharedData
 {
 public:
-    TournamentData() : m_id(-1) {}
-    TournamentData(int id) : m_id(id) {}
+    TournamentData() : m_id(-1), m_useTexasMatchCards(false), m_numMats(2) {}
+    TournamentData(int id) : m_id(id), m_useTexasMatchCards(false), m_numMats(2) {}
     TournamentData(const TournamentData& other)
         : QSharedData(other)
         , m_id(other.m_id)

@@ -30,6 +30,7 @@ bool TournamentInfoCommand::run(IDocument *const doc)
         dlg.setName(tournament.name());
         dlg.setDate(tournament.date());
         dlg.setTime(tournament.startTime());
+        dlg.setNumMats(tournament.numMats());
         dlg.setUseMatchCards(tournament.useTexasMatchCards());
         if(dlg.exec() == QDialog::Accepted)
         {
@@ -37,6 +38,7 @@ bool TournamentInfoCommand::run(IDocument *const doc)
             tournament.setName(dlg.name());
             tournament.setDate(dlg.date());
             tournament.setStartTime(dlg.time());
+            tournament.setNumMats(dlg.numMats());
             tournament.setTexasMatchCards(dlg.useMatchCards());
 
             UpdateTournamentCmdPtr updateCmd = UpdateTournamentCmdPtr(new UpdateTournamentCommand(tournament));

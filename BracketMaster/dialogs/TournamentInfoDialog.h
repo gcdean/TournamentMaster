@@ -21,6 +21,8 @@ public:
     QDate date() const;
     void setTime(QTime time);
     QTime time() const;
+    int numMats();
+    void setNumMats(int numMats);
     void setUseMatchCards(bool matchCards);
     bool useMatchCards() const;
 

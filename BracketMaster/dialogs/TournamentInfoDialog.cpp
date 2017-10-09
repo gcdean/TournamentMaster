@@ -43,6 +43,16 @@ QTime TournamentInfoDialog::time() const
     return ui->startTime->time();
 }
 
+int TournamentInfoDialog::numMats()
+{
+    return ui->numMats->value();
+}
+
+void TournamentInfoDialog::setNumMats(int numMatches)
+{
+    ui->numMats->setValue(numMatches);
+}
+
 void TournamentInfoDialog::setUseMatchCards(bool matchCards)
 {
     ui->useTexasMatchCards->setChecked(matchCards);
