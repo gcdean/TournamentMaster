@@ -40,6 +40,8 @@ private Q_SLOTS:
 
 private:
     CompetitorTableModel *allCompetitorModel();
+    void setMatNumbers();
+    int getNumberOfMatsInTournament();
 
 private:
     Ui::BracketManager *ui;

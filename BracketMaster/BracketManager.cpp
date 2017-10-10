@@ -20,6 +20,7 @@
 #include <QCheckBox>
 #include <QComboBox>
 #include <QDebug>
+#include <QLCDNumber>
 #include <QList>
 #include <QMenu>
 #include <QMessageBox>
@@ -70,6 +71,10 @@ BracketManager::BracketManager(QWidget *parent) :
     ui->bracketCompetitors->tableView()->setSortingEnabled(false);
     ui->bracketCompetitors->tableView()->setSelectionBehavior(QAbstractItemView::SelectRows);
 
+    ui->notBracketedNum->setPalette(Qt::red);
+    ui->notBracketedFrame->setVisible(false);
+    setMatNumbers();
+
     connect(ui->bracketList->tableView()->selectionModel(), &QItemSelectionModel::currentRowChanged, this, &BracketManager::rowChanged);
     connect(ui->allCompetitorsFilter, &CompetitorFilterWidget::applyFilter, this, &BracketManager::competitorFilterChanged);
     connect(JMApp(), &JudoMasterApplication::tournamentChanged, this, &BracketManager::tournamentChanged);
@@ -92,21 +97,40 @@ BracketManager::~BracketManager()
 
 void BracketManager::resetMatCompetitors()
 {
-    int mat1 = 0;
-    int mat2 = 0;
+    // Adding 1 because brackets with a mat 0 have not been set.
+    int numMats = getNumberOfMatsInTournament() + 1;
+
+    int matArray[numMats];
+
+    for(int x = 0; x < numMats; x++)
+    {
+        matArray[x] = 0;
+    }
 
     const QList<Bracket > brackets = JMApp()->bracketController()->brackets();
     foreach(Bracket bracket, brackets)
     {
-        // TODO - Fix
-        if(bracket.matNumber() == 1)
-            mat1 += bracket.competitorIds().size();
-        if(bracket.matNumber() == 2)
-            mat2 += bracket.competitorIds().size();
+        matArray[bracket.matNumber()]+= bracket.competitorIds().size();
     }
 
-    ui->mat1Cntr->display(mat1);
-    ui->ma2Cntr->display(mat2);
+    for(int x = 1; x < numMats; x++)
+    {
+        QLCDNumber *cntr = this->findChild<QLCDNumber *>(QString("mat_%1").arg(x));
+        if(cntr)
+        {
+            cntr->display(matArray[x]);
+        }
+    }
+
+    if(matArray[0] > 0)
+    {
+        ui->notBracketedFrame->setVisible(true);
+        ui->notBracketedNum->display(matArray[0]);
+    }
+    else
+    {
+        ui->notBracketedFrame->setVisible(false);
+    }
 }
 
 void BracketManager::bracketContextMenu(const QPoint &pos)
@@ -156,7 +180,6 @@ void BracketManager::printSelectedBrackets()
         bracketIds.append(m_bracketModel->data(index, Qt::UserRole).toInt());
     }
 
-
     // TODO - Can command params be changed?
     PrintBracketsCmdPtr cmd = PrintBracketsCmdPtr(new PrintBracketsCommand);
     JMApp()->commandController()->doCommand(cmd);
@@ -171,6 +194,8 @@ void BracketManager::addBracket()
 
 void BracketManager::tournamentChanged()
 {
+    setMatNumbers();
+
     ui->bracketList->setModel(new BracketTableModel());
     connect(ui->bracketList->tableView()->selectionModel(), &QItemSelectionModel::currentRowChanged, this, &BracketManager::rowChanged);
     ui->bracketList->tableView()->resizeColumnsToContents();
@@ -300,4 +325,45 @@ CompetitorTableModel *BracketManager::allCompetitorModel()
     CompetitorTableModel* cmodel = dynamic_cast<CompetitorTableModel *>(proxyModel->sourceModel());
 
     return cmodel;
+}
+
+void BracketManager::setMatNumbers()
+{
+    // Clear out the old controls
+    QList<QWidget *> widgets = this->findChildren<QWidget *>(QRegExp("mat_.*"));
+    foreach (QWidget *widget, widgets) {
+        ui->matNumberLayout->removeWidget(widget);
+        delete widget;
+    }
+
+    int numMats = getNumberOfMatsInTournament();
+
+    for (int x = numMats; x > 0; x--)
+    {
+        auto value = new QLCDNumber(this);
+        value->setSegmentStyle(QLCDNumber::Flat);
+        QString objName = QString("mat_%1").arg(x);
+        value->setObjectName(objName);
+        ui->matNumberLayout->insertWidget(0, value);
+
+
+        auto label = new QLabel(QString("Mat %1").arg((x)), this);
+        label->setObjectName(QString("mat_%1_label").arg(x));
+        ui->matNumberLayout->insertWidget(0, label );
+    }
+}
+
+int BracketManager::getNumberOfMatsInTournament()
+{
+    int numMats = 0;
+    // Get the tournament info
+    GetTournamentCmdPtr getTrnCmd = GetTournamentCmdPtr(new GetTournamentCommand);
+    if(JMApp()->commandController()->doCommand(getTrnCmd))
+    {
+        Tournament tournament = getTrnCmd->tournament();
+
+        numMats = tournament.numMats();
+    }
+
+    return numMats;
 }
