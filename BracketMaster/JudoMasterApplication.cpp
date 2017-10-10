@@ -3,6 +3,8 @@
 #include "CommandController.h"
 #include "TournamentDoc.h"
 
+#include <QFont>
+
 JudoMasterApplication *JMApp()
 {
     return dynamic_cast<JudoMasterApplication *>(qApp);
@@ -18,6 +20,10 @@ JudoMasterApplication::JudoMasterApplication(int &argc, char **argv) :
     QCoreApplication::setOrganizationName("emeraldcityjudo.com");
     QCoreApplication::setApplicationName("TournamentMaster");
 
+
+    QFont arielFont("Ariel");
+    arielFont.setPointSize(12);
+    setFont(arielFont);
 
     QSettings settings;
     m_lastSaveDir = settings.value("lastSaveDir").toString();
