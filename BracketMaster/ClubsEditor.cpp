@@ -5,6 +5,7 @@
 #include "CompetitorItemDelegate.h"
 #include "CompetitorTableModel.h"
 #include "JudoMasterApplication.h"
+#include "commands/ClubCommands.h"
 #include "commands/ClubInfoUpdateCommand.h"
 #include "commands/PrintRegistrationCommand.h"
 
@@ -50,6 +51,7 @@ ClubsEditor::ClubsEditor(QWidget *parent) :
 
     connect(JMApp(), &JudoMasterApplication::editClub, this, &ClubsEditor::editSelectedClub);
 
+
 }
 
 ClubsEditor::~ClubsEditor()
@@ -59,24 +61,21 @@ ClubsEditor::~ClubsEditor()
 
 void ClubsEditor::addClub()
 {
-    ClubListModel* model = dynamic_cast<ClubListModel *>(ui->clubList->model());
-    if(!model)
-        return; // Handle null value
+    if(ui->clubList->model()->insertRow(ui->clubList->model()->rowCount()))
+    {
 
-    JMApp()->clubController()->createClub();
-    QModelIndex addedIndex = model->index(JMApp()->clubController()->clubs().size() - 1, 0);
-    ui->clubList->selectionModel()->select(addedIndex, QItemSelectionModel::ClearAndSelect);
-    clubSelected(addedIndex);
+        QModelIndex selectIndex = ui->clubList->model()->index(ui->clubList->model()->rowCount() - 1, 0);
+        if(selectIndex.isValid())
+            ui->clubList->selectionModel()->select(selectIndex, QItemSelectionModel::ClearAndSelect);
+    }
 }
 
 void ClubsEditor::removeClub()
 {
     QModelIndexList selected = ui->clubList->selectionModel()->selectedIndexes();
-    for(int x = 0; x < selected.size(); x++)
+    if(selected.size() == 1)
     {
-        QModelIndex index = selected[x];
-        qDebug() << "Removing Row: " << index.row();
-        JMApp()->clubController()->removeIndex(index.row());
+        ui->clubList->model()->removeRow(selected[0].row());
     }
 }
 

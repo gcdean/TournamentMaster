@@ -3,6 +3,7 @@
 
 
 #include "commands/MergeClubsCommand.h"
+#include "commands/ClubCommands.h"
 #include "controllers/ClubController.h"
 #include "JudoMasterApplication.h"
 
@@ -24,6 +25,7 @@ Club ClubListModel::club(const QModelIndex &index)
 int ClubListModel::rowCount(const QModelIndex &) const
 {
     int rows = JMApp()->clubController()->clubs().size();
+//    qDebug() << "CLubListModel::rowCount() - " << rows << " rows.";
     return rows;
 }
 
@@ -122,4 +124,34 @@ Qt::DropActions ClubListModel::supportedDropActions() const
 Qt::DropActions ClubListModel::supportedDragActions() const
 {
     return Qt::MoveAction;
+}
+
+
+bool ClubListModel::insertRows(int row, int count, const QModelIndex &parent)
+{
+    beginInsertRows(parent, row, row+count);
+    CreatClubCmdPtr createCmd = CreatClubCmdPtr(new CreateClubCommand());
+    for(int x = 0; x < count; x++)
+    {
+        JMApp()->commandController()->doCommand(createCmd);
+    }
+    endInsertRows();
+    return true;
+}
+
+bool ClubListModel::removeRows(int row, int count, const QModelIndex &parent)
+{
+    beginRemoveRows(parent, row, row + count);
+
+    for(int x = 0; x < count; x++)
+    {
+        Club club = JMApp()->clubController()->clubs().at(row + x);
+        if(club.isValid())
+        {
+            RemoveClubCmdPtr removeCmd = RemoveClubCmdPtr(new RemoveClubCommand(club));
+            JMApp()->commandController()->doCommand(removeCmd);
+        }
+    }
+    endRemoveRows();
+    return false;
 }

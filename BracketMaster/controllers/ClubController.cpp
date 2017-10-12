@@ -22,7 +22,7 @@ Club ClubController::createClub()
     Club club = cmd->club();
 
     // TODO - Fix signal
-//    emit addedDataObj(&club);
+    //emit addedDataObj(&club);
 
     return club;
 }
