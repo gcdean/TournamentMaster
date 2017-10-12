@@ -160,15 +160,6 @@
         </property>
        </widget>
       </item>
-      <item>
-       <widget class="ClubEditor" name="clubEditor" native="true">
-        <property name="font">
-         <font>
-          <family>.SF NS Text</family>
-         </font>
-        </property>
-       </widget>
-      </item>
      </layout>
     </widget>
    </item>
@@ -179,12 +170,6 @@
    <class>CompetitorList</class>
    <extends>QWidget</extends>
    <header location="global">CompetitorList.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>ClubEditor</class>
-   <extends>QWidget</extends>
-   <header location="global">ClubEditor.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

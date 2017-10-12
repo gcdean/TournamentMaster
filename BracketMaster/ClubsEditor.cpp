@@ -41,9 +41,6 @@ ClubsEditor::ClubsEditor(QWidget *parent) :
 
     connect(ui->addClubBtn, &QPushButton::clicked, this, &ClubsEditor::addClub);
     connect(ui->removeClubBtn, &QPushButton::clicked, this, &ClubsEditor::removeClub);
-    // TODO - Fix
-    //connect(this, &ClubsEditor::clubAdded, ui->clubEditor, &ClubEditor::editClub);
-    connect(this, &ClubsEditor::clubSelect, ui->clubEditor, &ClubEditor::editClub);
 
     connect(ui->clubList->selectionModel(), &QItemSelectionModel::currentChanged, this, &ClubsEditor::clubSelected);
     connect(JMApp(), &JudoMasterApplication::tournamentChanged, this, &ClubsEditor::tournamentChanged);
