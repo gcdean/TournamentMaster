@@ -5,6 +5,7 @@
 #include "CompetitorItemDelegate.h"
 #include "CompetitorTableModel.h"
 #include "JudoMasterApplication.h"
+#include "commands/ClubInfoUpdateCommand.h"
 #include "commands/PrintRegistrationCommand.h"
 
 #include <QAbstractListModel>
@@ -24,11 +25,6 @@ ClubsEditor::ClubsEditor(QWidget *parent) :
     m_printClubRegAction = new QAction("Print Registration...", this);
 
     ui->clubList->setModel(new ClubListModel(ui->clubList));
-//    ui->clubList->setDragEnabled(true);
-//    ui->clubList->setDragDropMode(QAbstractItemView::InternalMove);
-//    ui->clubList->setDropIndicatorShown(true);
-//    ui->clubList->setAcceptDrops(true);
-//    ui->clubList->setSelectionMode(QAbstractItemView::ExtendedSelection);
 
     ui->clubList->setContextMenuPolicy(Qt::CustomContextMenu);
 
@@ -54,6 +50,8 @@ ClubsEditor::ClubsEditor(QWidget *parent) :
 
     connect(ui->clubList, &QWidget::customContextMenuRequested, this, &ClubsEditor::clubContextMenu);
     connect(m_printClubRegAction, &QAction::triggered, this, &ClubsEditor::printClubRegistration);
+
+    connect(JMApp(), &JudoMasterApplication::editClub, this, &ClubsEditor::editSelectedClub);
 
 }
 
@@ -126,5 +124,19 @@ void ClubsEditor::printClubRegistration()
 //    }
 
 //    PrintRegistrationCommand cmd(this, selectedClubs);
-//    cmd.run(nullptr);
+    //    cmd.run(nullptr);
+}
+
+void ClubsEditor::editSelectedClub()
+{
+    QModelIndexList selectedClubs = ui->clubList->selectionModel()->selectedRows();
+    if(selectedClubs.size() == 1)   // Only if there is one item selected.
+    {
+        int clubId = ui->clubList->model()->data(selectedClubs[0], Qt::UserRole).toInt();
+        qDebug() << "ClubsEditor::editSelectedClub() - Selected Club is: " << selectedClubs[0].row() << ", Club Id: " << clubId;
+
+        ClubInfoUpdateCommandPtr cmd = ClubInfoUpdateCommandPtr(new ClubInfoUpdateCommand(this, clubId));
+
+        JMApp()->commandController()->doCommand(cmd);
+    }
 }

@@ -106,6 +106,7 @@
      <string>Edit</string>
     </property>
     <addaction name="actionTournamentInfo"/>
+    <addaction name="actionClub"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
@@ -183,6 +184,11 @@
   <action name="actionTournamentInfo">
    <property name="text">
     <string>Tournament Info...</string>
+   </property>
+  </action>
+  <action name="actionClub">
+   <property name="text">
+    <string>Club...</string>
    </property>
   </action>
  </widget>

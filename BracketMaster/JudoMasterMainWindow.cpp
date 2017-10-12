@@ -82,6 +82,7 @@ JudoMasterMainWindow::JudoMasterMainWindow(QWidget *parent) :
     connect(ui->actionImport, &QAction::triggered, [=](){JMApp()->commandController()->doCommand(m_importDataCommand);});
     connect(ui->actionExport, &QAction::triggered, [=](){JMApp()->commandController()->doCommand(m_exportCSVCommand);});
     connect(ui->actionTournamentInfo, &QAction::triggered, [=] (){JMApp()->commandController()->doCommand(m_tournamentInfoCommand);});
+    connect(ui->actionClub, &QAction::triggered, [=] (){emit JMApp()->editClub();});
 
     connect(JMApp(), &QCoreApplication::aboutToQuit, [=] (){JMApp()->commandController()->doCommand(m_closeCommand);});
     connect(ui->actionExit, &QAction::triggered, this, &QApplication::quit);

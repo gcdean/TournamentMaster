@@ -34,6 +34,7 @@ public:
 signals:
 
     void tournamentChanged();
+    void editClub();
 
 private slots:
     void saveState();

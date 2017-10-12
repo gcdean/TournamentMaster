@@ -56,7 +56,9 @@ SOURCES += main.cpp\
     commands/CloseCommand.cpp \
     commands/SaveCommand.cpp \
     commands/OpenCommand.cpp \
-    commands/ExportCSVCommand.cpp
+    commands/ExportCSVCommand.cpp \
+    dialogs/ClubDataDialog.cpp \
+    commands/ClubInfoUpdateCommand.cpp
 
 HEADERS  += JudoMasterMainWindow.h \
     ClubsEditor.h \
@@ -94,7 +96,9 @@ HEADERS  += JudoMasterMainWindow.h \
     commands/CloseCommand.h \
     commands/SaveCommand.h \
     commands/OpenCommand.h \
-    commands/ExportCSVCommand.h
+    commands/ExportCSVCommand.h \
+    dialogs/ClubDataDialog.h \
+    commands/ClubInfoUpdateCommand.h
 
 FORMS    += JudoMasterMainWindow.ui \
     ClubsEditor.ui \
@@ -105,7 +109,8 @@ FORMS    += JudoMasterMainWindow.ui \
     CompetitorFilterWidget.ui \
     CompetitorFilterWidget.ui \
     CompetitorEditor.ui \
-    dialogs/TournamentInfoDialog.ui
+    dialogs/TournamentInfoDialog.ui \
+    dialogs/ClubDataDialog.ui
 
 RESOURCES += \
     Resources.qrc

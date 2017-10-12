@@ -30,6 +30,7 @@ private slots:
     void tournamentChanged();
     void clubContextMenu(const QPoint & pos);
     void printClubRegistration();
+    void editSelectedClub();
 
 private:
     Ui::ClubsEditor *ui;
