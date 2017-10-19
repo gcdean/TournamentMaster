@@ -63,26 +63,26 @@ Qt::ItemFlags ClubListModel::flags(const QModelIndex &) const
 }
 
 
-//void ClubListModel::clubAdded(JMDataObj *)
-//{
-//    // The club has already been added.
-//    int numClubs = JMApp()->clubController()->clubs().size();
-//    beginInsertRows(QModelIndex(), numClubs - 1, numClubs);
-//    endInsertRows();
-//}
+void ClubListModel::clubAdded(Club *)
+{
+    // The club has already been added.
+    int numClubs = JMApp()->clubController()->clubs().size();
+    beginInsertRows(QModelIndex(), numClubs - 1, numClubs);
+    endInsertRows();
+}
 
-//void ClubListModel::clubRemoved(JMDataObj *club)
-//{
-//    // Find the club that's being removed.
-//    // Find the index.
-//    int row = JMApp()->clubController()->indexOf(club->id());
-//    if(row >= 0)
-//    {
-//        beginRemoveRows(QModelIndex(), row, row);
-//        endRemoveRows();
-//    }
+void ClubListModel::clubRemoved(Club *club)
+{
+    // Find the club that's being removed.
+    // Find the index.
+    int row = JMApp()->clubController()->indexOf(club->id());
+    if(row >= 0)
+    {
+        beginRemoveRows(QModelIndex(), row, row);
+        endRemoveRows();
+    }
 
-//}
+}
 
 bool ClubListModel::dropMimeData(const QMimeData *mimeData, Qt::DropAction action, int row, int column, const QModelIndex &parent)
 {

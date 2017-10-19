@@ -23,6 +23,7 @@ Club ClubController::createClub()
 
     // TODO - Fix signal
     //emit addedDataObj(&club);
+    emit clubAdded(&club);
 
     return club;
 }
@@ -66,7 +67,7 @@ const QList<Club> ClubController::clubs() const
 {
     if(JMApp()->commandController())
     {
-        QSharedPointer<GetClubsCommand> cmd = QSharedPointer<GetClubsCommand> (new GetClubsCommand);
+        GetClubsCmdPtr cmd = GetClubsCmdPtr(new GetClubsCommand);
         if(JMApp()->commandController()->doCommand(cmd))
         {
             return cmd->clubs();
@@ -78,15 +79,7 @@ const QList<Club> ClubController::clubs() const
 
 Club ClubController::findClubByName(QString name)
 {
-    int firstSpace = name.indexOf(' ');
-    if(firstSpace != -1)
-    {
-//        qDebug() << "Truncating (" << name << ")";
-        name.truncate(firstSpace);
-//        qDebug() << "Truncated Name is: (" << name << ")";
-    }
-
-    QSharedPointer<GetClubCommand> cmd = QSharedPointer<GetClubCommand>( new GetClubCommand(name));
+    GetClubCmdPtr cmd = GetClubCmdPtr(new GetClubCommand(name));
     JMApp()->commandController()->doCommand(cmd);
     return cmd->club();
 }

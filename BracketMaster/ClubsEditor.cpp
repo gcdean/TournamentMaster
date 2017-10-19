@@ -46,6 +46,8 @@ ClubsEditor::ClubsEditor(QWidget *parent) :
     connect(ui->clubList->selectionModel(), &QItemSelectionModel::currentChanged, this, &ClubsEditor::clubSelected);
     connect(JMApp(), &JudoMasterApplication::tournamentChanged, this, &ClubsEditor::tournamentChanged);
 
+    connect(JMApp()->clubController(), &ClubController::clubAdded, (ClubListModel *)ui->clubList->model(), &ClubListModel::clubAdded);
+
     connect(ui->clubList, &QWidget::customContextMenuRequested, this, &ClubsEditor::clubContextMenu);
     connect(m_printClubRegAction, &QAction::triggered, this, &ClubsEditor::printClubRegistration);
 

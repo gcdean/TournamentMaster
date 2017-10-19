@@ -24,7 +24,8 @@ public:
 signals:
 
 public slots:
-
+    void clubAdded(Club *);
+    void clubRemoved(Club *club);
 
     // QAbstractItemModel interface
 public:
