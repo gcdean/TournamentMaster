@@ -66,19 +66,21 @@ bool ImportDataCommand::run(IDocument *const doc)
             line = fileStream.readLine();
             if(!line.isNull())
             {
+                // TODO - Need to store column names in a user configurable table.
+
                 QStringList columns = line.split(',');
                 QString lname = columns.at(colMap["Last Name"]);
                 QString fname = columns.at(colMap["First Name"]);
                 QString gender = columns.at(colMap["Gender"]);
                 QString age = columns.at(colMap["Age"]);
                 QString weight = columns.at(colMap["Weight (Lbs)"]);
-                QString belt = columns.at(colMap["Belt color / rank"]);
+                QString belt = columns.at(colMap["Rank"]);
                 QString clubName = columns.at(colMap["Club Name"]);
-                QString div0 = columns.at(colMap["Division"]);
-                QString div1 = columns.at(colMap["Division 1"]);
-                QString div2 = columns.at(colMap["Division 2"]);
-                QString div3 = columns.at(colMap["Division 3"]);
-                QString kata = columns.at(colMap["Kata"]);
+                QString div0 = colMap.contains("Division") ? columns.at(colMap["Division"]) : "";
+                QString div1 = colMap.contains("Division 1") ? columns.at(colMap["Division 1"]) : "";
+                QString div2 = colMap.contains("Division 2") ? columns.at(colMap["Division 2"]) : "";
+                QString div3 = colMap.contains("Division 3") ? columns.at(colMap["Division 3"]) : "";
+                QString kata = colMap.contains("Kata") ? columns.at(colMap["Kata"]) : "";
 
                 int numDivs = 0;
 
