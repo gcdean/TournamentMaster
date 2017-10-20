@@ -18,7 +18,7 @@
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="tabPosition">
-       <enum>QTabWidget::South</enum>
+       <enum>QTabWidget::North</enum>
       </property>
       <property name="currentIndex">
        <number>0</number>
@@ -28,6 +28,18 @@
         <string>Tab 1</string>
        </attribute>
        <layout class="QVBoxLayout" name="genTabVertLayout" stretch="1">
+        <property name="leftMargin">
+         <number>10</number>
+        </property>
+        <property name="topMargin">
+         <number>10</number>
+        </property>
+        <property name="rightMargin">
+         <number>10</number>
+        </property>
+        <property name="bottomMargin">
+         <number>10</number>
+        </property>
         <item>
          <widget class="ClubsEditor" name="detailsWidget" native="true">
           <property name="minimumSize">
@@ -59,6 +71,18 @@
         <string>Tab 1!!!</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_2">
+        <property name="leftMargin">
+         <number>10</number>
+        </property>
+        <property name="topMargin">
+         <number>10</number>
+        </property>
+        <property name="rightMargin">
+         <number>10</number>
+        </property>
+        <property name="bottomMargin">
+         <number>10</number>
+        </property>
         <item>
          <widget class="BracketManager" name="widget" native="true"/>
         </item>

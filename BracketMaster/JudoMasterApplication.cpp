@@ -33,6 +33,9 @@ JudoMasterApplication::JudoMasterApplication(int &argc, char **argv) :
 
     setCommandController(teditor);
 
+   // Reduce the whitespace that the tab control uses.
+   setStyleSheet("QTabWidget::pane {border: 0 solid white; margin: -13px -9px -13px -9px;}");
+
     connect(this, &QCoreApplication::aboutToQuit, this, &JudoMasterApplication::saveState);
 
 
