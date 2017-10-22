@@ -2,6 +2,7 @@
 
 #include "data/Club.h"
 #include "JudoMasterApplication.h"
+#include "commands/CompetitorCommands.h"
 
 #include <QDebug>
 #include <QMessageBox>
@@ -25,14 +26,14 @@ bool MergeClubsCommand::run(IDocument *const doc)
         return done(false);
     }
 
-//    // Copy Competitors from src to dest.
-//    // TODO - Get list of competitors for a club
-//    foreach(Competitor *cmp, m_srcClub->competitors())
-//    {
-//        m_destClub->addCompetitor(cmp);
-//    }
+    // Copy Competitors from src to dest.
+    foreach(Competitor cmp, JMApp()->clubController()->competitors(m_srcClub.id()))
+    {
+        cmp.setClubId(m_destClub.id());
+        JMApp()->competitorController()->updateCompetitor(cmp);
+    }
 
     // Delete the src club.
-//    JMApp()->clubController()->remove(m_srcClub->id());
+    JMApp()->clubController()->remove(m_srcClub.id());
     return done(true);
 }

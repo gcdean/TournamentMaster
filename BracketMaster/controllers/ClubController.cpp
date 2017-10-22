@@ -112,6 +112,8 @@ void ClubController::remove(int id)
 void ClubController::removeIndex(int index)
 {
     // TODO - use command
+
+    Q_ASSERT(false);
 //    if(index < 0 || index >= tournament()->clubs().size())
 //        return;
 
@@ -157,14 +159,10 @@ int ClubController::indexOf(int id)
 
 Club ClubController::find(int id) const
 {
-    // TODO - Fix return
-//    foreach(Club *club, tournament()->clubs())
-//    {
-//        if(id == club->id())
-//            return club;
-//    }
+    GetClubCmdPtr cmd = GetClubCmdPtr(new GetClubCommand(id));
+    JMApp()->commandController()->doCommand(cmd);
+    return cmd->club();
 
-    return 0;
 }
 
 const QList<Competitor> ClubController::competitors(int parentId) const
