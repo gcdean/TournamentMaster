@@ -102,8 +102,6 @@ bool ImportDataCommand::run(IDocument *const doc)
                 if(!club.isValid())
                 {
   //                  qDebug() << "Creating New Club for name " << clubName;
-                    // Need to add the club.
-                    Q_ASSERT(true);
                     club = JMApp()->clubController()->createClub();
                     club.setClubName(clubName);
                     JMApp()->clubController()->updateClub(club);
@@ -124,7 +122,6 @@ bool ImportDataCommand::run(IDocument *const doc)
                 {
                     // Competitor not found, so add.
                     competitor = JMApp()->competitorController()->createCompetitor(fname,lname, mf, age.toInt(), weight.toDouble(), rank, club.id(), numDivs, notes);
-                    doc->addCompetitor(competitor);
 
                     m_importedCompetitors.append(competitor);
                 }
