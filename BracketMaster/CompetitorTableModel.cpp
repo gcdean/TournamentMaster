@@ -499,6 +499,7 @@ bool CompetitorTableModel::removeRows(int row, int count, const QModelIndex &par
 
 bool CompetitorTableModel::insertRows(int row, int count, const QModelIndex &parent)
 {
+    row = std::max(0, row);
     beginInsertRows(parent, row, row + (count - 1));
     for(int x = 0; x < count; x++)
     {
